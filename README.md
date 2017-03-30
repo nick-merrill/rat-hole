@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/cloudrave/rat-hole-1.svg?token=NzvMezYczUFyT7q7HgKB&branch=master)](https://travis-ci.com/cloudrave/rat-hole-1)
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
