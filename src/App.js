@@ -1,47 +1,59 @@
-/* This is the main entry point of our app.
+/********************************************************
+ * This is the main entry point of our app.
  * Everything that flows from the way, flows to the way.
- */
+ ********************************************************/
 
 // Library files
-import './App.css';
 import React, {Component} from 'react';
-import {deepOrange500} from 'material-ui/styles/colors';
-import AppBar from 'material-ui/AppBar';
-import {Tabs, Tab} from 'material-ui/Tabs';
-import FontIcon from 'material-ui/FontIcon';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
+import styles from './styles/styles';
+import './App.css';
+import _ from 'lodash';
 
-// Our code
+// MUI
+import AppBar from 'material-ui/AppBar';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import muiTheme from './styles/muiTheme';
+
+/**********************************
+ * Import any pages you need here.
+ **********************************/
 import RatTabScreen from './tabScreens/RatTabScreen';
+import SideMenu from "./components/SideMenu";
 
-const tabScreens = {
+/******************************
+ * Define available pages here.
+ * You must set the three properties:
+   * key
+   * title
+   * component
+ ******************************/
+const pages = [
   // Simple tab screen
-  friends: <div style={{fontSize: '2em'}}>My Friends</div>,
+  {
+    key: 'friends',
+    title: 'My Friends',
+    component: <div style={{fontSize: '2em'}}>My Friends</div>,
+  },
   // A tab screen that's a component
-  rats: <RatTabScreen />,
-};
-
-const styles = {
-  container: {
-    textAlign: 'center',
+  {
+    key: 'rats',
+    title: 'Rats',
+    component: <RatTabScreen />,
   },
-};
-
-const muiTheme = getMuiTheme({
-  palette: {
-    accent1Color: deepOrange500,
-  },
-});
+];
 
 class App extends Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-      currentTab: 'friends',
+      isMenuOpen: false,
+      /*************************************************
+       * This is the initial page the app will start on.
+       *************************************************/
+      currentPageKey: 'friends',
     };
   }
 
@@ -51,29 +63,36 @@ class App extends Component {
         <div style={styles.container}>
           {/* Header */}
           <AppBar title="REConnect"
-                  iconClassNameLeft=" "
-                  iconClassNameRight="fa fa-cog"
+                  onLeftIconButtonTouchTap={() => this.setState({isMenuOpen: true})}
+                  // iconClassNameRight="fa fa-cog"
+          />
+          <SideMenu open={this.state.isMenuOpen}
+                    pages={pages}
+                    // Allows the menu to style the current page for reference
+                    currentPageKey={this.state.currentPageKey}
+                    // Allows the open state to be changed on touch outside of
+                    // menu events.
+                    onRequestChange={(open) => this.setState({isMenuOpen: open})}
+                    handleClose={(item) => {
+                      this.setState({
+                        currentPageKey: item.key,
+                        isMenuOpen: false,
+                      });
+                    }}
           />
 
           {/*
-            Our main screens live inside of here. To define a new tab,
-            just add your new component to `tabScreens`.
+            Our main screens live inside of here. To define a new page,
+            just add your new component to `pages`.
           */}
           <div>
-            {tabScreens[this.state.currentTab]}
+            {
+              _.find(
+                pages,
+                ['key', this.state.currentPageKey]
+              ).component
+            }
           </div>
-
-          {/* Tab bar footer */}
-          <Tabs style={{position: 'absolute', bottom: 0, width: '100%'}}>
-            <Tab icon={<FontIcon className='fa fa-user' />}
-                 label='Friends'
-                 onActive={() => {this.setState({currentTab: 'friends'})}}
-            />
-            <Tab icon={<FontIcon className='fa fa-smile-o' />}
-                 label='Rats'
-                 onActive={() => {this.setState({currentTab: 'rats'})}}
-            />
-          </Tabs>
         </div>
       </MuiThemeProvider>
     );
