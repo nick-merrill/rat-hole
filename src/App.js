@@ -1,21 +1,32 @@
+/* This is the main entry point of our app.
+ * Everything that flows from the way, flows to the way.
+ */
+
+// Library files
 import './App.css';
 import React, {Component} from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
-import Dialog from 'material-ui/Dialog';
 import {deepOrange500} from 'material-ui/styles/colors';
-import FlatButton from 'material-ui/FlatButton';
+import AppBar from 'material-ui/AppBar';
+import {Tabs, Tab} from 'material-ui/Tabs';
+import FontIcon from 'material-ui/FontIcon';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
-// Needed for onTouchTap
-// http://stackoverflow.com/a/34015469/988941
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
+
+// Our code
+import RatTabScreen from './tabScreens/RatTabScreen';
+
+const tabScreens = {
+  // Simple tab screen
+  friends: <div style={{fontSize: '2em'}}>My Friends</div>,
+  // A tab screen that's a component
+  rats: <RatTabScreen />,
+};
 
 const styles = {
   container: {
     textAlign: 'center',
-    paddingTop: 200,
   },
 };
 
@@ -29,53 +40,40 @@ class App extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.handleRequestClose = this.handleRequestClose.bind(this);
-    this.handleTouchTap = this.handleTouchTap.bind(this);
-
     this.state = {
-      open: false,
+      currentTab: 'friends',
     };
   }
 
-  handleRequestClose() {
-    this.setState({
-      open: false,
-    });
-  }
-
-  handleTouchTap() {
-    this.setState({
-      open: true,
-    });
-  }
-
   render() {
-    const standardActions = (
-      <FlatButton
-        label="Ok"
-        primary={true}
-        onTouchTap={this.handleRequestClose}
-      />
-    );
-
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={styles.container}>
-          <Dialog
-            open={this.state.open}
-            title="Super Secret Password"
-            actions={standardActions}
-            onRequestClose={this.handleRequestClose}
-          >
-            1-2-3-4-5
-          </Dialog>
-          <h1>Material-UI</h1>
-          <h2>example project</h2>
-          <RaisedButton
-            label="Super Secret Password"
-            secondary={true}
-            onTouchTap={this.handleTouchTap}
+          {/* Header */}
+          <AppBar title="REConnect"
+                  iconClassNameLeft=" "
+                  iconClassNameRight="fa fa-cog"
           />
+
+          {/*
+            Our main screens live inside of here. To define a new tab,
+            just add your new component to `tabScreens`.
+          */}
+          <div>
+            {tabScreens[this.state.currentTab]}
+          </div>
+
+          {/* Tab bar footer */}
+          <Tabs style={{position: 'absolute', bottom: 0, width: '100%'}}>
+            <Tab icon={<FontIcon className='fa fa-user' />}
+                 label='Friends'
+                 onActive={() => {this.setState({currentTab: 'friends'})}}
+            />
+            <Tab icon={<FontIcon className='fa fa-smile-o' />}
+                 label='Rats'
+                 onActive={() => {this.setState({currentTab: 'rats'})}}
+            />
+          </Tabs>
         </div>
       </MuiThemeProvider>
     );
