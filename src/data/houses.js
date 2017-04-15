@@ -10,5 +10,6 @@ const add = (name) => {
 
 export const pfoho = add('Pforzheimer');
 export const quincy = add('Quincy');
+export const leverett = add('Leverett');
 
 export default houses;
