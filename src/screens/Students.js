@@ -1,6 +1,7 @@
 import React from 'react';
 import students from '../data/students';
-import {Paper, TextField} from 'material-ui';
+import {Card, TextField} from 'material-ui';
+import StudentProfile from './StudentProfile';
 
 class Students extends React.Component {
   constructor(props) {
@@ -22,10 +23,11 @@ class Students extends React.Component {
         <TextField value={this.state.search} onChange={this.handleSearchChange} />
         {/*<StudentProfile student={s} />*/}
         {
-          students.map((s) => (
-            <Paper key={s.id}>
-             <div>{s.firstName}</div>
-            </Paper>
+          students.map((s, index) => (
+            <Card className='container' style={{background: '#eee'}}
+                   key={index}>
+              <StudentProfile student={s} />
+            </Card>
           ))
         }
       </div>

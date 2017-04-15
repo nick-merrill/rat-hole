@@ -36,7 +36,7 @@ const routes = [
   },
   {
     title: 'Student Profile',
-    path: '/StudentProfile',
+    path: '/students/:id',
     component: StudentProfile,
   },
 ];
