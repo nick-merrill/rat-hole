@@ -1,4 +1,6 @@
 @import "./vendors/progress/styles";
+$fa-font-path: "//netdna.bootstrapcdn.com/font-awesome/4.7.0/fonts";
+@import "../node_modules/font-awesome/scss/font-awesome";
 
 .App {
   text-align: center;
@@ -28,6 +30,10 @@
 
 .huge-title {
   font-size: 100px;
+}
+
+.main-container {
+
 }
 
 .container {

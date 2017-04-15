@@ -1,12 +1,7 @@
 import React from 'react';
-import students from '../data/students';
 import {Paper} from 'material-ui';
 
 class StudentProfile extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let student = this.props.student;
     const imageSize = 150;
