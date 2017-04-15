@@ -111,8 +111,6 @@ class App extends Component {
       Screen = () => (
         <div>
           <HeaderWithSideBar />
-
-          <div>Welcome, {currentUser.firstName}</div>
           <currentRoute.component />
         </div>
       );

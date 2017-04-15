@@ -42,7 +42,7 @@ const add = (firstName, lastName, house, role, extra = {}) => {
 
 add('Brigitte', 'Libby', pfoho, dean);
 add('Stacy', 'Blondin', pfoho, tutor);
-add('Mario', 'León', pfoho, staff);
+add('Mario', 'León', pfoho, staff, {imageURL: 'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/16388119_10211533632637074_8685994266444723417_n.jpg?oh=1663c341aecd69e94388583ff97967ef&oe=5982E07C'});
 add('Custom', 'Email', pfoho, staff, {email: 'whatupyo@gmail.com'});
 
 export const storage = new StorageEngine('users');
