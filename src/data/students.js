@@ -115,7 +115,7 @@ add(
   '2020',
   'Engineering Sciences',
   'M',
-  'http://leverett.harvard.edu/facebook/getface.php?leverettuid=4373',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/12311216_10102516766671211_2712199964004302288_n.jpg?oh=07fa026476b894a406f2c584d2dcca77&oe=598E74D8',
   'Bryan likes to play drum'
 );
 
@@ -125,7 +125,7 @@ add(
   '2018',
   'Anthropology',
   'M',
-  'http://leverett.harvard.edu/facebook/getface.php?leverettuid=3915',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/1379934_10201165053702387_2007584992_n.jpg?oh=0cb0b5f6d4683692ca905454333c5f29&oe=59832A4D',
   'George digs around at the yard to find about the past'
 );
 
@@ -135,18 +135,18 @@ add(
   '2019',
   'Neurobiology',
   'M',
-  'http://leverett.harvard.edu/facebook/getface.php?leverettuid=4084',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/18704_1153415458017233_2695121698464711189_n.jpg?oh=03c67a525649f63039aaf04cda8f367f&oe=598D820E',
   'Manny likes to know about your brain structure'
 );
 
 add(
-  'Thomas', 'Peterson',
+  'Kunho', 'Kim',
   leverett,
   '2017',
-  'History and Literature',
+  'Folklore and mythology',
   'M',
-  'http://leverett.harvard.edu/facebook/getface.php?leverettuid=4206',
-  'Thomas likes to dance!'
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/10268487_219869451556277_126286291676155279_n.jpg?oh=625d841cd43a2317f3c6dfe9edc16b87&oe=599AACDC',
+  'Kunho eats everything!'
 );
 
 add(
@@ -155,7 +155,7 @@ add(
   '2018',
   'Computer Science',
   'M',
-  'http://leverett.harvard.edu/facebook/getface.php?leverettuid=4189',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/11752573_1049889981690581_8079720275024260818_n.jpg?oh=04ca1e977005123193a53e064cd913ea&oe=595290E1',
   'Carlos likes to row'
 );
 
@@ -165,7 +165,7 @@ add(
   '2018',
   'Classics',
   'F',
-  'http://leverett.harvard.edu/facebook/getface.php?leverettuid=4173',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/17342737_10209726968026008_6352002458119055700_n.jpg?oh=01d417c1c692e51561517e3e9896bc71&oe=59881679',
   'Belle loves to go see musicals'
 );
 
@@ -175,7 +175,7 @@ add(
   '2018',
   'Theater, Dance & Media',
   'F',
-  'http://leverett.harvard.edu/facebook/getface.php?leverettuid=4182',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t31.0-8/s960x960/16904908_790843301064927_8299785261010914717_o.jpg?oh=3bc5d1e6d45fa0257e22d860afa72f80&oe=599ACCF0',
   'Eliza wants to work with Comedians!'
 );
 
@@ -185,17 +185,17 @@ add(
   '2017',
   'Enginering Sciences',
   'F',
-  'http://leverett.harvard.edu/facebook/getface.php?leverettuid=3666',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/1045133_10201532121248870_810462164_n.jpg?oh=ff7ee5ae031e7166dd8274acf2c74705&oe=59800FF1',
   'Sarah likes to make robots during the weekends'
 );
 
 add(
-  'Katherine', 'Balton',
+  'Katherine', 'Blanton',
   leverett,
   '2019',
   'History and Science',
   'F',
-  'http://leverett.harvard.edu/facebook/getface.php?leverettuid=4092',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/11887891_1200767923274092_5875909735324110139_n.jpg?oh=d5a22f3766d476f71860ef6cfcc4172c&oe=59985FC5',
   'Katherine wants to work in Africa to help eradicating AIDS'
 );
 
@@ -205,9 +205,10 @@ add(
   '2018',
   'Human Evolutionary Biology',
   'F',
-  'http://leverett.harvard.edu/facebook/getface.php?leverettuid=4227',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
   'Lara is obssessed with recycling'
 );
+
 
 
 
