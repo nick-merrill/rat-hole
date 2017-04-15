@@ -9,6 +9,7 @@ script:
 - yarn test
 - yarn run build
 notifications:
+  email: false
   slack:
     on_success: change
     on_failure: always
