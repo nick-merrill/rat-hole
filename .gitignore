@@ -1,5 +1,9 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
+# Ignore all CSS files, and use SCSS instead.
+# CSS files are compiled by the yarn task.
+*.css
+
 # dependencies
 /node_modules
 
