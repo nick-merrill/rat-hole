@@ -16,33 +16,39 @@ import AppBar from 'material-ui/AppBar';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import muiTheme from './styles/muiTheme';
 
-/**********************************
- * Import any pages you need here.
- **********************************/
-import RatTabScreen from './tabScreens/RatTabScreen';
-import SideMenu from "./components/SideMenu";
+import {getCurrentUser, setCurrentUser} from './data/users';
+import Router from './lib/Router';
+import routes from './lib/routes';
+import Login from './screens/Login';
+import SideMenu from './components/SideMenu';
 
-/******************************
- * Define available pages here.
- * You must set the three properties:
-   * key
-   * title
-   * component
- ******************************/
-const pages = [
-  // Simple tab screen
-  {
-    key: 'friends',
-    title: 'My Friends',
-    component: <div style={{fontSize: '2em'}}>My Friends</div>,
-  },
-  // A tab screen that's a component
-  {
-    key: 'rats',
-    title: 'Rats',
-    component: <RatTabScreen />,
-  },
+/***************************************************
+ * Define *additional* links for the side menu here.
+ * For manual links, you must provide:
+ * key
+ * title
+ * handleClick
+ ****************************************************/
+let menuItems = [
+  // Any items defined here will go before the routes.
 ];
+// Include all available routes in the menu automatically.
+routes.forEach((route) => {
+  menuItems.push({
+    // Routes are handled automatically by the menu in a special way.
+    route: route,
+  });
+});
+// These will go after all the routes.
+menuItems = menuItems.concat([
+  {
+    key: 'logout',
+    title: 'Sign Out',
+    handleClick: () => {
+      setCurrentUser(null);
+    },
+  },
+]);
 
 class App extends Component {
   constructor(props, context) {
@@ -50,49 +56,72 @@ class App extends Component {
 
     this.state = {
       isMenuOpen: false,
-      /*************************************************
-       * This is the initial page the app will start on.
-       *************************************************/
-      currentPageKey: 'friends',
     };
   }
 
   render() {
+    let currentUser = getCurrentUser();
+    const currentPath = Router.getCurrentPath();
+    const currentRoute = _.find(routes, {path: currentPath});
+    if (_.isNil(currentRoute)) {
+      throw new Error(`${currentPath} is not a valid route. See lib/routes.js file.`);
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    const HeaderWithSideBar = () => {
+      return (
+        <div>
+          <AppBar title="Know Your House"
+                  onLeftIconButtonTouchTap={() => this.setState({isMenuOpen: true})}
+            // Uncomment the following to add a cog to the right
+            // iconClassNameRight="fa fa-cog"
+          />
+          <SideMenu open={this.state.isMenuOpen}
+                    items={menuItems}
+            // Allows the menu to style the current page for reference
+                    currentItemKey={currentPath}
+            // Allows the open state to be changed on touch outside of
+            // menu events.
+                    onRequestChange={(open) => this.setState({isMenuOpen: open})}
+                    handleClose={(itemProps) => {
+                      this.setState({
+                        isMenuOpen: false,
+                      });
+                    }}/>
+        </div>
+      );
+    };
+
+
+    /**
+     * Shows the login page if the user is not signed in.
+     */
+      // eslint-disable-next-line no-unused-vars
+    let Screen;
+    if (_.isNil(currentUser)) {
+      Screen = () => (
+        <div>
+          <h3>You must log in to see {currentRoute.title}.</h3>
+          <Login successCallback={() => {
+            this.forceUpdate();
+          }}/>
+        </div>
+      );
+    } else {
+      Screen = () => (
+        <div>
+          <HeaderWithSideBar />
+
+          <div>Welcome, {currentUser.firstName}</div>
+          <currentRoute.component />
+        </div>
+      );
+    }
+
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={styles.container}>
-          {/* Header */}
-          <AppBar title="REConnect"
-                  onLeftIconButtonTouchTap={() => this.setState({isMenuOpen: true})}
-                  // iconClassNameRight="fa fa-cog"
-          />
-          <SideMenu open={this.state.isMenuOpen}
-                    pages={pages}
-                    // Allows the menu to style the current page for reference
-                    currentPageKey={this.state.currentPageKey}
-                    // Allows the open state to be changed on touch outside of
-                    // menu events.
-                    onRequestChange={(open) => this.setState({isMenuOpen: open})}
-                    handleClose={(item) => {
-                      this.setState({
-                        currentPageKey: item.key,
-                        isMenuOpen: false,
-                      });
-                    }}
-          />
-
-          {/*
-            Our main screens live inside of here. To define a new page,
-            just add your new component to `pages`.
-          */}
-          <div>
-            {
-              _.find(
-                pages,
-                ['key', this.state.currentPageKey]
-              ).component
-            }
-          </div>
+          <Screen />
         </div>
       </MuiThemeProvider>
     );

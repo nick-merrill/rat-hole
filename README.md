@@ -830,7 +830,7 @@ If the `proxy` option is **not** flexible enough for you, alternatively you can:
 
 >Note: this feature is available with `react-scripts@0.4.0` and higher.
 
-You may require the dev server to serve pages over HTTPS. One particular case where this could be useful is when using [the "proxy" feature](#proxying-api-requests-in-development) to proxy requests to an API server when that API server is itself serving HTTPS.
+You may require the dev server to serve items over HTTPS. One particular case where this could be useful is when using [the "proxy" feature](#proxying-api-requests-in-development) to proxy requests to an API server when that API server is itself serving HTTPS.
 
 To do this, set the `HTTPS` environment variable to `true`, then start the dev server as usual with `npm start`:
 
@@ -868,7 +868,7 @@ If you use a Node server, you can even share the route matching logic between th
 
 ## Pre-Rendering into Static HTML Files
 
-If you’re hosting your `build` with a static hosting provider you can use [react-snapshot](https://www.npmjs.com/package/react-snapshot) to generate HTML pages for each route, or relative link, in your application. These pages will then seamlessly become active, or “hydrated”, when the JavaScript bundle has loaded.
+If you’re hosting your `build` with a static hosting provider you can use [react-snapshot](https://www.npmjs.com/package/react-snapshot) to generate HTML items for each route, or relative link, in your application. These items will then seamlessly become active, or “hydrated”, when the JavaScript bundle has loaded.
 
 There are also opportunities to use this outside of static hosting, to take the pressure off the server when generating and caching routes.
 
@@ -1390,14 +1390,14 @@ Open your `package.json` and add a `homepage` field:
 
 Create React App uses the `homepage` field to determine the root URL in the built HTML file.
 
-#### Step 2: Install `gh-pages` and add `deploy` to `scripts` in `package.json`
+#### Step 2: Install `gh-items` and add `deploy` to `scripts` in `package.json`
 
 Now, whenever you run `npm run build`, you will see a cheat sheet with instructions on how to deploy to GitHub Pages.
 
 To publish it at [https://myusername.github.io/my-app](https://myusername.github.io/my-app), run:
 
 ```sh
-npm install --save-dev gh-pages
+npm install --save-dev gh-items
 ```
 
 Add the following scripts in your `package.json`:
@@ -1407,8 +1407,7 @@ Add the following scripts in your `package.json`:
   "scripts": {
     // ...
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
-  }
+    "deploy": itemitems
 ```
 
 The `predeploy` script will run automatically before `deploy` is run.
@@ -1423,9 +1422,7 @@ npm run deploy
 
 #### Step 4: Ensure your project’s settings use `gh-pages`
 
-Finally, make sure **GitHub Pages** option in your GitHub project settings is set to use the `gh-pages` branch:
-
-<img src="http://i.imgur.com/HUjEr9l.png" width="500" alt="gh-pages branch setting">
+Finallitemske sure **GitHub Pages** option in your GitHub project settings is set to use the `gh-pages` branch:itemsg src="http://i.imgur.com/HUjEr9l.png" width="500" alt="gh-pages branch sitemsg">
 
 #### Step 5: Optionally, configure the domain
 

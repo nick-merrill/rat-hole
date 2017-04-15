@@ -4,10 +4,18 @@ import MenuItem from 'material-ui/MenuItem';
 import _ from 'lodash';
 
 import styles from '../styles/styles';
+import Router from '../lib/Router';
 
 // Taken from Material UI DrawerUndockedExample at
 // http://www.material-ui.com/#/components/drawer
 class SideMenu extends React.Component {
+  handleClick(itemProps) {
+    // Menu item callback
+    itemProps.handleClick();
+    // Callback for parent
+    this.props.handleClose(itemProps);
+  }
+
   render() {
     return (
       <div style={{textAlign: 'left'}}>
@@ -17,18 +25,32 @@ class SideMenu extends React.Component {
           open={this.props.open}
           onRequestChange={this.props.onRequestChange}
         >
-          {this.props.pages.map((item) => {
+          {this.props.items.map((item) => {
+            let itemProps;
+            if (item.route) {
+              const route = item.route;
+              itemProps = {
+                key: route.path,
+                title: route.title,
+                handleClick: () => {
+                  Router.goToPath(route.path);
+                },
+              };
+            }
+            else {
+              itemProps = item;
+            }
             return (
               <MenuItem
                 style={
                   _.defaults(
-                    this.props.currentPageKey === item.key ? styles.selectedMenuItem : {}
+                    this.props.currentItemKey === itemProps.key ? styles.selectedMenuItem : {}
                   )
                 }
-                key={item.key}
-                onTouchTap={() => this.props.handleClose(item)}
+                key={itemProps.key}
+                onTouchTap={() => this.handleClick(itemProps)}
               >
-                {item.title}
+                {itemProps.title}
               </MenuItem>
             );
           })}
@@ -43,8 +65,8 @@ class SideMenu extends React.Component {
  */
 SideMenu.propTypes = {
   open: React.PropTypes.bool.isRequired,
-  pages: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  currentPageKey: React.PropTypes.string,
+  items: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  currentItemKey: React.PropTypes.string,
   handleClose: React.PropTypes.func,
   onRequestChange: React.PropTypes.func,
 };
