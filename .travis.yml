@@ -1,13 +1,13 @@
 language: node_js
 node_js:
-- node
+- "6"
 cache:
   yarn: true
   directories:
   - node_modules
 script:
-- npm test
-- npm run build
+- yarn test
+- yarn run build
 notifications:
   slack:
     on_success: change
