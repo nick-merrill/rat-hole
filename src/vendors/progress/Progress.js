@@ -1,6 +1,7 @@
+// Thanks to https://github.com/expalmer/react-progress-form
 
 var React    = require('react');
-var classSet = require('../../../../../Downloads/react-progress-form-master/src/js/utils/classSet');
+var classSet = require('./classSet');
 
 var ProgressElement = React.createClass({
   componentDidUpdate: function() {
