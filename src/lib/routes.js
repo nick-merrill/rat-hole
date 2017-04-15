@@ -3,6 +3,7 @@ import _ from 'lodash';
 import Game from "../screens/Game";
 import Stats from "../screens/Stats";
 import Home from "../screens/Home";
+import StudentProfile from "../screens/StudentProfile";
 
 /**
  * Define your routes here. These are primary screens/items the user can access.
@@ -23,7 +24,12 @@ const routes = [
     title: 'My Stats',
     path: '/stats',
     component: Stats,
-  }
+  },
+  {
+    title: 'Student Profile',
+    path: '/StudentProfile',
+    component: StudentProfile,
+  },
 ];
 
 const routeProps = ['title', 'path', 'component'];
