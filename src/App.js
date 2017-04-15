@@ -120,7 +120,7 @@ class App extends Component {
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <div className='container' style={styles.container}>
+        <div className="container" style={styles.container}>
           <Screen />
         </div>
       </MuiThemeProvider>

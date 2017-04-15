@@ -7,9 +7,14 @@ import Game from "../screens/Game";
 import Stats from "../screens/Stats";
 import Home from "../screens/Home";
 import Students from "../screens/Students";
+import StudentProfile from "../screens/StudentProfile";
+
+/**
+ * Define your routes here. These are primary screens/items the user can access.
+ */
 
 const routes = [
- {
+  {
     title: 'Home Screen',
     path: '/',
     component: Home,
@@ -28,6 +33,11 @@ const routes = [
     title: 'Student List',
     path: '/students',
     component: Students,
+  },
+  {
+    title: 'Student Profile',
+    path: '/StudentProfile',
+    component: StudentProfile,
   },
 ];
 
