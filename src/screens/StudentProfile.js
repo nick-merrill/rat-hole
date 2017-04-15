@@ -6,11 +6,11 @@ import PropTypes from 'prop-types';
 class StudentProfile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {isflag: false};
+    this.state = {isFlagged: false};
   }
 
   flag() {
-    this.setState({isflag: !this.state.isflag})
+    this.setState({isFlagged: !this.state.isFlagged});
   }
 
   render() {
@@ -26,18 +26,21 @@ class StudentProfile extends React.Component {
                  overflow: 'hidden',
                  margin: '0 auto',
                }}>
-           <img src={student.imageURL} alt={student.firstName}
-             style={{height: imageSize}}/>
+          <img src={student.imageURL} alt={student.firstName}
+               style={{height: imageSize}}/>
         </Paper>
-        <h2 style={{textAlign:'left'}}>
+        <h2 style={{textAlign: 'left'}}>
           {student.firstName} {student.lastName} &nbsp;
-          <i onClick={() => this.flag()}>
-            <i className={this.state.isflag ? "fa  fa-star" : "fa  fa-star-o" }></i></i>
+          <i className={this.state.isFlagged ? 'fa fa-star' : 'fa fa-star-o' }
+             onClick={() => this.flag()}>
+          </i>
         </h2>
-        <div style={{textAlign:'left'}}>
-          {student.bio.split('\n').map((item, key) => {
-            return <span key={key}>{item}<br/></span>;
-          })}
+        <div style={{textAlign: 'left'}}>
+          {
+            student.bio.split('\n').map((item, key) => {
+              return <span key={key}>{item}<br/></span>;
+            })
+          }
         </div>
 
       </div>
