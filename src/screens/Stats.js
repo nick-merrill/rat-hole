@@ -25,7 +25,7 @@ class Stats extends React.Component {
         </div>
         <br /><br />
         <div style={{textAlign:'left'}}>
-          {`You've identified ${stats.numberIdentified} of the entire house.`}
+          {`You've identified ${stats.numberIdentified} students.`}
         </div>
       </div>
     );
