@@ -7,7 +7,6 @@
 import React, {Component} from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
-import styles from './styles/styles';
 import './App.css';
 import _ from 'lodash';
 
@@ -16,6 +15,8 @@ import AppBar from 'material-ui/AppBar';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import muiTheme from './styles/muiTheme';
 
+// Our Files
+import styles from './styles/styles';
 import {getCurrentUser, setCurrentUser} from './data/users';
 import Router from './lib/Router';
 import routes from './lib/routes';
@@ -57,6 +58,13 @@ class App extends Component {
     this.state = {
       isMenuOpen: false,
     };
+  }
+
+  componentDidMount() {
+    Router.subscribeToChange(() => {
+      console.log('update!!!');
+      this.forceUpdate();
+    });
   }
 
   render() {
@@ -118,7 +126,7 @@ class App extends Component {
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <div className="container" style={styles.container}>
+        <div className="main-container" style={styles.container}>
           <Screen />
         </div>
       </MuiThemeProvider>

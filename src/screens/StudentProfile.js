@@ -1,7 +1,7 @@
 import React from 'react';
+import {Paper} from 'material-ui';
 import students from '../data/students';
 import PropTypes from 'prop-types';
-import {Paper} from 'material-ui';
 
 class StudentProfile extends React.Component {
   constructor(props) {

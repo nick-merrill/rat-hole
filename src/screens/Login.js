@@ -27,7 +27,6 @@ class Login extends React.Component {
 
   handleLogin() {
     let user = getUserFromEmail(this.state.email);
-    console.log(user);
     if (_.isNil(user)) {
       // Login failed
       alert('No such user :(');
