@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 /**
  * Stores items with prefix as JSON.
  */
@@ -15,7 +17,12 @@ class StorageEngine {
   }
 
   get(key) {
-    return JSON.parse(localStorage.getItem(this._prefix_key(key)));
+    let value = localStorage.getItem(this._prefix_key(key));
+    if (_.isString(value)) {
+      return JSON.parse(value);
+    } else {
+      return value;
+    }
   }
 }
 

@@ -17,7 +17,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import muiTheme from './styles/muiTheme';
 
 import {getCurrentUser, setCurrentUser} from './data/users';
-import router from './lib/router';
+import Router from './lib/Router';
 import routes from './lib/routes';
 import Login from './screens/Login';
 import SideMenu from './components/SideMenu';
@@ -61,10 +61,10 @@ class App extends Component {
 
   render() {
     let currentUser = getCurrentUser();
-    const path = router.getCurrentPath();
-    const route = _.find(routes, {path: path});
-    if (_.isNil(route)) {
-      throw new Error(`${path} is not a valid route. See lib/routes.js file.`);
+    const currentPath = Router.getCurrentPath();
+    const currentRoute = _.find(routes, {path: currentPath});
+    if (_.isNil(currentRoute)) {
+      throw new Error(`${currentPath} is not a valid route. See lib/routes.js file.`);
     }
 
     // eslint-disable-next-line no-unused-vars
@@ -79,7 +79,7 @@ class App extends Component {
           <SideMenu open={this.state.isMenuOpen}
                     items={menuItems}
             // Allows the menu to style the current page for reference
-                    currentPageKey={path}
+                    currentItemKey={currentPath}
             // Allows the open state to be changed on touch outside of
             // menu events.
                     onRequestChange={(open) => this.setState({isMenuOpen: open})}
@@ -101,7 +101,7 @@ class App extends Component {
     if (_.isNil(currentUser)) {
       Screen = () => (
         <div>
-          <h3>You must log in to see {route.title}.</h3>
+          <h3>You must log in to see {currentRoute.title}.</h3>
           <Login successCallback={() => {
             this.forceUpdate();
           }}/>
@@ -113,7 +113,7 @@ class App extends Component {
           <HeaderWithSideBar />
 
           <div>Welcome, {currentUser.firstName}</div>
-          <route.component />
+          <currentRoute.component />
         </div>
       );
     }

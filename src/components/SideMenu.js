@@ -4,7 +4,7 @@ import MenuItem from 'material-ui/MenuItem';
 import _ from 'lodash';
 
 import styles from '../styles/styles';
-import router from '../lib/router';
+import Router from '../lib/Router';
 
 // Taken from Material UI DrawerUndockedExample at
 // http://www.material-ui.com/#/components/drawer
@@ -33,7 +33,7 @@ class SideMenu extends React.Component {
                 key: route.path,
                 title: route.title,
                 handleClick: () => {
-                  router.goToPath(route.path);
+                  Router.goToPath(route.path);
                 },
               };
             }
