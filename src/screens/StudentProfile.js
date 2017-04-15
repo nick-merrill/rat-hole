@@ -1,5 +1,6 @@
 import React from 'react';
 import students from '../data/students';
+import PropTypes from 'prop-types';
 import {Paper} from 'material-ui';
 
 class StudentProfile extends React.Component {
@@ -34,6 +35,8 @@ class StudentProfile extends React.Component {
   }
 }
 
-StudentProfile.propTypes = {};
+StudentProfile.propTypes = {
+  student: PropTypes.object.isRequired
+};
 
 export default StudentProfile;
