@@ -209,7 +209,105 @@ add(
   'Lara is obssessed with recycling'
 );
 
+add(
+  'Annie', 'Schugart',
+  quincy,
+  '2018',
+  'Computer Science',
+  'F',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'Annie is from Kansas. \n\n she/her/hers'
+);
 
+add(
+  'Jerry', 'Nelluvelil',
+  quincy,
+  '2018',
+  'Linguistics, Neurobiology',
+  'M',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'Jerry enjoys creating PowerPoint presentations. \n\n he/him/his'
+);
+
+add(
+  'Brittany', 'Wang',
+  quincy,
+  '2017',
+  'Human Developmental and Regenerative Biology',
+  'F',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'Brittany is obsessed with Quincy. \n\n she/her/hers'
+);
+
+add(
+  'Tayjus', 'Surampudi',
+  quincy,
+  '2018',
+  'Government',
+  'M',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'Tayjus loves spending time with friends in Quincy Courtyard. \n\n he/him/his'
+);
+
+add(
+  'Olivia', 'Goldberg',
+  quincy,
+  '2017',
+  'Government',
+  'F',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'Olivia enjoys studying political philosophy. \n\n she/her/hers'
+);
+
+add(
+  'Ibrahim', 'Syed',
+  quincy,
+  '2019',
+  'Applied Mathematics',
+  'M',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'Ibby enjoys working out in his free time. \n\n he/him/his'
+);
+
+add(
+  'PJ', 'Kelley',
+  quincy,
+  '2018',
+  'Human Developmental and Regenerative Biology',
+  'F',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'PJ works in the Quincy Building Manager office. \n\n she/her/hers'
+);
+
+add(
+  'Simon', 'Sun',
+  quincy,
+  '2019',
+  'Computer Science',
+  'M',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'Simon is interested in videomaking and hopes to pursue a secondary in VES. \n\n he/him/his'
+);
+
+add(
+  'Karen', 'Maldonado',
+  quincy,
+  '2018',
+  'Sociology',
+  'F',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'Karen loves to travel. \n\n she/her/hers'
+);
+
+add(
+  'Curtis', 'Stone',
+  quincy,
+  '2017',
+  'Economics',
+  'F',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'Curtis loves theater, improv, and playwriting. \n\n he/him/his'
+);
 
 
 
