@@ -21,9 +21,8 @@ const GameTutorial = () => {
           While playing, your social abilities will both be tested and extended.
         </p>
         <p>
-          By playing The Game, you are not only contributing to making
-          {userHouseNickname}
-          feel like a real home.
+          By playing The Game, you are not only contributing to
+          making {userHouseNickname} feel like a real home.
         </p>
       </div>
     </div>
@@ -48,9 +47,9 @@ class Game extends React.Component {
    */
   render() {
     // TODO: Use storage engine to tell if this is true
-    const userHasSeenTutorial = !!storage.get('hasSeenTutorial');
-    storage.set('hasSeenTutorial', true);
-    if (userHasSeenTutorial && false) {
+    const userHasSeenTutorial = !!storage.get('hasReadTutorial');
+    storage.set('hasReadTutorial', true);
+    if (userHasSeenTutorial) {
       return <GamePlayEnvironment/>;
     } else {
       return <GameTutorial/>;

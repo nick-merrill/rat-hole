@@ -2,11 +2,13 @@
  * Define your routes here. These are primary screens/items the user can access.
  */
 import _ from 'lodash';
+import React from 'react';
 
-import Game from "../screens/Game";
-import Stats from "../screens/Stats";
-import Home from "../screens/Home";
-import StudentList from "../screens/StudentList";
+import Game from '../screens/Game';
+import Stats from '../screens/Stats';
+import Home from '../screens/Home';
+import StudentList from '../screens/StudentList';
+import Settings from '../screens/Settings';
 
 /**
  * Define your routes here. These are primary screens/items the user can access.
@@ -37,6 +39,13 @@ const routes = [
     path: '/students',
     component: StudentList,
   },
+  {
+    key: 'settings',
+    title: 'Settings',
+    path: '/settings',
+    icon: <i className='fa fa-cog' />,
+    component: Settings,
+  }
 ];
 
 const routeProps = ['key', 'title', 'path', 'component'];
