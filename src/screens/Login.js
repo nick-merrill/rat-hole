@@ -8,6 +8,7 @@ import {
   getUserFromEmail,
   setCurrentUser,
 } from '../data/users';
+import {Dialog, FlatButton} from 'material-ui';
 
 class Login extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class Login extends React.Component {
       // All we care about is the email because it tells us which user to
       // set as the current user.
       email: '',
+      errorDialog: null,
     };
   }
 
@@ -25,11 +27,18 @@ class Login extends React.Component {
     });
   }
 
-  handleLogin() {
+  handleLogin(event) {
+    event.preventDefault(); // don't submit form the old HTML way
+
     let user = getUserFromEmail(this.state.email);
     if (_.isNil(user)) {
       // Login failed
-      alert('No such user :(');
+      this.setState({
+        errorDialog: {
+          title: 'No such user',
+          message: 'Sorry, a user with that email does not exist.',
+        }
+      });
     } else {
       // Login succeeded
       setCurrentUser(user);
@@ -38,27 +47,45 @@ class Login extends React.Component {
   }
 
   render() {
+    const errorDialog = this.state.errorDialog;
+
     return (
       <div>
         <h1>Welcome</h1>
 
-        <TextField
-          hintText='Email'
-          floatingLabelText='Email'
-          floatingLabelFixed={true}
-          onChange={this.handleEmailUpdate.bind(this)}
-          value={this.state.email}
-        />
-        <TextField
-          type='password'
-          hintText='Password'
-          floatingLabelText='Password'
-          floatingLabelFixed={true}
-        />
-        <RaisedButton type='submit' label='Log In' fullWidth={true}
-                      primary={true} onClick={this.handleLogin.bind(this)} />
-        <RaisedButton label='Sign Up' fullWidth={true} secondary={true}
-                      href='/'/>
+        <form onSubmit={this.handleLogin.bind(this)}>
+          <TextField
+            hintText='Email'
+            floatingLabelText='Email'
+            floatingLabelFixed={true}
+            onChange={this.handleEmailUpdate.bind(this)}
+            value={this.state.email}
+          />
+          <TextField
+            type='password'
+            hintText='Password'
+            floatingLabelText='Password'
+            floatingLabelFixed={true}
+          />
+          <div>
+            <RaisedButton type='submit' label='Log In' primary={true} />
+          </div>
+          <div>
+            <FlatButton type='submit' label='Sign Up' secondary={true} />
+          </div>
+        </form>
+
+        <Dialog open={!!errorDialog}
+                modal={true}
+                title={errorDialog && errorDialog.title}
+                actions={[
+                  <FlatButton
+                    label='OK'
+                    primary={true}
+                    onTouchTap={() => this.setState({errorDialog: null})}/>
+                ]}>
+          {errorDialog && errorDialog.message}
+        </Dialog>
       </div>
     );
   }

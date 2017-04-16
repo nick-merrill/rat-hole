@@ -1,12 +1,14 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Router from '../lib/Router';
-import {getCurrentUser} from '../data/users';
+import {getCurrentUser, setCurrentUser} from '../data/users';
 import Avatar from 'material-ui/Avatar';
 import {
   greenA700,
 } from 'material-ui/styles/colors';
 import CircleProgress from '../components/CircleProgress';
+import {FlatButton} from 'material-ui';
+import muiTheme from '../styles/muiTheme';
 
 const buttonStyle = {
   margin: 15,
@@ -63,6 +65,17 @@ class Home extends React.Component {
                         onClick={() => this.handleClick('/stats')}
 
           />
+          <div>
+            <FlatButton label='Sign Out'
+                        labelPosition='before'
+                        backgroundColor={muiTheme.palette.dangerColor}
+                        icon={<i className='fa fa-sign-out'/>}
+                        onClick={() => {
+                          setCurrentUser(null);
+                          Router.informOfChangeManually();
+                        }}
+            />
+          </div>
         </div>
 
       </div>

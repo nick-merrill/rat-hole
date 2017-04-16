@@ -1,6 +1,6 @@
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {
-  blue500, blueGrey500
+  blue500, blueGrey500, red500
 } from 'material-ui/styles/colors';
 
 // I don't think we want to go with Harvard branding because it makes an app
@@ -14,6 +14,7 @@ const muiTheme = getMuiTheme({
   palette: {
     primary1Color: blue500,
     accent1Color: blueGrey500,
+    dangerColor: red500,
   },
 });
 

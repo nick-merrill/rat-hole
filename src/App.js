@@ -70,7 +70,10 @@ class App extends Component {
     const currentPath = Router.getCurrentPath();
     const currentRoute = _.find(routes, {path: currentPath});
     if (_.isNil(currentRoute)) {
-      throw new Error(`${currentPath} is not a valid route. See lib/routes.js file.`);
+      throw new Error(`
+      ${currentPath} is not a valid route. See lib/routes.js file.
+      You may need to go to http://localhost:3000/#/
+      `);
     }
 
     // eslint-disable-next-line no-unused-vars
@@ -106,7 +109,7 @@ class App extends Component {
     let Screen;
     if (_.isNil(currentUser)) {
       Screen = () => (
-        <div>
+        <div style={styles.container}>
           <h3>You must log in to see {currentRoute.title}.</h3>
           <Login successCallback={() => {
             this.forceUpdate();
@@ -117,15 +120,16 @@ class App extends Component {
       Screen = () => (
         <div>
           <MainAppBar />
-          <currentRoute.component />
+          <div style={{...styles.container, paddingTop: 60}}>
+            <currentRoute.component />
+          </div>
         </div>
       );
     }
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <div className="main-container"
-             style={{...styles.container, paddingTop: 40}}>
+        <div className="main-container">
           <Screen />
         </div>
       </MuiThemeProvider>

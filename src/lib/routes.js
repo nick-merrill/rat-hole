@@ -39,7 +39,7 @@ const routes = [
   },
 ];
 
-const routeProps = ['title', 'path', 'component'];
+const routeProps = ['key', 'title', 'path', 'component'];
 // Verify every route has the appropriate properties.
 routes.forEach((route, index) => {
   routeProps.forEach((prop) => {

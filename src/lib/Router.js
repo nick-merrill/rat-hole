@@ -8,7 +8,10 @@ window.Router = window.Router ||
     },
     subscribeToChange: (callback) => {
       window.addEventListener('hashchange', callback);
-    }
+    },
+    informOfChangeManually: () => {
+      window.fireEvent('hashchange');
+    },
   };
 
 export default window.Router;
