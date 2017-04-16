@@ -35,10 +35,14 @@ let menuItems = [
     route: _.find(routes, {key: 'studentList'}),
   },
   {
+    route: _.find(routes, {key: 'settings'}),
+  },
+  {
     key: 'logout',
     title: 'Sign Out',
     labelPosition: 'left',
     icon: <i className='fa fa-sign-out'/>,
+    color: muiTheme.palette.dangerColor,
     handleClick: () => {
       setCurrentUser(null);
     },
