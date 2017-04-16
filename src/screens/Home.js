@@ -1,14 +1,12 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Router from '../lib/Router';
-import {getCurrentUser, setCurrentUser} from '../data/users';
+import {getCurrentUser} from '../data/users';
 import Avatar from 'material-ui/Avatar';
 import {
   greenA700,
 } from 'material-ui/styles/colors';
 import CircleProgress from '../components/CircleProgress';
-import {FlatButton} from 'material-ui';
-import muiTheme from '../styles/muiTheme';
 
 const buttonStyle = {
   margin: 15,
