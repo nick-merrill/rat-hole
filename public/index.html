@@ -30,5 +30,10 @@
     <link rel='stylesheet'
           type='text/css'
           href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' />
+    <!-- Fuse wouldn't work with ES6 imports, so we're including it here. -->
+    <script type='text/javascript' src='/js/fuse.min.js'></script>
+    <script type='text/javascript'>
+      window.Fuse = Fuse;
+    </script>
   </body>
 </html>
