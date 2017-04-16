@@ -1,0 +1,32 @@
+$font-styles: (
+                (normal normal "Regular"),
+                (bold normal "Semibold"),
+                (normal italic "RegularItalic"),
+                (bold italic "SemiboldItalic"),
+                (300 normal "Light"),
+                (300 italic "LightItalic"),
+                (100 normal "Ultralight"),
+                (100 italic "UltralightItalic"),
+);
+
+@each $full-style in $font-styles {
+  $weight: nth($full-style, 1);
+  $style: nth($full-style, 2);
+  $name: nth($full-style, 3);
+  // This font is for anything smaller than 20 points.
+  @include font-face(
+                  "San Francisco",
+                  "/fonts/SF/SF-UI-Text-#{$name}",
+                  $weight,
+                  $style,
+                  otf
+  );
+  // This font is for anything larger than or equal to 20 points.
+  @include font-face(
+                  "San Francisco Display",
+                  "/fonts/SF/SF-UI-Display-#{$name}",
+                  $weight,
+                  $style,
+                  otf
+  );
+}

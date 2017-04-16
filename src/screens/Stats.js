@@ -10,7 +10,6 @@ class Stats extends React.Component {
     };
     return (
       <div className='padding'>
-        <h2>My Ranking</h2>
         <div style={{textAlign: 'left'}}>
           <p>
             {`You're in the top ${100 * stats.globalRank}% of players.`}

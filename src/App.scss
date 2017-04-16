@@ -1,33 +1,19 @@
+@import "./sass/clearfix";
 @import "./vendors/progress/styles";
+@import "./sass/font_face_mixin";
+@import "./sass/fonts";
 
-.App {
-  text-align: center;
-  font-family: 'Roboto', sans-serif;
+
+body {
+  @include clearfix;
+  margin: 0;
+
+  font-family: 'San Francisco', sans-serif;
+  color: #222;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.huge-title {
-  font-size: 100px;
+h1, h2 {
+  font-family: "San Francisco Display", sans-serif;
 }
 
 .main-container {
@@ -40,4 +26,8 @@
 
 .padding {
   padding: 1em;
+}
+
+p {
+  line-height: 1.3em;
 }
