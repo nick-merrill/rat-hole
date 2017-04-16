@@ -31,10 +31,9 @@ import SideMenu from './components/SideMenu';
  * handleClick
  ****************************************************/
 let menuItems = [
-  // Any items defined here will go before the routes.
-];
-// These will go after all the routes.
-menuItems = menuItems.concat([
+  {
+    route: _.find(routes, {key: 'studentList'}),
+  },
   {
     key: 'logout',
     title: 'Sign Out',
@@ -44,7 +43,7 @@ menuItems = menuItems.concat([
       setCurrentUser(null);
     },
   },
-]);
+];
 
 class App extends Component {
   constructor(props, context) {
