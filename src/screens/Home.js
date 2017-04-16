@@ -29,7 +29,6 @@ class Home extends React.Component {
   render() {
     let currentUser = getCurrentUser();
     return (
-
       <div>
         <div>
 
@@ -65,23 +64,8 @@ class Home extends React.Component {
                         onClick={() => this.handleClick('/stats')}
 
           />
-          <div>
-            <FlatButton label='Sign Out'
-                        labelPosition='before'
-                        backgroundColor={muiTheme.palette.dangerColor}
-                        icon={<i className='fa fa-sign-out'/>}
-                        onClick={() => {
-                          setCurrentUser(null);
-                          Router.informOfChangeManually();
-                        }}
-            />
-          </div>
         </div>
-
       </div>
-
-
-
     );
   }
 }

@@ -21,6 +21,7 @@ import {getCurrentUser, setCurrentUser} from './data/users';
 import Router from './lib/Router';
 import routes from './lib/routes';
 import Login from './screens/Login';
+import SideMenu from './components/SideMenu';
 
 /***************************************************
  * Define *additional* links for the side menu here.
@@ -32,18 +33,13 @@ import Login from './screens/Login';
 let menuItems = [
   // Any items defined here will go before the routes.
 ];
-// Include all available routes in the menu automatically.
-routes.forEach((route) => {
-  menuItems.push({
-    // Routes are handled automatically by the menu in a special way.
-    route: route,
-  });
-});
 // These will go after all the routes.
 menuItems = menuItems.concat([
   {
     key: 'logout',
     title: 'Sign Out',
+    labelPosition: 'left',
+    icon: <i className='fa fa-sign-out' />,
     handleClick: () => {
       setCurrentUser(null);
     },
@@ -76,16 +72,29 @@ class App extends Component {
       `);
     }
 
-    // eslint-disable-next-line no-unused-vars
     const appBarStyle = {
       position: 'fixed',
       width: '100%',
       top: 0,
     };
     const HomeAppBar = () => (
-      <AppBar title="Know Your House"
-              iconElementLeft={<span/>} // empty left icon
-              style={appBarStyle}/>
+      <div>
+        <AppBar title="Know Your House"
+                onLeftIconButtonTouchTap={() => this.setState({isMenuOpen: true})}
+                style={appBarStyle}/>
+        <SideMenu open={this.state.isMenuOpen}
+                  items={menuItems}
+          // Allows the menu to style the current page for reference
+                  currentItemKey={currentPath}
+          // Allows the open state to be changed on touch outside of
+          // menu events.
+                  onRequestChange={(open) => this.setState({isMenuOpen: open})}
+                  handleClose={(itemProps) => {
+                    this.setState({
+                      isMenuOpen: false,
+                    });
+                  }}/>
+      </div>
     );
     const ScreenAppBar = () => (
       <AppBar title={currentRoute.title}

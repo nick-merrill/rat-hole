@@ -32,6 +32,7 @@ class SideMenu extends React.Component {
               itemProps = {
                 key: route.path,
                 title: route.title,
+                icon: route.icon,
                 handleClick: () => {
                   Router.goToPath(route.path);
                 },
@@ -40,6 +41,10 @@ class SideMenu extends React.Component {
             else {
               itemProps = item;
             }
+            // Default to label position on the right
+            itemProps = _.defaults(itemProps, {
+              labelPosition: 'right',
+            });
             return (
               <MenuItem
                 style={
@@ -50,7 +55,11 @@ class SideMenu extends React.Component {
                 key={itemProps.key}
                 onTouchTap={() => this.handleClick(itemProps)}
               >
-                {itemProps.title}
+                {itemProps.labelPosition === 'left' && itemProps.title}
+                <span style={{margin: '0 8px'}}>
+                  {itemProps.icon && itemProps.icon}
+                </span>
+                {itemProps.labelPosition === 'right' && itemProps.title}
               </MenuItem>
             );
           })}
