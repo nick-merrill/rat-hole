@@ -81,6 +81,11 @@ class App extends Component {
         <div>
           <AppBar title="Know Your House"
                   onLeftIconButtonTouchTap={() => this.setState({isMenuOpen: true})}
+                  style={{
+                    position: 'fixed',
+                    width: '100%',
+                    top: 0,
+                  }}
             // Uncomment the following to add a cog to the right
             // iconClassNameRight="fa fa-cog"
           />
@@ -126,7 +131,8 @@ class App extends Component {
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <div className="main-container" style={styles.container}>
+        <div className="main-container"
+             style={{...styles.container, paddingTop: 40}}>
           <Screen />
         </div>
       </MuiThemeProvider>

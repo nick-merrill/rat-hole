@@ -24,7 +24,7 @@ class Students extends React.Component {
         {/*<StudentProfile student={s} />*/}
         {
           students.map((s, index) => (
-            <Card className='container' style={{background: '#eee'}}
+            <Card className='padding' style={{background: '#eee'}}
                    key={index}>
               <StudentProfile student={s} />
             </Card>

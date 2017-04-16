@@ -1,31 +1,26 @@
 import React from 'react';
 
 class Stats extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
+    // let stats = this.props.stat;
     let stats = {
       globalRank: 0.4,
       percKnown: 0.48,
       numberIdentified: 1083,
-    }
-    // let stats = this.props.stat;
+    };
     return (
-      <div>
+      <div className='padding'>
         <h2>My Ranking</h2>
-        <br />
-        <div style={{textAlign:'left'}}>
-          {`You're in the top ${100*stats.globalRank}% of players.`}
-        </div>
-        <br /><br />
-        <div style={{textAlign:'left'}}>
-          {`You know ${100*stats.percKnown}% of the entire house.`}
-        </div>
-        <br /><br />
-        <div style={{textAlign:'left'}}>
-          {`You've identified ${stats.numberIdentified} students.`}
+        <div style={{textAlign: 'left'}}>
+          <p>
+            {`You're in the top ${100 * stats.globalRank}% of players.`}
+          </p>
+          <p>
+            {`You know ${100 * stats.percKnown}% of the entire house.`}
+          </p>
+          <p>
+            {`You've identified ${stats.numberIdentified} students.`}
+          </p>
         </div>
       </div>
     );

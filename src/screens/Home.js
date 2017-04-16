@@ -3,7 +3,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Router from '../lib/Router';
 import {getCurrentUser} from '../data/users';
 import Avatar from 'material-ui/Avatar';
-import Progress from '../vendors/progress/Progress';
+import {
+  greenA700,
+} from 'material-ui/styles/colors';
+import CircleProgress from '../components/CircleProgress';
 
 const buttonStyle = {
   margin: 15,
@@ -13,7 +16,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      completed: 75,
+      percentComplete: 75,
     };
   }
 
@@ -38,13 +41,15 @@ class Home extends React.Component {
             </div>
           </div>
 
-          <div style={{paddingBottom: 20}}>
-            <div style={{paddingBottom: 20}}>
+
+          <div className='padding'>
+            <div>
               Your Radar Percentage:
             </div>
-            <Progress percent={90} />
+            <CircleProgress percent={this.state.percentComplete}
+                            label={true}
+                            color={greenA700} />
           </div>
-
 
           <RaisedButton label="Test your knowledge"
                         primary={true}

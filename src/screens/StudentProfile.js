@@ -1,6 +1,5 @@
 import React from 'react';
 import {Paper} from 'material-ui';
-import students from '../data/students';
 import PropTypes from 'prop-types';
 
 class StudentProfile extends React.Component {
