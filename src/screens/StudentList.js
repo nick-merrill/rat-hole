@@ -1,5 +1,5 @@
 import React from 'react';
-// import Fuse from 'fuse';
+const Fuse = window.Fuse;
 
 import {getPermittedStudents} from '../data/students';
 import {Card, TextField} from 'material-ui';
@@ -13,23 +13,22 @@ class StudentList extends React.Component {
     };
     this.permittedStudents = getPermittedStudents();
     // See http://fusejs.io/ to understand these options.
-    // console.log(Fuse);
-    // this.studentFuse = new Fuse(this.permittedStudents, {
-    //   shouldSort: true,
-    //   threshold: 0.6,
-    //   location: 0,
-    //   distance: 60,
-    //   maxPatternLength: 32,
-    //   minMatchCharLength: 1,
-    //   keys: [
-    //     'firstName',
-    //     'lastName',
-    //     'year',
-    //     'concentration',
-    //     'sex',
-    //     'bio',
-    //   ]
-    // });
+    this.studentFuse = new Fuse(this.permittedStudents, {
+      shouldSort: true,
+      threshold: 0.6,
+      location: 0,
+      distance: 60,
+      maxPatternLength: 32,
+      minMatchCharLength: 1,
+      keys: [
+        'firstName',
+        'lastName',
+        'year',
+        'concentration',
+        'sex',
+        'bio',
+      ]
+    });
   }
 
   handleSearchChange(event) {
@@ -41,9 +40,9 @@ class StudentList extends React.Component {
   // TODO: debounce this bad boy!
   filterStudents(search) {
     let ret = getPermittedStudents();
-    // if (search) {
-    //   ret = this.studentFuse.search(search);
-    // }
+    if (search) {
+      ret = this.studentFuse.search(search);
+    }
     return ret;
   }
 
