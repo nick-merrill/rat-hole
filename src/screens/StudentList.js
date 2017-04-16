@@ -1,9 +1,9 @@
 import React from 'react';
 import students from '../data/students';
 import {Card, TextField} from 'material-ui';
-import StudentProfile from './StudentProfile';
+import StudentProfile from '../components/StudentProfile';
 
-class Students extends React.Component {
+class StudentList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,4 +35,4 @@ class Students extends React.Component {
   }
 }
 
-export default Students;
+export default StudentList;

@@ -1,9 +1,13 @@
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import {deepOrange500} from 'material-ui/styles/colors';
+import {
+  blue500, blueGrey500, deepOrange500,
+  green500
+} from 'material-ui/styles/colors';
 
 const muiTheme = getMuiTheme({
   palette: {
-    accent1Color: deepOrange500,
+    primary1Color: blue500,
+    accent1Color: blueGrey500,
   },
 });
 

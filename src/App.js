@@ -22,6 +22,7 @@ import Router from './lib/Router';
 import routes from './lib/routes';
 import Login from './screens/Login';
 import SideMenu from './components/SideMenu';
+import {FontIcon, IconButton} from 'material-ui';
 
 /***************************************************
  * Define *additional* links for the side menu here.
@@ -75,35 +76,30 @@ class App extends Component {
     }
 
     // eslint-disable-next-line no-unused-vars
-    const HeaderWithSideBar = () => {
-      return (
-        <div>
-          <AppBar title="Know Your House"
-                  onLeftIconButtonTouchTap={() => this.setState({isMenuOpen: true})}
-                  style={{
-                    position: 'fixed',
-                    width: '100%',
-                    top: 0,
-                  }}
-            // Uncomment the following to add a cog to the right
-            // iconClassNameRight="fa fa-cog"
-          />
-          <SideMenu open={this.state.isMenuOpen}
-                    items={menuItems}
-            // Allows the menu to style the current page for reference
-                    currentItemKey={currentPath}
-            // Allows the open state to be changed on touch outside of
-            // menu events.
-                    onRequestChange={(open) => this.setState({isMenuOpen: open})}
-                    handleClose={(itemProps) => {
-                      this.setState({
-                        isMenuOpen: false,
-                      });
-                    }}/>
-        </div>
-      );
+    const appBarStyle = {
+      position: 'fixed',
+      width: '100%',
+      top: 0,
     };
-
+    const HomeAppBar = () => (
+      <AppBar title="Know Your House"
+              iconElementLeft={<span/>} // empty left icon
+              style={appBarStyle}/>
+    );
+    const ScreenAppBar = () => (
+      <AppBar title={currentRoute.title}
+              onLeftIconButtonTouchTap={() => Router.goToPath('/')}
+              iconClassNameLeft='fa fa-chevron-left'
+              style={appBarStyle}/>
+    );
+    // Returns the appropriate App Bar
+    const MainAppBar = () => {
+      if (currentRoute.key === 'home') {
+        return <HomeAppBar/>;
+      } else {
+        return <ScreenAppBar/>;
+      }
+    };
 
     /**
      * Shows the login page if the user is not signed in.
@@ -122,7 +118,7 @@ class App extends Component {
     } else {
       Screen = () => (
         <div>
-          <HeaderWithSideBar />
+          <MainAppBar />
           <currentRoute.component />
         </div>
       );
