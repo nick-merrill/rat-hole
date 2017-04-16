@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 window.Router = window.Router ||
   {
     goToPath: (path) => {
@@ -7,10 +9,10 @@ window.Router = window.Router ||
       return window.location.hash.slice(1);
     },
     subscribeToChange: (callback) => {
-      window.addEventListener('hashchange', callback);
+      $(window).on('hashchange', callback);
     },
     informOfChangeManually: () => {
-      window.fireEvent('hashchange');
+      $(window).trigger('hashchange');
     },
   };
 
