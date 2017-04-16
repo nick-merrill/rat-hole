@@ -1,15 +1,21 @@
 import React from 'react';
 import {Paper} from 'material-ui';
 import PropTypes from 'prop-types';
+import muiTheme from '../styles/muiTheme';
+import {getFlag, setFlag} from '../data/students';
 
 class StudentProfile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {isFlagged: false};
+    this.state = {isFlagged: getFlag(props.student)};
   }
 
   flag() {
-    this.setState({isFlagged: !this.state.isFlagged});
+    let student = this.props.student;
+    setFlag(student, !this.state.isFlagged);
+    this.setState({
+      isFlagged: getFlag(student),
+    });
   }
 
   render() {
@@ -31,8 +37,8 @@ class StudentProfile extends React.Component {
         <h2 style={{textAlign: 'left'}}>
           {student.firstName} {student.lastName} &nbsp;
           <i className={this.state.isFlagged ? 'fa fa-star' : 'fa fa-star-o' }
-             onClick={() => this.flag()}>
-          </i>
+             style={{color: muiTheme.palette.flagColor}}
+             onClick={() => this.flag()} />
         </h2>
         <div style={{textAlign: 'left'}}>
           {
