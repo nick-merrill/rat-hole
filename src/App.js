@@ -62,7 +62,6 @@ class App extends Component {
 
   componentDidMount() {
     Router.subscribeToChange(() => {
-      console.log('update!!!');
       this.forceUpdate();
     });
   }
