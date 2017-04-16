@@ -1,5 +1,7 @@
 import React from 'react';
-import students from '../data/students';
+// import Fuse from 'fuse';
+
+import {getPermittedStudents} from '../data/students';
 import {Card, TextField} from 'material-ui';
 import StudentProfile from '../components/StudentProfile';
 
@@ -9,6 +11,25 @@ class StudentList extends React.Component {
     this.state = {
       search: '',
     };
+    this.permittedStudents = getPermittedStudents();
+    // See http://fusejs.io/ to understand these options.
+    // console.log(Fuse);
+    // this.studentFuse = new Fuse(this.permittedStudents, {
+    //   shouldSort: true,
+    //   threshold: 0.6,
+    //   location: 0,
+    //   distance: 60,
+    //   maxPatternLength: 32,
+    //   minMatchCharLength: 1,
+    //   keys: [
+    //     'firstName',
+    //     'lastName',
+    //     'year',
+    //     'concentration',
+    //     'sex',
+    //     'bio',
+    //   ]
+    // });
   }
 
   handleSearchChange(event) {
@@ -17,16 +38,28 @@ class StudentList extends React.Component {
     });
   }
 
+  // TODO: debounce this bad boy!
+  filterStudents(search) {
+    let ret = getPermittedStudents();
+    // if (search) {
+    //   ret = this.studentFuse.search(search);
+    // }
+    return ret;
+  }
+
   render() {
+    let filteredStudents = this.filterStudents(this.state.search);
     return (
       <div>
-        <TextField value={this.state.search} onChange={this.handleSearchChange} />
-        {/*<StudentProfile student={s} />*/}
+        <TextField value={this.state.search}
+                   name='student-search'
+                   floatingLabelText="Search"
+                   onChange={this.handleSearchChange.bind(this)}/>
         {
-          students.map((s, index) => (
-            <Card className='padding' style={{background: '#eee'}}
-                   key={index}>
-              <StudentProfile student={s} />
+          filteredStudents.map((s, index) => (
+            <Card className='margin padding' style={{background: '#f4f4f4'}}
+                  key={index}>
+              <StudentProfile student={s}/>
             </Card>
           ))
         }

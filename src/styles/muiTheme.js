@@ -1,5 +1,6 @@
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {
+  amber500,
   blue500, blueGrey500, red500
 } from 'material-ui/styles/colors';
 
@@ -15,6 +16,7 @@ const muiTheme = getMuiTheme({
     primary1Color: blue500,
     accent1Color: blueGrey500,
     dangerColor: red500,
+    flagColor: amber500,
   },
 });
 

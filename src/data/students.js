@@ -1,11 +1,19 @@
+import _ from 'lodash';
+
 import {roles} from './constants';
 // eslint-disable-next-line no-unused-vars
 import {pfoho, quincy, leverett} from './houses';
+import {getCurrentUser} from './users';
+import StorageEngine from '../lib/StorageEngine';
+
+let storage = new StorageEngine('students');
 
 let students = [];
+let idCount = 1;  // to mark each student with a unique ID
 
 const add = (firstName, lastName, house, year, concentration, sex, imageURL, bio) => {
   students.push({
+    id: idCount++,
     role: roles.student,
     firstName,
     lastName,
@@ -310,5 +318,70 @@ add(
 );
 
 
-
+// TODO: Don't even export these. Force access through a function that checks
+//   user permissions.
 export default students;
+
+
+/*
+ Gets an array of students that the user has permission to see.
+ For now this simply filters by house.
+ */
+export const getPermittedStudents = () => {
+  const user = getCurrentUser();
+  if (!user) {
+    // User not logged in should not see any students.
+    return [];
+  }
+  return _.filter(students, {
+    house: user.house,
+  });
+};
+
+const STUDENT_DATA = 'student_data';
+
+/**
+ * Uses the student ID as a lookup for an object of students.
+ * {
+ *   42: {
+ *     is_flagged: true,
+ *     check_ins: [{text: 'She is changing concentration to CS'}],
+ *   }
+ * }
+ */
+// Private method.
+const _getData = () => {
+  return storage.get(STUDENT_DATA) || {};
+};
+
+export const getStudentData = (student) => {
+  let data = _getData();
+  return data[student.id] || {};
+};
+
+// Private method. Use `patchStudentData` for updates instead.
+const _setStudentData = (student, newData) => {
+  let data = _getData();
+  data[student.id] = newData;
+  storage.set(STUDENT_DATA, data);
+};
+
+export const patchStudentData = (student, patchObject) => {
+  let studentData = getStudentData(student);
+  studentData = Object.assign({}, studentData, patchObject);
+  _setStudentData(student, studentData);
+};
+
+const IS_FLAGGED_KEY = 'is_flagged';
+
+export const setFlag = (student, isFlagged) => {
+  let patch = {};
+  patch[IS_FLAGGED_KEY] = isFlagged;
+  return patchStudentData(student, patch);
+};
+
+// Returns true if student is flagged, false otherwise.
+// Defaults to false.
+export const getFlag = (student) => {
+  return !!getStudentData(student)[IS_FLAGGED_KEY];
+};
