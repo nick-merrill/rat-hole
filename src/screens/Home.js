@@ -31,7 +31,7 @@ class Home extends React.Component {
         <div>
 
           <div style={{paddingTop: 30, paddingBottom: 20}}>
-            Welcome, {currentUser.firstName}
+            Welcome, {currentUser.firstName}!
             <div>
               <Avatar src={currentUser.imageURL}
                       size={70}
