@@ -38,7 +38,7 @@ let menuItems = [
     key: 'logout',
     title: 'Sign Out',
     labelPosition: 'left',
-    icon: <i className='fa fa-sign-out' />,
+    icon: <i className='fa fa-sign-out'/>,
     handleClick: () => {
       setCurrentUser(null);
     },
@@ -71,16 +71,32 @@ class App extends Component {
       `);
     }
 
+    const appBarHeight = 64;
     const appBarStyle = {
       position: 'fixed',
       width: '100%',
+      left: 0,
+      right: 0,
+      top: 0,
+      margin: 0,
+      height: appBarHeight,
+    };
+    const appBarTitleStyle = {
+      fontWeight: 300,
+      position: 'absolute',
+      textAlign: 'center',
+      margin: 0,
+      left: 0,
+      right: 0,
       top: 0,
     };
     const HomeAppBar = () => (
       <div>
-        <AppBar title="Know Your House"
+        <AppBar title=""
+                iconClassNameLeft='fa fa-bars'
                 onLeftIconButtonTouchTap={() => this.setState({isMenuOpen: true})}
-                style={appBarStyle}/>
+                style={appBarStyle}
+                titleStyle={appBarTitleStyle}/>
         <SideMenu open={this.state.isMenuOpen}
                   items={menuItems}
           // Allows the menu to style the current page for reference
@@ -97,9 +113,10 @@ class App extends Component {
     );
     const ScreenAppBar = () => (
       <AppBar title={currentRoute.title}
-              onLeftIconButtonTouchTap={() => Router.goToPath('/')}
               iconClassNameLeft='fa fa-chevron-left'
-              style={appBarStyle}/>
+              onLeftIconButtonTouchTap={() => Router.goToPath('/')}
+              style={appBarStyle}
+              titleStyle={appBarTitleStyle}/>
     );
     // Returns the appropriate App Bar
     const MainAppBar = () => {
@@ -128,7 +145,7 @@ class App extends Component {
       Screen = () => (
         <div>
           <MainAppBar />
-          <div style={{...styles.container, paddingTop: 60}}>
+          <div style={{...styles.container, paddingTop: appBarHeight}}>
             <currentRoute.component />
           </div>
         </div>
