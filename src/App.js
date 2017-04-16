@@ -75,7 +75,7 @@ class App extends Component {
       `);
     }
 
-    const appBarHeight = 64;
+    const appBarHeight = muiTheme.appBar.height;
     const appBarStyle = {
       position: 'fixed',
       width: '100%',
@@ -86,7 +86,6 @@ class App extends Component {
       height: appBarHeight,
     };
     const appBarTitleStyle = {
-      fontWeight: 300,
       position: 'absolute',
       textAlign: 'center',
       margin: 0,
@@ -101,18 +100,19 @@ class App extends Component {
                 onLeftIconButtonTouchTap={() => this.setState({isMenuOpen: true})}
                 style={appBarStyle}
                 titleStyle={appBarTitleStyle}/>
-        <SideMenu open={this.state.isMenuOpen}
-                  items={menuItems}
+        <SideMenu
+          open={this.state.isMenuOpen}
+          items={menuItems}
           // Allows the menu to style the current page for reference
-                  currentItemKey={currentPath}
+          currentItemKey={currentPath}
           // Allows the open state to be changed on touch outside of
           // menu events.
-                  onRequestChange={(open) => this.setState({isMenuOpen: open})}
-                  handleClose={(itemProps) => {
-                    this.setState({
-                      isMenuOpen: false,
-                    });
-                  }}/>
+          onRequestChange={(open) => this.setState({isMenuOpen: open})}
+          handleClose={(itemProps) => {
+            this.setState({
+              isMenuOpen: false,
+            });
+          }}/>
       </div>
     );
     const ScreenAppBar = () => (
@@ -158,7 +158,8 @@ class App extends Component {
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <div className="main-container">
+        <div className="main-container"
+             style={{color: muiTheme.palette.textColor}}>
           <Screen />
         </div>
       </MuiThemeProvider>

@@ -2,6 +2,7 @@
 @import "./vendors/progress/styles";
 @import "./sass/font_face_mixin";
 @import "./sass/fonts";
+@import "./sass/colors";
 
 
 body {
@@ -9,7 +10,6 @@ body {
   margin: 0;
 
   font-family: 'San Francisco', sans-serif;
-  color: #222;
 }
 
 h1, h2 {
