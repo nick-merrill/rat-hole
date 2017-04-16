@@ -1,7 +1,7 @@
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {
   amber500,
-  blue500, blueGrey500, red500
+  blue500, blueGrey500, grey700, grey800, grey900, red500
 } from 'material-ui/styles/colors';
 
 // I don't think we want to go with Harvard branding because it makes an app
@@ -13,11 +13,26 @@ import {
 // environment.
 const muiTheme = getMuiTheme({
   palette: {
+    textColor: grey900,
+    /*
+     DESIGN: Use this color for text that is less important. This is perfect
+       for helping the user's eyes be drawn towards what is more important.
+     */
+    softTextColor: grey800,
+    /*
+     DESIGN: Only use pure black for things we want to draw the user's
+       eye towards.
+     */
+    focusTextColor: '#000',
     primary1Color: blue500,
     accent1Color: blueGrey500,
     dangerColor: red500,
     flagColor: amber500,
   },
+  appBar: {
+    color: grey700,
+    titleFontWeight: 300,
+  }
 });
 
 export default muiTheme;
