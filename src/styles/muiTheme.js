@@ -1,7 +1,6 @@
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {
-  blue500, blueGrey500, deepOrange500,
-  green500
+  blue500, blueGrey500
 } from 'material-ui/styles/colors';
 
 const muiTheme = getMuiTheme({

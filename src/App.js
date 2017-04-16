@@ -21,8 +21,6 @@ import {getCurrentUser, setCurrentUser} from './data/users';
 import Router from './lib/Router';
 import routes from './lib/routes';
 import Login from './screens/Login';
-import SideMenu from './components/SideMenu';
-import {FontIcon, IconButton} from 'material-ui';
 
 /***************************************************
  * Define *additional* links for the side menu here.
