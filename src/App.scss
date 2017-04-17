@@ -4,6 +4,9 @@
 @import "./sass/fonts";
 @import "./sass/colors";
 
+html {
+  height: 100%;
+}
 
 body {
   @include clearfix;
@@ -14,10 +17,6 @@ body {
 
 h1, h2 {
   font-family: "San Francisco Display", sans-serif;
-}
-
-.main-container {
-
 }
 
 .margin {
