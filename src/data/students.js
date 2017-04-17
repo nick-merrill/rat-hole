@@ -223,7 +223,7 @@ add(
   '2018',
   'Computer Science',
   'F',
-  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'https://scontent-iad3-1.xx.fbcdn.net/v/t31.0-8/14525085_1216566931742134_7204994523829239446_o.jpg?oh=ae0e72e9b48b0581f1b42ec8ea376138&oe=59531292',
   'Annie is from Kansas. \n\n she/her/hers'
 );
 
@@ -233,7 +233,7 @@ add(
   '2018',
   'Linguistics, Neurobiology',
   'M',
-  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'https://scontent-iad3-1.xx.fbcdn.net/v/t1.0-9/12243457_10153830647078619_8206633542063117536_n.jpg?oh=52395f3a12f08c9a31f031f8e3681610&oe=598D75AE',
   'Jerry enjoys creating PowerPoint presentations. \n\n he/him/his'
 );
 
@@ -243,7 +243,7 @@ add(
   '2017',
   'Human Developmental and Regenerative Biology',
   'F',
-  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'http://facebook.college.harvard.edu//photos/75fd665b944f855a2f3fc51bbae5ba54-559762-250.jpg',
   'Brittany is obsessed with Quincy. \n\n she/her/hers'
 );
 
@@ -253,7 +253,7 @@ add(
   '2018',
   'Government',
   'M',
-  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'https://scontent-iad3-1.xx.fbcdn.net/v/t31.0-8/12052650_1101728653178237_8720421064758456128_o.jpg?oh=d4763b97f0e8302867c808226247b180&oe=5993B131',
   'Tayjus loves spending time with friends in Quincy Courtyard. \n\n he/him/his'
 );
 
@@ -263,7 +263,7 @@ add(
   '2017',
   'Government',
   'F',
-  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'https://scontent-iad3-1.xx.fbcdn.net/v/t1.0-9/11700854_10205829043539832_3032028927572804033_n.jpg?oh=c77e8509fa88c856f09af18966aaa0f1&oe=599AA113',
   'Olivia enjoys studying political philosophy. \n\n she/her/hers'
 );
 
@@ -273,7 +273,7 @@ add(
   '2019',
   'Applied Mathematics',
   'M',
-  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'https://scontent-iad3-1.xx.fbcdn.net/v/t1.0-9/12400429_768379683294648_5930768022171584899_n.jpg?oh=626a2b09a97cc412cda8c4fdfad59ba2&oe=59930745',
   'Ibby enjoys working out in his free time. \n\n he/him/his'
 );
 
@@ -283,7 +283,7 @@ add(
   '2018',
   'Human Developmental and Regenerative Biology',
   'F',
-  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'http://facebook.college.harvard.edu//photos/5d45e356ab9ae2d3d08410389c978b46-657759-250.jpg',
   'PJ works in the Quincy Building Manager office. \n\n she/her/hers'
 );
 
@@ -293,7 +293,7 @@ add(
   '2019',
   'Computer Science',
   'M',
-  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'https://scontent-iad3-1.xx.fbcdn.net/v/t1.0-9/14725482_1339369299420071_572206681919424743_n.jpg?oh=0fb2337328e4310f41b0742f46d8bff0&oe=5950AE30',
   'Simon is interested in videomaking and hopes to pursue a secondary in VES. \n\n he/him/his'
 );
 
@@ -303,7 +303,7 @@ add(
   '2018',
   'Sociology',
   'F',
-  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'https://scontent-iad3-1.xx.fbcdn.net/v/t31.0-8/14481740_1208143652591024_8405930919252554472_o.jpg?oh=f6b210424a609be8e9168f5ebdbc28e0&oe=59538938',
   'Karen loves to travel. \n\n she/her/hers'
 );
 
@@ -313,7 +313,7 @@ add(
   '2017',
   'Economics',
   'F',
-  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15672742_1167518409964319_3566380102929572702_n.jpg?oh=a414296dfcdaf8ceae7bf1f1a29a6a6b&oe=5989EA49',
+  'http://facebook.college.harvard.edu//photos/fed02216ef17d8cd33a38e39bc5f9a30-561412-250.jpg',
   'Curtis loves theater, improv, and playwriting. \n\n he/him/his'
 );
 
