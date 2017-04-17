@@ -12,6 +12,10 @@ class Settings extends React.Component {
                     labelStyle={{color: muiTheme.palette.dangerColor}}
                     onClick={() => {
                       localStorage.clear();
+                      // When we log back in, will be nicer not to come to the
+                      // settings page.
+                      Router.goToPath('/');
+                      // Just in case the path change doesn't inform the view.
                       Router.informOfChangeManually();
                     }}/>
       </div>

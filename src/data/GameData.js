@@ -1,7 +1,10 @@
+import _ from 'lodash';
+
 import StorageEngine from '../lib/StorageEngine';
 
 // Keys
 const STUDENTS = 'students';
+const RECENT_GUESS_IDS = 'recent_guess_ids';
 
 /**
  * Handles all the data storage we want for the user's game play.
@@ -25,6 +28,10 @@ class GameData {
     this._patchStudentData(student, {
       goodGuessCount: this._getStudentData(student).goodGuessCount + 1,
     });
+    this.storage.set(
+      RECENT_GUESS_IDS,
+      (this.storage.get(RECENT_GUESS_IDS) || []).concat(student.id)
+    );
   }
 
   /**
@@ -44,16 +51,30 @@ class GameData {
     }
   }
 
+  /**
+   * Returns an array of students that were recently guessed.
+   * The first element is the most recent student guessed.
+   */
+  getRecentlyGuessedStudentIDs() {
+    let ret = this.storage.get(RECENT_GUESS_IDS) || [];
+    // OPTIMIZE: Store elements in reverse to avoid this dumb operation.
+    return _.reverse(ret);
+  }
+
   /*
    PRIVATE methods from here on. Don't call them without good reason.
    */
 
+  _getStudents() {
+    return this.storage.get(STUDENTS) || {};
+  }
+
   _getStudentData(student) {
-    return this.storage.get(STUDENTS)[student.id] || {};
+    return this._getStudents()[student.id] || {};
   }
 
   _setStudentData(student, newData) {
-    let data = this.storage.get(STUDENTS);
+    let data = this._getStudents();
     data[student.id] = newData;
     return this.storage.set(STUDENTS, data);
   }

@@ -1,66 +1,106 @@
 import React from 'react';
+import {Motion, spring} from 'react-motion';
 import _ from 'lodash';
 
 import Question from './Question';
 import muiTheme from '../../../styles/muiTheme';
 import {GridList, GridTile} from 'material-ui';
+import {getGreatWordShort} from '../generators';
 
 class TextToPhotoQuestion extends Question {
   constructor(props) {
     super(props);
-    this.state = {};
-  }
-
-  componentWillMount() {
-    this.setState({
-      // We only need 3 other students for this Question type
-      badStudentsToGuess: _.sampleSize(this.props.guessPool, 3),
+    Object.assign(this.state, {
+      studentToGuess: props.studentToGuess,
+      guessPool: this.getFreshGuessPool(props),
     });
   }
 
-  render() {
-    const good = this.props.studentToGuess;
-    // TODO: Randomize this ordering.
-    const allStudentOptions = [
-      ...this.state.badStudentsToGuess,
-      this.props.studentToGuess
+  componentWillReceiveProps(nextProps) {
+    super.componentWillReceiveProps(nextProps);
+    // If student to guess has changed, update the guess pool.
+    if (this.props.studentToGuess.id !== nextProps.studentToGuess.id) {
+      this.setState({
+        studentToGuess: nextProps.studentToGuess,
+        guessPool: this.getFreshGuessPool(nextProps),
+      });
+    }
+  }
+
+  getFreshGuessPool(props) {
+    // 3 other students, plus the correct one
+    let allStudentOptions = [
+      ...props.guessPool.slice(0, 3),
+      props.studentToGuess
     ];
+    // Otherwise, student would always be on the bottom left
+    allStudentOptions = _.shuffle(allStudentOptions);
+    return allStudentOptions;
+  }
+
+  render() {
+    const studentToGuess = this.state.studentToGuess;
     // Results in square photos if in portrait and reasonably sized photos if
     // in landscape.
     const cellHeight = _.min([
       window.innerWidth / 2,
       window.innerHeight / 2
     ]);
+
     return (
-      <div>
-        <h2 style={{fontWeight: 300}}>
+      <div style={{
+        ...this.props.style,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+      }}>
+        <h3 style={{fontWeight: 300}}>
           Can you guess
           <div style={{fontWeight: 'bold'}}>
             <span style={{color: muiTheme.palette.focusTextColor}}>
-              {good.firstName}
+              {studentToGuess.firstName}
             </span>
             &nbsp;
             <span style={{color: muiTheme.palette.softTextColor}}>
-              {good.lastName}
+              {studentToGuess.lastName}
             </span>
           </div>
           from these photos?
-        </h2>
+        </h3>
         {/* 2-by-2 table of photos */}
         <GridList cols={2} cellHeight={cellHeight}>
           {
-            allStudentOptions.map((s, index) => (
-              <GridTile key={s.id}>
-                <img
-                  src={s.imageURL}
-                  // TODO: Figure out a way blind users can play this game
-                  //   (e.g. by sound or by matching students to their
-                  //   interests).
-                  alt={`student guess option ${index}`}
-                />
-              </GridTile>
+            this.state.guessPool.map((s, index) => (
+              <Motion
+                key={s.id}
+                defaultStyle={{x: 0.01}}
+                style={{x: spring(1, {stiffness: 120, damping: 30})}}
+              >
+                {
+                  ({x}) => (
+                    <GridTile
+                      key={s.id}
+                      onTouchTap={() => this.handleGuess(s)}
+                      style={{opacity: x}}
+                      title={
+                        this.state.wasJustSuccessful && s.id === studentToGuess.id
+                          ? this.state.greatWordShort
+                          : ''
+                      }
+                    >
+                      <img
+                        src={s.imageURL}
+                        // TODO: Figure out a way blind users can play this game
+                        //   (e.g. by sound or by matching students to their
+                        //   interests).
+                        alt={`student guess option ${index}`}
+                      />
+                    </GridTile>
+                  )
+                }
+              </Motion>
             ))
-            }
+          }
         </GridList>
       </div>
     );
