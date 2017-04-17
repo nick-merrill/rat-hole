@@ -5,7 +5,6 @@ import _ from 'lodash';
 import Question from './Question';
 import muiTheme from '../../../styles/muiTheme';
 import {GridList, GridTile} from 'material-ui';
-import {getGreatWordShort} from '../generators';
 
 class TextToPhotoQuestion extends Question {
   constructor(props) {

@@ -34,6 +34,7 @@ class GameTutorial extends React.Component {
         </div>
 
         <RaisedButton label='Continue' primary={true}
+                      buttonStyle={{height: 50, minWidth: window.innerWidth / 2}}
                       onClick={() => this.handleContinue()}
                       icon={<i className='color-white fa fa-chevron-right'/>}
                       labelPosition='before'/>
