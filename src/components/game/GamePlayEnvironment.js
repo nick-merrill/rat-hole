@@ -1,6 +1,6 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import {FlatButton, RaisedButton} from 'material-ui';
+import {FlatButton, LinearProgress, RaisedButton} from 'material-ui';
 import _ from 'lodash';
 
 import StorageEngine from '../../lib/StorageEngine';
@@ -53,7 +53,11 @@ class GamePlayEnvironment extends React.Component {
     this.state = {
       students: permittedStudents,
       studentToGuess: initialStudentToGuess,
+      // This number will count down to 0.
       remainingQuestionsCount,
+      // This number will stay constant so we know how far the user has come,
+      // for the purpose of measuring progress.
+      questionsInRound: remainingQuestionsCount,
     };
   }
 
@@ -63,8 +67,10 @@ class GamePlayEnvironment extends React.Component {
   }
 
   handleContinue() {
+    const remainingQuestionsCount = this.getNewRemainingQuestionsCount();
     this.setState({
-      remainingQuestionsCount: this.getNewRemainingQuestionsCount(),
+      remainingQuestionsCount,
+      questionsInRound: remainingQuestionsCount,
     });
     this.loadNextStudentToGuess();
   }
@@ -74,6 +80,14 @@ class GamePlayEnvironment extends React.Component {
     // loaded. This prevents a user from cheating by refreshing the app
     // manually.
     this.loadNextStudentToGuess(this.state.studentToGuess);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // If the state has just reached 0 questions remaining, the user
+    // is considered to have played the game once.
+    if (this.state.remainingQuestionsCount === 0 && prevState.remainingQuestionsCount > 0) {
+      storage.set(HAS_PLAYED_ALREADY, true);
+    }
   }
 
   handleGoodGuess() {
@@ -113,11 +127,12 @@ class GamePlayEnvironment extends React.Component {
   }
 
   render() {
+    const isSuccessPage = this.state.remainingQuestionsCount > 0;
+
     // Note that although this is called a Question, it is a specific subclass
     // of the Question class. It's called Question so that it's easier for an
     // IDE to map the required props onto it.
     const Question = _.sample(AVAILABLE_QUESTION_COMPONENTS);
-
     const question = () => (
       <Question
         studentToGuess={this.state.studentToGuess}
@@ -146,7 +161,7 @@ class GamePlayEnvironment extends React.Component {
     );
 
     let primaryComponent;
-    if (this.state.remainingQuestionsCount > 0) {
+    if (isSuccessPage) {
       primaryComponent = question();
     } else {
       primaryComponent = success();
@@ -160,6 +175,12 @@ class GamePlayEnvironment extends React.Component {
         alignItems: 'center',
         minHeight: window.innerHeight - 64,
       }}>
+        <LinearProgress
+          mode='determinate'
+          value={this.state.questionsInRound - this.state.remainingQuestionsCount}
+          max={this.state.questionsInRound}
+        />
+
         {primaryComponent}
 
         {/* DESIGN: Escape hatch + Redundancy (to back button in menu bar) */}

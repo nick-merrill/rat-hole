@@ -6,6 +6,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import GameData from '../../../data/GameData';
+import {getGreatWordShort} from '../generators';
 
 const GOOD_GUESS_DELAY = 400;
 
@@ -35,6 +36,7 @@ class Question extends React.Component {
     GameData.registerGoodGuess(this.props.studentToGuess);
     this.setState({
       wasJustSuccessful: true,
+      greatWordShort: getGreatWordShort(),
     });
     setTimeout(() => {
       // Callback for parent

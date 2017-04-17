@@ -1,4 +1,5 @@
 import React from 'react';
+import {Motion, spring} from 'react-motion';
 import _ from 'lodash';
 
 import Question from './Question';
@@ -47,7 +48,8 @@ class TextToPhotoQuestion extends Question {
     ]);
 
     return (
-      <div style={{...this.props.style,
+      <div style={{
+        ...this.props.style,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
@@ -69,25 +71,36 @@ class TextToPhotoQuestion extends Question {
         <GridList cols={2} cellHeight={cellHeight}>
           {
             this.state.guessPool.map((s, index) => (
-              <GridTile
+              <Motion
                 key={s.id}
-                onTouchTap={() => this.handleGuess(s)}
-                title={
-                  this.state.wasJustSuccessful && s.id === studentToGuess.id
-                    ? getGreatWordShort()
-                    : ''
-                }
+                defaultStyle={{x: 0.01}}
+                style={{x: spring(1, {stiffness: 120, damping: 30})}}
               >
-                <img
-                  src={s.imageURL}
-                  // TODO: Figure out a way blind users can play this game
-                  //   (e.g. by sound or by matching students to their
-                  //   interests).
-                  alt={`student guess option ${index}`}
-                />
-              </GridTile>
+                {
+                  ({x}) => (
+                    <GridTile
+                      key={s.id}
+                      onTouchTap={() => this.handleGuess(s)}
+                      style={{opacity: x}}
+                      title={
+                        this.state.wasJustSuccessful && s.id === studentToGuess.id
+                          ? this.state.greatWordShort
+                          : ''
+                      }
+                    >
+                      <img
+                        src={s.imageURL}
+                        // TODO: Figure out a way blind users can play this game
+                        //   (e.g. by sound or by matching students to their
+                        //   interests).
+                        alt={`student guess option ${index}`}
+                      />
+                    </GridTile>
+                  )
+                }
+              </Motion>
             ))
-            }
+          }
         </GridList>
       </div>
     );
