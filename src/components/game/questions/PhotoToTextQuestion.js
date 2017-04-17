@@ -5,8 +5,9 @@ import Question from './Question';
 import {RaisedButton} from 'material-ui';
 import {
   cyanA100,
-  lightBlueA200, lightGreenA200, lightGreenA400, pinkA200,
-  pinkA400, purpleA200
+  lightGreenA200,
+  pinkA200,
+  purpleA200
 } from 'material-ui/styles/colors';
 
 class PhotoToTextQuestion extends Question {
