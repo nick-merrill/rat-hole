@@ -17,6 +17,7 @@ class Login extends React.Component {
       // All we care about is the email because it tells us which user to
       // set as the current user.
       email: '',
+      password: '',
       errorDialog: null,
     };
   }
@@ -27,10 +28,16 @@ class Login extends React.Component {
     });
   }
 
+  handlePasswordUpdate(event) {
+    this.setState({
+      password: event.target.value,
+    });
+  }
+
   handleLogin(event) {
     event.preventDefault(); // don't submit form the old HTML way
 
-    let user = getUserFromEmail(this.state.email);
+    let user = getUserFromEmail(this.state.email.toLowerCase());
     if (_.isNil(user)) {
       // Login failed
       this.setState({
@@ -39,10 +46,23 @@ class Login extends React.Component {
           message: 'Sorry, a user with that email does not exist.',
         }
       });
-    } else {
+      return;
+    }
+    // DESIGN: We do password validation because it makes the user feel that
+    //   this information is secure.
+    if (this.state.password === user.password) {
       // Login succeeded
       setCurrentUser(user);
       this.props.successCallback();
+    } else {
+      this.setState({
+        // TODO: Don't tell the hacker that this user even exists.
+        //   This is for testing purposes currently.
+        errorDialog: {
+          title: 'Incorrect password',
+          message: 'Sorry, that seems to be the wrong password for that user.',
+        }
+      });
     }
   }
 
@@ -55,6 +75,7 @@ class Login extends React.Component {
 
         <form onSubmit={this.handleLogin.bind(this)}>
           <TextField
+            type='email'  // allows for no auto-correct and lower casing
             hintText='Email'
             floatingLabelText='Email'
             floatingLabelFixed={true}
@@ -65,10 +86,12 @@ class Login extends React.Component {
             type='password'
             hintText='Password'
             floatingLabelText='Password'
+            onChange={this.handlePasswordUpdate.bind(this)}
             floatingLabelFixed={true}
           />
           <div>
-            <RaisedButton type='submit' label='Log In' primary={true} />
+            <RaisedButton type='submit' label='Log In' primary={true}
+                          style={{minWidth: 150}} />
           </div>
           <div>
             <FlatButton type='submit' label='Sign Up' secondary={true} />
@@ -82,7 +105,7 @@ class Login extends React.Component {
                   <FlatButton
                     label='OK'
                     primary={true}
-                    onTouchTap={() => this.setState({errorDialog: null})}/>
+                    onTouchTap={() => this.setState({errorDialog: null})} />
                 ]}>
           {errorDialog && errorDialog.message}
         </Dialog>

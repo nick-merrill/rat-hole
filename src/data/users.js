@@ -22,6 +22,11 @@ const _make_email = (firstName, lastName) => {
   return `${pre_at}@x.com`;
 };
 
+// Password is user's first name, in lower case.
+const _make_password = (firstName, lastName) => {
+  return firstName.toLowerCase();
+};
+
 const add = (firstName, lastName, house, role, extra = {}) => {
   if (!_.isObject(extra)) {
     throw new Error('"extra" parameter must be an object');
@@ -32,6 +37,7 @@ const add = (firstName, lastName, house, role, extra = {}) => {
     firstName,
     lastName,
     email: _make_email(firstName, lastName),
+    password: _make_password(firstName, lastName),
     // The `extra` object allows you to override any of these above settings
     // on a per-user basis.
     ...extra
