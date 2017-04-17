@@ -93,7 +93,7 @@ class TextToPhotoQuestion extends Question {
                         // TODO: Figure out a way blind users can play this game
                         //   (e.g. by sound or by matching students to their
                         //   interests).
-                        alt={`student guess option ${index}`}
+                        alt={`student guess option ${index+1}`}
                       />
                     </GridTile>
                   )
