@@ -12,6 +12,7 @@ import {
 import CircleProgress from '../CircleProgress';
 import {greenA400} from 'material-ui/styles/colors';
 import GameData from '../../data/GameData';
+import LiveGameScore from './LiveGameScore';
 
 // Storage and its keys
 const storage = new StorageEngine('game_play_environment');
@@ -154,7 +155,10 @@ class GamePlayEnvironment extends React.Component {
         <p>Are you ready to continue?</p>
         <RaisedButton label='Bring it on!' primary={true}
                       labelStyle={{fontSize: 20}}
-                      buttonStyle={{height: 60, minWidth: window.innerWidth / 2}}
+                      buttonStyle={{
+                        height: 60,
+                        minWidth: window.innerWidth / 2
+                      }}
                       onTouchTap={() => this.handleContinue()}
         />
       </div>
@@ -182,6 +186,8 @@ class GamePlayEnvironment extends React.Component {
         />
 
         {primaryComponent}
+
+        <LiveGameScore />
 
         {/* DESIGN: Escape hatch + Redundancy (to back button in menu bar) */}
         <div className='margin'>

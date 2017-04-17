@@ -5,6 +5,9 @@ import StorageEngine from '../lib/StorageEngine';
 // Keys
 const STUDENTS = 'students';
 const RECENT_GUESS_IDS = 'recent_guess_ids';
+const GUESS_LOG = 'guess_log';
+const GOOD = 'good';
+const BAD = 'bad';
 
 /**
  * Handles all the data storage we want for the user's game play.
@@ -14,10 +17,11 @@ const RECENT_GUESS_IDS = 'recent_guess_ids';
  */
 class GameData {
   constructor() {
-    this.storage = new StorageEngine('game_data');
+    this._storage = new StorageEngine('game_data');
     // Keeps track of student-specific data by using unique IDs as a
     // lookup method.
-    this.storage.set(STUDENTS, {});
+    this._storage.set(STUDENTS, {});
+    this._subscribers = [];
   }
 
   /**
@@ -25,13 +29,15 @@ class GameData {
    * @param student - The student correctly guessed.
    */
   registerGoodGuess(student) {
+    this._addToGuessLog(GOOD);
     this._patchStudentData(student, {
-      goodGuessCount: this._getStudentData(student).goodGuessCount + 1,
+      correctlyGuessedCount: (this._getStudentData(student).correctlyGuessedCount || 0) + 1,
     });
-    this.storage.set(
+    this._storage.set(
       RECENT_GUESS_IDS,
-      (this.storage.get(RECENT_GUESS_IDS) || []).concat(student.id)
+      (this._storage.get(RECENT_GUESS_IDS) || []).concat(student.id)
     );
+    this.callGuessingCallbacks(student);
   }
 
   /**
@@ -41,14 +47,40 @@ class GameData {
    *                       incorrectly.
    */
   registerBadGuess(student, wrongStudent = null) {
+    this._addToGuessLog(BAD);
     this._patchStudentData(student, {
-      missedGuessCount: this._getStudentData(student).missedGuessCount + 1,
+      missedGuessCount: (this._getStudentData(student).missedGuessCount || 0) + 1,
     });
     if (wrongStudent) {
       this._patchStudentData(wrongStudent, {
-        badGuessCount: this._getStudentData(wrongStudent).badGuessCount + 1,
+        incorrectlyGuessedCount: (this._getStudentData(wrongStudent).incorrectlyGuessedCount || 0) + 1,
       });
     }
+    this.callGuessingCallbacks(student);
+  }
+
+  subscribeToGuessing(callback) {
+    this._subscribers.push(callback);
+  }
+
+  callGuessingCallbacks(data) {
+    this._subscribers.forEach((callback) => {
+      callback(data);
+    });
+  }
+
+  /**
+   * Fun stuff
+   */
+
+  getGuessRatio(options) {
+    options = _.defaults(options, {
+      maxDepth: 100,
+    });
+    const recent = this.getGuessLog().slice(0, options.maxDepth);
+    const good = _.filter(recent, (g) => g === GOOD).length;
+    const bad = _.filter(recent, (g) => g === BAD).length;
+    return good / (good + bad);
   }
 
   /**
@@ -56,7 +88,7 @@ class GameData {
    * The first element is the most recent student guessed.
    */
   getRecentlyGuessedStudentIDs() {
-    let ret = this.storage.get(RECENT_GUESS_IDS) || [];
+    let ret = this._storage.get(RECENT_GUESS_IDS) || [];
     // OPTIMIZE: Store elements in reverse to avoid this dumb operation.
     return _.reverse(ret);
   }
@@ -66,7 +98,7 @@ class GameData {
    */
 
   _getStudents() {
-    return this.storage.get(STUDENTS) || {};
+    return this._storage.get(STUDENTS) || {};
   }
 
   _getStudentData(student) {
@@ -76,7 +108,7 @@ class GameData {
   _setStudentData(student, newData) {
     let data = this._getStudents();
     data[student.id] = newData;
-    return this.storage.set(STUDENTS, data);
+    return this._storage.set(STUDENTS, data);
   }
 
   _patchStudentData(student, patchObject) {
@@ -84,6 +116,19 @@ class GameData {
     const newData = Object.assign({}, studentData, patchObject);
     this._setStudentData(student, newData);
   }
+
+  getGuessLog() {
+    return this._storage.get(GUESS_LOG) || [];
+  }
+
+  _addToGuessLog(data) {
+    this._storage.set(
+      GUESS_LOG,
+      [data].concat(this.getGuessLog())
+    );
+  }
 }
+
+window.GameData = new GameData();
 
 export default new GameData();
