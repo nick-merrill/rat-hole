@@ -99,7 +99,7 @@ class OurAppBar extends React.Component {
             });
           }}/>
       </div>
-    )
+    );
   }
 }
 

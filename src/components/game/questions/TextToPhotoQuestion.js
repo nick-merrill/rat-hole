@@ -7,36 +7,6 @@ import muiTheme from '../../../styles/muiTheme';
 import {GridList, GridTile} from 'material-ui';
 
 class TextToPhotoQuestion extends Question {
-  constructor(props) {
-    super(props);
-    Object.assign(this.state, {
-      studentToGuess: props.studentToGuess,
-      guessPool: this.getFreshGuessPool(props),
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    super.componentWillReceiveProps(nextProps);
-    // If student to guess has changed, update the guess pool.
-    if (this.props.studentToGuess.id !== nextProps.studentToGuess.id) {
-      this.setState({
-        studentToGuess: nextProps.studentToGuess,
-        guessPool: this.getFreshGuessPool(nextProps),
-      });
-    }
-  }
-
-  getFreshGuessPool(props) {
-    // 3 other students, plus the correct one
-    let allStudentOptions = [
-      ...props.guessPool.slice(0, 3),
-      props.studentToGuess
-    ];
-    // Otherwise, student would always be on the bottom left
-    allStudentOptions = _.shuffle(allStudentOptions);
-    return allStudentOptions;
-  }
-
   render() {
     const studentToGuess = this.state.studentToGuess;
     // Results in square photos if in portrait and reasonably sized photos if
