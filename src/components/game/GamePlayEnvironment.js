@@ -11,8 +11,8 @@ import {
 } from './questions';
 
 const storage = new StorageEngine('game_play_environment');
+const STUDENT_TO_GUESS_ID = 'studentToGuessID';
 
-// eslint-disable-next-line no-unused-vars
 const AVAILABLE_QUESTION_COMPONENTS = [
   TextToPhotoQuestion,
 ];
@@ -31,13 +31,14 @@ class GamePlayEnvironment extends React.Component {
   constructor(props) {
     super(props);
     const permittedStudents = getPermittedStudents();
+    // Looks up student by ID if a student was already being guessed during
+    // last game play session.
+    const initialStudentToGuess = _.find(permittedStudents, {
+      id: storage.get(STUDENT_TO_GUESS_ID),
+    });
     this.state = {
       students: permittedStudents,
-      // Looks up student by ID if a student was already being guessed during
-      // last game play session.
-      studentToGuess: _.find(permittedStudents, {
-        id: _.get('studentToGuessID'),
-      }),
+      studentToGuess: initialStudentToGuess,
     };
   }
 
@@ -45,40 +46,53 @@ class GamePlayEnvironment extends React.Component {
     // Only loads a new student on mount if there wasn't already a student
     // loaded. This prevents a user from cheating by refreshing the app
     // manually.
-    if (_.isNil(this.state.studentToGuess)) {
-      this.loadNextStudentToGuess();
-    }
+    this.loadNextStudentToGuess(this.state.studentToGuess);
   }
 
   handleGoodGuess() {
     this.loadNextStudentToGuess();
   }
 
-  loadNextStudentToGuess() {
-    const newStudent = _.sample(this.state.students);
+  loadNextStudentToGuess(forcedStudent = null) {
+    // TODO: Don't show a student who has been shown recently.
+    const newStudent = forcedStudent || _.sample(this.state.students);
+    // Don't include the same student as the student to be guessed or
+    // any students of a different sex than the student to be guessed,
+    // lest the game be too easy.
+    let guessPool = _.reject(this.state.students, (s) => {
+      return s.id === newStudent.id || s.sex !== newStudent.sex;
+    });
     this.setState({
       studentToGuess: newStudent,
+      guessPool: guessPool,
     });
-    storage.set('studentToGuessID', newStudent.id);
+    storage.set(STUDENT_TO_GUESS_ID, newStudent.id);
   }
 
   render() {
+    // Note that although this is called a Question, it is a specific subclass
+    // of the Question class. It's called Question so that it's easier for an
+    // IDE to map the required props onto it.
+    const Question = _.sample(AVAILABLE_QUESTION_COMPONENTS);
+
     return (
       <div>
-        <TextToPhotoQuestion
+        <Question
           studentToGuess={this.state.studentToGuess}
           // TODO: Limit this pool by the same gender of the studentToGuess
           //   for better play experience.
           // TODO: Don't include the same student who is the one to guess.
-          guessPool={this.state.students}
+          guessPool={this.state.guessPool}
           handleGoodGuess={() => this.handleGoodGuess()}
         />
 
         {/* DESIGN: Escape hatch + Redundancy (to back button in menu bar) */}
-        <FlatButton secondary={true}
-                    onClick={() => Router.goToPath('/')}>
-          Exit Game
-        </FlatButton>
+        <div className='margin'>
+          <FlatButton secondary={true}
+                      onClick={() => Router.goToPath('/')}>
+            Exit Game
+          </FlatButton>
+        </div>
       </div>
     );
   }
