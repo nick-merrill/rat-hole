@@ -118,6 +118,106 @@ add(
 );
 
 add(
+  'Neel', 'Mehta',
+  pfoho,
+  '2018',
+  'Computer Science',
+  'M',
+  'https://scontent.fbed1-2.fna.fbcdn.net/v/t31.0-8/12038633_879989328763997_8134931835787599940_o.jpg?oh=91842df5fec4e9e4dd069c3864ea2868&oe=59883C5F',
+  'Neel is interested in civic tech. \n\n he/him/his'
+);
+
+add(
+  'Darius', 'Johnson',
+  pfoho,
+  '2018',
+  'Philosophy',
+  'M',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/16174408_1552379018107437_4877929532012906690_n.jpg?oh=31c1e83d768f65c3c7c5ff5738bc02fe&oe=597EBF4C',
+  'Darius enjoys directing theater productions on campus. \n\n they/them/theirs.'
+);
+
+add(
+  'Leib', 'Celnik',
+  pfoho,
+  '2018',
+  'History of Science, History of Art and Architecture',
+  'M',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/13495198_736078113201444_4008575415469445355_n.jpg?oh=fa470efb6de44e892340ac151d007810&oe=597C4ED1',
+  'Leib speaks fluent German. \n\n he/him/his'
+);
+
+add(
+  'Lucas', 'Conti',
+  pfoho,
+  '2018',
+  'Neurobiology',
+  'M',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/14729155_10210023166832227_1202858060069522989_n.jpg?oh=88c18ebaba87fe677bd3ff627e6fe5c8&oe=5996FD02',
+  'Lucas hopes to attend medical school one day. \n\n he/him/his'
+);
+
+add(
+  'Ben', 'Iuliano',
+  pfoho,
+  '2018',
+  'Comparative Study of Religion',
+  'M',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t31.0-8/11864852_852553568191607_1708957320042489669_o.jpg?oh=f011f7bdb98952156eece07d36e320e4&oe=598ECAE2',
+  'Ben enjoys working on the production side of theater shows. \n\n he/him/his'
+);
+
+add(
+  'McKayla', 'Gourneau',
+  pfoho,
+  '2017',
+  'Molecular and Cellular Biology',
+  'F',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/17630151_1606287126065529_3621963812561932182_n.jpg?oh=59bddb180f91138df6ea148c77e97c1f&oe=595271F6',
+  'McKayla ejoys being a part of the extracurricular group Native Americans at Harvard College.'
+);
+
+add(
+  'Christina', 'Tenuta',
+  pfoho,
+  '2017',
+  'Computer Science',
+  'F',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15109550_1372517946093371_7408238712204909757_n.jpg?oh=4d4106caf4c05ccc37ec070d1c94d3f9&oe=5986D8D0',
+  'Christina is excited to work for Teach for America after graduation.'
+);
+
+add(
+  'Kayi', 'Okine',
+  pfoho,
+  '2017',
+  'Computer Science',
+  'F',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t31.0-8/13558879_10153935694593124_8674988323305683795_o.jpg?oh=0da12df8e1ac4177cf60100c3434fcc4&oe=594CD92A',
+  'Kayi hopes to work as a software engineer one day.'
+);
+
+add(
+  'Megan', 'Ross',
+  pfoho,
+  '2018',
+  'Computer Science',
+  'F',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t31.0-8/15016355_1029127347214625_1999027232931750215_o.jpg?oh=636b5883376b6446f1c3125b74293199&oe=59500ACA',
+  'Megan is originally from Ireland.'
+);
+
+add(
+  'Hunter', 'Richards',
+  pfoho,
+  '2018',
+  'Environmental Engineering',
+  'F',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t31.0-8/16707438_10208720762442084_5189341941557934144_o.jpg?oh=cf38901012881290fa806657ef90d085&oe=5952F0C7',
+  'Hunter enjoys spending time in the Spfa.'
+);
+
+add(
   'Bryan', 'Hu',
   leverett,
   '2020',
