@@ -318,6 +318,106 @@ add(
 );
 
 add(
+  'Camille', 'NDiaye-Muller',
+  leverett,
+  '2018',
+  'Social Studies',
+  'F',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t31.0-8/16402604_1352687891419113_1354289481128810327_o.jpg?oh=73d3efde16a9b25957488e92cbe25364&oe=5986D988',
+  'Camille hopes to attend law school. \n\n she/her/hers'
+);
+
+add(
+  'Sara', 'Atske',
+  leverett,
+  '2017',
+  'Sociology',
+  'F',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/10398883_10203877507057025_780555731914747099_n.jpg?oh=8690d81316648ef560343092d3d7004a&oe=5998B755',
+  'Sara enjoys writing for The Crimson in her free time. \n\n she/her/hers'
+);
+
+add(
+  'Katherine', 'Borrazzo',
+  leverett,
+  '2018',
+  'Psychology',
+  'F',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t31.0-8/14115473_1416923934991299_1992429553703294450_o.jpg?oh=dac9e6b382cd40a79f945daa51579a5a&oe=599B3966',
+  'Katherine "Katie" enjoys photography. \n\n she/her/hers'
+);
+
+add(
+  'Savannah', 'Bradley',
+  leverett,
+  '2017',
+  'Environmental Science and Public Policy',
+  'F',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/12227563_1074342815910181_3793988563039008113_n.jpg?oh=423b35a9416c28af525164aba3c2548f&oe=597C1235',
+  'Savannah plays softball for The Crimson. \n\n she/her/hers'
+);
+
+add(
+  'Siyani', 'Chambers',
+  leverett,
+  '2017',
+  'Sociology',
+  'M',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/10330417_10202619992838808_5173500503865388347_n.jpg?oh=5a11db91cc9dd4e85c703890490a70da&oe=598F4B7C',
+  'Siyani is captain of the basketball team. \n\n he/him/his'
+);
+
+add(
+  'Timmy', 'Freese',
+  leverett,
+  '2018',
+  'Mathematics',
+  'M',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t31.0-8/17349889_1325767400849917_1156449631056657445_o.jpg?oh=e86bf2959d2f7b412730e7ef96218de6&oe=59855571',
+  'Timmy very much enjoys mathematical theory. \n\n he/him/his'
+);
+
+add(
+  'Kamran', 'Jamil',
+  leverett,
+  '2018',
+  'Social Studies',
+  'M',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t31.0-8/1618294_1537775509780259_2082121183_o.jpg?oh=738eb678e8e9b43ccee21f16e26980e2&oe=59950EEE',
+  'Kamran has a budding interest in journalism. \n\n he/him/his'
+);
+
+add(
+  'Joe', 'Kahn',
+  leverett,
+  '2018',
+  'Computer Science',
+  'M',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/12037953_10153355957827705_4691285278107759394_n.jpg?oh=d3567f140558bb68f94794ba2fb93fef&oe=597DA915',
+  'Joe is originally from South Africa. \n\n he/him/his'
+);
+
+add(
+  'Gabe', 'Martinez',
+  leverett,
+  '2018',
+  'Computer Science',
+  'M',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t31.0-8/16422960_1390282251017242_8685202736241506830_o.jpg?oh=d8c1df1d34a264714ca3be8964eaf903&oe=597FD4D9',
+  'Gabe directs the Harvard-Radcliffe Modern Dance Company. \n\n he/him/his'
+);
+
+add(
+  'Cassandra', 'Hastie',
+  leverett,
+  '2018',
+  'Government',
+  'F',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t31.0-8/17240235_10206233354671727_542613872726948648_o.jpg?oh=7d76cfdfaa6fc97d3e33a465bc9b24c5&oe=597C1816',
+  'Cass serves as a peer counselor within Echo. \n\n she/her/hers'
+);
+
+add(
   'Annie', 'Schugart',
   quincy,
   '2018',
@@ -416,7 +516,6 @@ add(
   'http://facebook.college.harvard.edu//photos/fed02216ef17d8cd33a38e39bc5f9a30-561412-250.jpg',
   'Curtis loves theater, improv, and playwriting. \n\n he/him/his'
 );
-
 
 // TODO: Don't even export these. Force access through a function that checks
 //   user permissions.
