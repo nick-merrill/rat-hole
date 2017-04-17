@@ -78,7 +78,7 @@ class Question extends React.Component {
 
   handleGuess(guessedStudent) {
     if (!this.state.interactionAllowed) {
-      // eslint-disable-next no-console
+      // eslint-disable-next-line no-console
       console.log('interaction not allowed at this time');
       return;
     }

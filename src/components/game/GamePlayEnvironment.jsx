@@ -8,6 +8,7 @@ import Router from '../../lib/Router';
 import {getPermittedStudents} from '../../data/students';
 import {
   TextToPhotoQuestion,
+  PhotoToTextQuestion,
 } from './questions';
 import CircleProgress from '../CircleProgress';
 import {greenA400} from 'material-ui/styles/colors';
@@ -24,6 +25,7 @@ const QUESTIONS_TO_SHOW_BEFORE_BREAK_RANGE = [6, 8];  // 7 is lucky ;)
 
 const AVAILABLE_QUESTION_COMPONENTS = [
   TextToPhotoQuestion,
+  PhotoToTextQuestion,
 ];
 
 /**
@@ -176,7 +178,7 @@ class GamePlayEnvironment extends React.Component {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        alignItems: 'center',
+        alignItems: 'stretch',
         minHeight: window.innerHeight - 64,
       }}>
         <LinearProgress
