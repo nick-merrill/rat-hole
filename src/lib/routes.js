@@ -37,6 +37,7 @@ const routes = [
     key: 'studentList',
     title: 'Student List',
     path: '/students',
+    icon: <i className='fa fa-list' />,
     component: StudentList,
   },
   {

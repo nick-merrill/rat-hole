@@ -1,5 +1,7 @@
-@import "./sass/clearfix";
 @import "./vendors/progress/styles";
+$ionicons-font-path: "/ionicons/fonts";
+@import "../public/ionicons/scss/ionicons";
+@import "./sass/clearfix";
 @import "./sass/font_face_mixin";
 @import "./sass/fonts";
 @import "./sass/colors";

@@ -67,10 +67,24 @@ class OurAppBar extends React.Component {
     const HomeAppBar = () => (
       <div>
         <AppBar title=""
-                iconClassNameLeft='fa fa-bars'
+                iconClassNameLeft='ion ion-android-menu'
                 onLeftIconButtonTouchTap={() => this.setState({isMenuOpen: true})}
                 style={appBarStyle}
                 titleStyle={appBarTitleStyle}/>
+      </div>
+    );
+    const ScreenAppBar = () => (
+      <AppBar title={this.props.currentRoute.title}
+              iconClassNameLeft='fa fa-chevron-left'
+              onLeftIconButtonTouchTap={() => Router.goToPath('/')}
+              style={appBarStyle}
+              titleStyle={appBarTitleStyle}/>
+    );
+    // Returns the appropriate App Bar
+    const appBar = this.props.currentRoute.key === 'home' ? <HomeAppBar/> : <ScreenAppBar/>;
+    return (
+      <div>
+        {appBar}
         <SideMenu
           open={this.state.isMenuOpen}
           items={menuItems}
@@ -85,20 +99,7 @@ class OurAppBar extends React.Component {
             });
           }}/>
       </div>
-    );
-    const ScreenAppBar = () => (
-      <AppBar title={this.props.currentRoute.title}
-              iconClassNameLeft='fa fa-chevron-left'
-              onLeftIconButtonTouchTap={() => Router.goToPath('/')}
-              style={appBarStyle}
-              titleStyle={appBarTitleStyle}/>
-    );
-    // Returns the appropriate App Bar
-    if (this.props.currentRoute.key === 'home') {
-      return <HomeAppBar/>;
-    } else {
-      return <ScreenAppBar/>;
-    }
+    )
   }
 }
 
