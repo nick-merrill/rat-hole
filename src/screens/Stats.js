@@ -1,12 +1,13 @@
 import React from 'react';
+import GameData from '../data/GameData';
 
 class Stats extends React.Component {
   render() {
-    // let stats = this.props.stat;
     let stats = {
       globalRank: 0.4,
-      percKnown: 0.48,
+      percKnown: 0.5,
       numberIdentified: 1083,
+      recentSuccessRatio: GameData.getGuessRatio({maxDepth: 20}),
     };
     return (
       <div className='padding'>
@@ -19,6 +20,9 @@ class Stats extends React.Component {
           </p>
           <p>
             {`You've identified ${stats.numberIdentified} students.`}
+          </p>
+          <p>
+            {`Lately, you've been right ${Math.round(stats.recentSuccessRatio * 100)}% of the time.`}
           </p>
         </div>
       </div>
