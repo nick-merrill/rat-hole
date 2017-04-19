@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {RadialBar, RadialBarChart} from 'recharts';
 import _ from 'lodash';
 
-const width = 200;
+const width = window.innerWidth / 2 - 30;
 
 class CircleProgress extends React.Component {
   render() {
@@ -46,6 +46,7 @@ class CircleProgress extends React.Component {
         <RadialBarChart width={width} height={width}
                         barGap={10} barSize={20}
                         innerRadius='45%' outerRadius='100%'
+                        onClick={this.props.onClick}
                         data={data}>
           <RadialBar background={true}
                      startAngle={90} // starts from the top, like a clock
@@ -66,6 +67,7 @@ CircleProgress.propTypes = {
   label: PropTypes.string,
   fill: PropTypes.string,
   shouldAnimate: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 CircleProgress.defaultProps = {

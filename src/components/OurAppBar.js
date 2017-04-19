@@ -13,8 +13,8 @@ import muiTheme from '../styles/muiTheme';
 import SideMenu from '../components/SideMenu';
 import Router from '../lib/Router';
 import routes from '../lib/routes';
-import {setCurrentUser} from '../data/users';
-import {AppBar} from 'material-ui';
+import {getCurrentUser, setCurrentUser} from '../data/users';
+import {AppBar, Avatar} from 'material-ui';
 
 export const APP_BAR_HEIGHT = muiTheme.appBar.height;
 
@@ -29,7 +29,7 @@ const menuItems = [
     key: 'logout',
     title: 'Sign Out',
     labelPosition: 'left',
-    icon: <i className='fa fa-sign-out'/>,
+    icon: <i className='fa fa-sign-out' />,
     color: muiTheme.palette.dangerColor,
     handleClick: () => {
       setCurrentUser(null);
@@ -65,25 +65,39 @@ class OurAppBar extends React.Component {
       fontSize: 20,
     };
     const currentPath = this.props.currentRoute.path;
+    const currentUser = getCurrentUser();
     const HomeAppBar = () => (
       <div>
-        <AppBar title=""
-                iconClassNameLeft='ion ion-android-menu'
-                onLeftIconButtonTouchTap={() => this.setState({isMenuOpen: true})}
-                style={appBarStyle}
-                titleStyle={appBarTitleStyle}/>
+        <AppBar
+          title={`Welcome, ${currentUser.firstName}`}
+          iconClassNameLeft='ion ion-android-menu'
+          onLeftIconButtonTouchTap={() => this.setState({isMenuOpen: true})}
+          style={appBarStyle}
+          titleStyle={appBarTitleStyle}>
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            marginRight: 16,
+          }}>
+            <Avatar src={currentUser.imageURL}
+                    size={APP_BAR_HEIGHT - 4}
+                    style={{margin: 2}}
+            />
+          </div>
+        </AppBar>
       </div>
     );
     const ScreenAppBar = () => (
       <AppBar title={this.props.currentRoute.title}
-              iconClassNameLeft='fa fa-chevron-left'
+              iconClassNameLeft='ion ion-chevron-left'
               onLeftIconButtonTouchTap={() => Router.goToPath('/')}
               style={appBarStyle}
-              titleStyle={appBarTitleStyle}/>
+              titleStyle={appBarTitleStyle} />
     );
     // Returns the appropriate App Bar
     const isHome = this.props.currentRoute.key === 'home';
-    const appBar = isHome ? <HomeAppBar/> : <ScreenAppBar/>;
+    const appBar = isHome ? <HomeAppBar /> : <ScreenAppBar />;
     return (
       <div>
         {appBar}

@@ -59,18 +59,18 @@ class Question extends React.Component {
    then notifies parent in order to move on.
    */
   handleGoodGuess() {
-    GameData.registerGoodGuess(this.props.studentToGuess);
     this.setState({
       wasJustSuccessful: true,
       greatWordShort: getGreatWordShort(),
       interactionAllowed: false,
     });
+    GameData.registerGoodGuess(this.props.studentToGuess);
     setTimeout(() => {
-      // Callback for parent
-      this.props.handleGoodGuess();
       this.setState({
         interactionAllowed: true,
       });
+      // Callback for parent
+      this.props.handleGoodGuess();
     }, GOOD_GUESS_DELAY);
   }
 
@@ -85,11 +85,11 @@ class Question extends React.Component {
       interactionAllowed: false,
     });
     setTimeout(() => {
-      // Callback for parent
-      this.props.handleBadGuess();
       this.setState({
         interactionAllowed: true,
       });
+      // Callback for parent
+      this.props.handleBadGuess();
     }, BAD_GUESS_DELAY);
   }
 
