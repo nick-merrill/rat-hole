@@ -24,7 +24,7 @@ class CircleProgress extends React.Component {
         }}
       >
         {
-          _.isNil(this.props.label) ? `${this.props.percent}%`
+          _.isNil(this.props.label) ? `${Math.round(this.props.percent)}%`
             : this.props.label
         }
       </div>
@@ -51,7 +51,8 @@ class CircleProgress extends React.Component {
                      startAngle={90} // starts from the top, like a clock
                      endAngle={-270}
                      minAngle={0}
-                     maxAngle={360} // allows circle to fill entirely at 100%
+                     // allows circle to fill entirely at 100%
+                     maxAngle={this.props.percent / 100 * 360}
                      isAnimationActive={this.props.shouldAnimate}
                      dataKey='value' />
         </RadialBarChart>
