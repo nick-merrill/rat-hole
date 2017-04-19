@@ -1,6 +1,6 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import {FlatButton, LinearProgress, RaisedButton} from 'material-ui';
+import {FlatButton, LinearProgress} from 'material-ui';
 import _ from 'lodash';
 
 import StorageEngine from '../../lib/StorageEngine';
@@ -10,10 +10,10 @@ import {
   TextToPhotoQuestion,
   PhotoToTextQuestion,
 } from './questions';
-import CircleProgress from '../CircleProgress';
-import {greenA400} from 'material-ui/styles/colors';
 import GameData from '../../data/GameData';
 import LiveGameScore from './LiveGameScore';
+import SuccessPage from './pages/SuccessPage';
+import DEBUG from '../../lib/debug';
 
 // Storage and its keys
 const storage = new StorageEngine('game_play_environment');
@@ -21,7 +21,10 @@ const STUDENT_TO_GUESS_ID = 'studentToGuessID';
 const HAS_PLAYED_ALREADY = 'has_played_already';
 
 const QUESTIONS_TO_SHOW_BEFORE_BREAK_IF_FIRST_TIME_PLAYING = 3;
-const QUESTIONS_TO_SHOW_BEFORE_BREAK_RANGE = [6, 8];  // 7 is lucky ;)
+let QUESTIONS_TO_SHOW_BEFORE_BREAK_RANGE = [6, 8];  // 7 is lucky ;)
+if (DEBUG) {
+  QUESTIONS_TO_SHOW_BEFORE_BREAK_RANGE = [2, 2];
+}
 
 const AVAILABLE_QUESTION_COMPONENTS = [
   TextToPhotoQuestion,
@@ -139,9 +142,6 @@ class GamePlayEnvironment extends React.Component {
     const question = () => (
       <Question
         studentToGuess={this.state.studentToGuess}
-        // TODO: Limit this pool by the same gender of the studentToGuess
-        //   for better play experience.
-        // TODO: Don't include the same student who is the one to guess.
         guessPool={this.state.guessPool}
         handleGoodGuess={() => this.handleGoodGuess()}
         // Have the question element take up as much space as possible.
@@ -149,30 +149,15 @@ class GamePlayEnvironment extends React.Component {
       />
     );
 
-    const success = () => (
-      <div>
-        <h3>You're doing great!</h3>
-        <p>Here's how you did that round:</p>
-        <CircleProgress
-          percent={GameData.getGuessRatio({maxDepth: this.state.questionsInRound})}
-          color={greenA400} />
-        <p>Are you ready to continue?</p>
-        <RaisedButton label='Bring it on!' primary={true}
-                      labelStyle={{fontSize: 20}}
-                      buttonStyle={{
-                        height: 60,
-                        minWidth: window.innerWidth / 2
-                      }}
-                      onTouchTap={() => this.handleContinue()}
-        />
-      </div>
-    );
-
     let primaryComponent;
     if (isSuccessPage) {
       primaryComponent = question();
     } else {
-      primaryComponent = success();
+      primaryComponent = (
+        <SuccessPage
+          handleContinue={() => this.handleContinue()}
+          circleProgressPercent={GameData.getGuessRatio({maxDepth: this.props.questionsInRound}) * 100} />
+      );
     }
 
     return (

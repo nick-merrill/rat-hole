@@ -15,6 +15,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import muiTheme from './styles/muiTheme';
 
 // Our Files
+// eslint-disable-next-line no-unused-vars
+import DEBUG from './lib/debug';
 import styles from './styles/styles';
 import {getCurrentUser} from './data/users';
 import Router from './lib/Router';
