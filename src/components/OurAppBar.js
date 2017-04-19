@@ -82,7 +82,7 @@ class OurAppBar extends React.Component {
               titleStyle={appBarTitleStyle}/>
     );
     // Returns the appropriate App Bar
-    const isHome = this.props.currentRoute.key === 'home'
+    const isHome = this.props.currentRoute.key === 'home';
     const appBar = isHome ? <HomeAppBar/> : <ScreenAppBar/>;
     return (
       <div>

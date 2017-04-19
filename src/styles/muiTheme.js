@@ -1,7 +1,7 @@
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {
   amber500,
-  blue500, blueGrey500, grey100, grey700, grey800, grey900, red500, white
+  blue500, blueGrey500, grey700, grey800, grey900, red500, white
 } from 'material-ui/styles/colors';
 
 // I don't think we want to go with Harvard branding because it makes an app
