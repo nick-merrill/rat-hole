@@ -33,7 +33,13 @@ class GameTutorial extends React.Component {
           </p>
         </div>
 
-        <RaisedButton label='Continue' primary={true}
+        <RaisedButton label='Play on Starred Students' primary={true}
+                      buttonStyle={{height: 50, minWidth: window.innerWidth / 2}}
+                      onClick={() => this.handleContinue()}
+                      icon={<i className='color-white fa fa-chevron-right'/>}
+                      style={{margin: 10}}
+                      labelPosition='before'/>
+        <RaisedButton label='Play on Entire House' primary={true}
                       buttonStyle={{height: 50, minWidth: window.innerWidth / 2}}
                       onClick={() => this.handleContinue()}
                       icon={<i className='color-white fa fa-chevron-right'/>}

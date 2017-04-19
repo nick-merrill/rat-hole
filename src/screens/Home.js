@@ -16,7 +16,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      percentComplete: 75,
+      percentComplete: 100,
     };
   }
 
@@ -46,7 +46,6 @@ class Home extends React.Component {
               Your Radar Percentage:
             </div>
             <CircleProgress percent={this.state.percentComplete}
-                            label={true}
                             color={greenA700} />
           </div>
 

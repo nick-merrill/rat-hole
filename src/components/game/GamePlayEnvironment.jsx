@@ -152,8 +152,10 @@ class GamePlayEnvironment extends React.Component {
     const success = () => (
       <div>
         <h3>You're doing great!</h3>
-        <p>Here's how you're doing so far:</p>
-        <CircleProgress percent={30} color={greenA400} />
+        <p>Here's how you did that round:</p>
+        <CircleProgress
+          percent={GameData.getGuessRatio({maxDepth: this.state.questionsInRound})}
+          color={greenA400} />
         <p>Are you ready to continue?</p>
         <RaisedButton label='Bring it on!' primary={true}
                       labelStyle={{fontSize: 20}}

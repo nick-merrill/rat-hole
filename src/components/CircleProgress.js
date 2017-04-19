@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {RadialBar, RadialBarChart} from 'recharts';
+import _ from 'lodash';
 
 const width = 200;
 
@@ -22,13 +23,18 @@ class CircleProgress extends React.Component {
           color: this.props.color,
         }}
       >
-        {this.props.percent}%
+        {
+          _.isNil(this.props.label) ? `${this.props.percent}%`
+            : this.props.label
+        }
       </div>
     );
-    const data = [{
-      value: this.props.percent,
-      fill: this.props.color || '#ff0000',
-    }];
+    const data = [
+      {
+        value: this.props.percent,
+        fill: this.props.color || '#ff0000',
+      },
+    ];
     return (
       <div style={{
         position: 'relative',
@@ -36,16 +42,18 @@ class CircleProgress extends React.Component {
         width: width,
         margin: '0 auto',
       }}>
-        { this.props.label ? label : '' }
+        {label}
         <RadialBarChart width={width} height={width}
                         barGap={10} barSize={20}
                         innerRadius='45%' outerRadius='100%'
                         data={data}>
           <RadialBar background={true}
-                     startAngle={90}
+                     startAngle={90} // starts from the top, like a clock
                      endAngle={-270}
-                     data={data}
-                     dataKey='value'/>
+                     minAngle={0}
+                     maxAngle={360} // allows circle to fill entirely at 100%
+                     isAnimationActive={this.props.shouldAnimate}
+                     dataKey='value' />
         </RadialBarChart>
       </div>
     );
@@ -54,7 +62,13 @@ class CircleProgress extends React.Component {
 
 CircleProgress.propTypes = {
   percent: PropTypes.number.isRequired,
+  label: PropTypes.string,
   fill: PropTypes.string,
+  shouldAnimate: PropTypes.bool,
+};
+
+CircleProgress.defaultProps = {
+  shouldAnimate: true,
 };
 
 export default CircleProgress;
