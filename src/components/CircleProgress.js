@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import {RadialBar, RadialBarChart} from 'recharts';
 import _ from 'lodash';
 
-const width = window.innerWidth / 2 - 30;
+const BAR_SIZE = 15;
 
 class CircleProgress extends React.Component {
   render() {
+    const width = this.props.size;
     const label = (
       <div
         style={{
@@ -44,8 +45,10 @@ class CircleProgress extends React.Component {
       }}>
         {label}
         <RadialBarChart width={width} height={width}
-                        barGap={10} barSize={20}
-                        innerRadius='45%' outerRadius='100%'
+                        barGap={0}
+                        barSize={BAR_SIZE}
+                        innerRadius={width / 2 - BAR_SIZE * 2}
+                        outerRadius={width / 2}
                         onClick={this.props.onClick}
                         data={data}>
           <RadialBar background={true}
@@ -63,6 +66,8 @@ class CircleProgress extends React.Component {
 }
 
 CircleProgress.propTypes = {
+  // This will be both the width and height of the graph
+  size: PropTypes.number.isRequired,
   percent: PropTypes.number.isRequired,
   label: PropTypes.string,
   fill: PropTypes.string,
