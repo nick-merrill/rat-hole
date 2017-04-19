@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import GameData from '../../../data/GameData';
 import {greenA400} from 'material-ui/styles/colors';
 import CircleProgress from '../../CircleProgress';
 import {RaisedButton} from 'material-ui';
