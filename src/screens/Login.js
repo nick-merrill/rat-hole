@@ -9,6 +9,7 @@ import {
   setCurrentUser,
 } from '../data/users';
 import {Dialog, FlatButton} from 'material-ui';
+import Router from '../lib/Router';
 
 class Login extends React.Component {
   constructor(props) {
@@ -54,6 +55,8 @@ class Login extends React.Component {
       // Login succeeded
       setCurrentUser(user);
       this.props.successCallback();
+      // Always send user to the home page upon login
+      Router.goToPath('/');
     } else {
       this.setState({
         // TODO: Don't tell the hacker that this user even exists.

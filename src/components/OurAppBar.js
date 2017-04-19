@@ -33,6 +33,7 @@ const menuItems = [
     color: muiTheme.palette.dangerColor,
     handleClick: () => {
       setCurrentUser(null);
+      Router.informOfChangeManually();
     },
   },
 ];
@@ -97,7 +98,12 @@ class OurAppBar extends React.Component {
     );
     // Returns the appropriate App Bar
     const isHome = this.props.currentRoute.key === 'home';
-    const appBar = isHome ? <HomeAppBar /> : <ScreenAppBar />;
+    let appBar;
+    if (currentUser) {
+      appBar = isHome ? <HomeAppBar /> : <ScreenAppBar />;
+    } else {
+      appBar = null;
+    }
     return (
       <div>
         {appBar}

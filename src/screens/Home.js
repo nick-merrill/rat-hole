@@ -45,22 +45,22 @@ class Home extends React.Component {
   render() {
     const data = [
       {
-        title: 'Your cjoverage',
+        title: 'House Knowledge',
         percent: GameData.getGuessRatio(),
         color: colors.pink500,
       },
       {
-        title: 'How you compare',
+        title: 'Radar Coverage',
+        percent: GameData.getGuessRatio(),
+        color: colors.lightBlue500,
+      },
+      {
+        title: 'Improvement',
         bars: [{value: 10}, {value: 20}],
         color: colors.green500,
       },
       {
-        title: 'Your awesomeness',
-        percent: _.random(0, 100),
-        color: colors.lightBlue500,
-      },
-      {
-        title: 'Your incredibleness',
+        title: 'Ranking',
         percent: _.random(0, 100),
         color: colors.amber500,
       },
