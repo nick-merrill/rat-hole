@@ -56,7 +56,13 @@ class PhotoToTextQuestion extends Question {
             textShadow: '0 0 4px #000',
           }}>
             <div>
-              {this.state.wasJustSuccessful && this.state.greatWordShort}
+              {
+                this.state.wasJustSuccessful && this.state.greatWordShort
+              }
+              {
+                this.state.wasJustUnsuccessful &&
+                <span><i className='fa fa-frown-o' />Sorry</span>
+              }
             </div>
           </div>
         </div>
@@ -66,17 +72,17 @@ class PhotoToTextQuestion extends Question {
           justifyContent: 'center',
           flexWrap: 'wrap',
         }}>
-        {
-          this.state.guessPool.map((s) => (
-            <div key={s.id} style={{margin: 8}}>
-              <RaisedButton label={`${s.firstName} ${s.lastName}`}
-                            onTouchTap={() => this.handleGuess(s)}
-                            primary={true}
-                            style={{minWidth: window.innerWidth * 0.40}}
-              />
-            </div>
-          ))
-        }
+          {
+            this.state.guessPool.map((s) => (
+              <div key={s.id} style={{margin: 8}}>
+                <RaisedButton label={`${s.firstName} ${s.lastName}`}
+                              onTouchTap={() => this.handleGuess(s)}
+                              primary={true}
+                              style={{minWidth: window.innerWidth * 0.40}}
+                />
+              </div>
+            ))
+          }
         </div>
       </div>
     );

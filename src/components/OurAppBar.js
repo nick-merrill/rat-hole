@@ -62,6 +62,7 @@ class OurAppBar extends React.Component {
       left: 0,
       right: 0,
       top: 0,
+      fontSize: 20,
     };
     const currentPath = this.props.currentRoute.path;
     const HomeAppBar = () => (
@@ -81,7 +82,8 @@ class OurAppBar extends React.Component {
               titleStyle={appBarTitleStyle}/>
     );
     // Returns the appropriate App Bar
-    const appBar = this.props.currentRoute.key === 'home' ? <HomeAppBar/> : <ScreenAppBar/>;
+    const isHome = this.props.currentRoute.key === 'home'
+    const appBar = isHome ? <HomeAppBar/> : <ScreenAppBar/>;
     return (
       <div>
         {appBar}
@@ -97,7 +99,9 @@ class OurAppBar extends React.Component {
             this.setState({
               isMenuOpen: false,
             });
-          }}/>
+          }}
+          disableSwipeToOpen={!isHome}
+        />
       </div>
     );
   }

@@ -52,9 +52,15 @@ class TextToPhotoQuestion extends Question {
                       onTouchTap={() => this.handleGuess(s)}
                       style={{opacity: x}}
                       title={
-                        this.state.wasJustSuccessful && s.id === studentToGuess.id
+                        s.id === studentToGuess.id && (
+                          this.state.wasJustSuccessful
                           ? this.state.greatWordShort
-                          : ''
+                          : this.state.wasJustUnsuccessful &&
+                            <span>
+                              <i className='fa fa-arrow-right' />
+                              {studentToGuess.firstName}
+                            </span>
+                        )
                       }
                     >
                       <img

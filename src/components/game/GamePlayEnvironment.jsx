@@ -1,6 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import {FlatButton, LinearProgress} from 'material-ui';
+import {FlatButton, LinearProgress, RaisedButton} from 'material-ui';
+import {ImageNavigateNext} from 'material-ui/svg-icons'
 import _ from 'lodash';
 
 import StorageEngine from '../../lib/StorageEngine';
@@ -14,10 +15,13 @@ import GameData from '../../data/GameData';
 import LiveGameScore from './LiveGameScore';
 import SuccessPage from './pages/SuccessPage';
 import DEBUG from '../../lib/debug';
+import StudentProfile from '../StudentProfile';
+import muiTheme from '../../styles/muiTheme';
 
 // Storage and its keys
 const storage = new StorageEngine('game_play_environment');
 const STUDENT_TO_GUESS_ID = 'studentToGuessID';
+const QUESTION_TYPE = 'questionType';
 const HAS_PLAYED_ALREADY = 'has_played_already';
 
 const QUESTIONS_TO_SHOW_BEFORE_BREAK_IF_FIRST_TIME_PLAYING = 3;
@@ -26,10 +30,10 @@ if (DEBUG) {
   QUESTIONS_TO_SHOW_BEFORE_BREAK_RANGE = [2, 2];
 }
 
-const AVAILABLE_QUESTION_COMPONENTS = [
+const AVAILABLE_QUESTION_COMPONENTS = {
   TextToPhotoQuestion,
   PhotoToTextQuestion,
-];
+};
 
 /**
  * Chooses which student to have the user guess and displays a question type
@@ -50,6 +54,7 @@ class GamePlayEnvironment extends React.Component {
     const initialStudentToGuess = _.find(permittedStudents, {
       id: storage.get(STUDENT_TO_GUESS_ID),
     });
+    const initialQuestionType = storage.get(QUESTION_TYPE);
     let remainingQuestionsCount;
     if (storage.get(HAS_PLAYED_ALREADY)) {
       remainingQuestionsCount = this.getNewRemainingQuestionsCount();
@@ -59,6 +64,7 @@ class GamePlayEnvironment extends React.Component {
     this.state = {
       students: permittedStudents,
       studentToGuess: initialStudentToGuess,
+      questionType: initialQuestionType,
       // This number will count down to 0.
       remainingQuestionsCount,
       // This number will stay constant so we know how far the user has come,
@@ -77,15 +83,16 @@ class GamePlayEnvironment extends React.Component {
     this.setState({
       remainingQuestionsCount,
       questionsInRound: remainingQuestionsCount,
+      justBadlyGuessedStudent: null,
     });
-    this.loadNextStudentToGuess();
+    this.loadNextQuestion();
   }
 
   componentWillMount() {
     // Only loads a new student on mount if there wasn't already a student
     // loaded. This prevents a user from cheating by refreshing the app
     // manually.
-    this.loadNextStudentToGuess(this.state.studentToGuess);
+    this.loadNextQuestion(this.state.studentToGuess);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -100,15 +107,24 @@ class GamePlayEnvironment extends React.Component {
     this.setState({
       remainingQuestionsCount: this.state.remainingQuestionsCount - 1,
     });
-    this.loadNextStudentToGuess();
+    this.loadNextQuestion();
+  }
+
+  handleBadGuess() {
+    this.setState({
+      justBadlyGuessedStudent: this.state.studentToGuess,
+    });
   }
 
   /**
    * Note: A pool is smaller than a universe. Duh!
    */
-  loadNextStudentToGuess(forcedStudent = null) {
+  loadNextQuestion(forcedStudent = null, forcedQuestionType = null) {
     // Don't let the last two guesses show up as options, unless that student
     // is forced.
+    const questionType = (
+      forcedQuestionType || _.sample(_.keys(AVAILABLE_QUESTION_COMPONENTS))
+    );
     const recentGuesses = GameData.getRecentlyGuessedStudentIDs().slice(0, 2);
     const guessUniverse = _.filter(this.state.students, (s) => {
       return (
@@ -127,23 +143,43 @@ class GamePlayEnvironment extends React.Component {
     guessPool = _.shuffle(guessPool);
     this.setState({
       studentToGuess: newStudent,
-      guessPool: guessPool,
+      guessPool,
+      questionType,
     });
     storage.set(STUDENT_TO_GUESS_ID, newStudent.id);
+    storage.set(QUESTION_TYPE, questionType);
+  }
+
+  renderContinueBlock() {
+    return (
+      <div>
+        <p>Are you ready to continue?</p>
+        <RaisedButton label='Bring it on' primary={true}
+                      icon={<ImageNavigateNext/>}
+                      labelPosition='before'
+                      labelStyle={{fontSize: 20}}
+                      buttonStyle={{
+                        height: 60,
+                        minWidth: window.innerWidth / 2
+                      }}
+                      onTouchTap={() => this.handleContinue()} />
+      </div>
+    );
   }
 
   render() {
-    const isSuccessPage = this.state.remainingQuestionsCount > 0;
+    const isSuccessPage = this.state.remainingQuestionsCount === 0;
 
     // Note that although this is called a Question, it is a specific subclass
     // of the Question class. It's called Question so that it's easier for an
     // IDE to map the required props onto it.
-    const Question = _.sample(AVAILABLE_QUESTION_COMPONENTS);
+    const Question = AVAILABLE_QUESTION_COMPONENTS[this.state.questionType];
     const question = () => (
       <Question
         studentToGuess={this.state.studentToGuess}
         guessPool={this.state.guessPool}
         handleGoodGuess={() => this.handleGoodGuess()}
+        handleBadGuess={() => this.handleBadGuess()}
         // Have the question element take up as much space as possible.
         style={{flex: '1 1 auto'}}
       />
@@ -151,13 +187,26 @@ class GamePlayEnvironment extends React.Component {
 
     let primaryComponent;
     if (isSuccessPage) {
-      primaryComponent = question();
-    } else {
       primaryComponent = (
-        <SuccessPage
-          handleContinue={() => this.handleContinue()}
-          circleProgressPercent={GameData.getGuessRatio({maxDepth: this.props.questionsInRound}) * 100} />
+        <div>
+          <SuccessPage
+            circleProgressPercent={GameData.getGuessRatio({maxDepth: this.props.questionsInRound}) * 100} />
+          {this.renderContinueBlock()}
+        </div>
       );
+    } else if (this.state.justBadlyGuessedStudent) {
+      primaryComponent = (
+        <div className='padding'>
+          <h1 style={{
+            fontWeight: 300,
+            color: muiTheme.palette.softTextColor,
+          }}>For your edification...</h1>
+          <StudentProfile student={this.state.justBadlyGuessedStudent} />
+          {this.renderContinueBlock()}
+        </div>
+      );
+    } else {
+      primaryComponent = question();
     }
 
     return (

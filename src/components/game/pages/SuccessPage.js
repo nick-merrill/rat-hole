@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import {greenA400} from 'material-ui/styles/colors';
 import CircleProgress from '../../CircleProgress';
-import {RaisedButton} from 'material-ui';
 
 class SuccessPage extends React.Component {
   render() {
@@ -14,15 +13,6 @@ class SuccessPage extends React.Component {
         <CircleProgress
           percent={this.props.circleProgressPercent}
           color={greenA400} />
-        <p>Are you ready to continue?</p>
-        <RaisedButton label='Bring it on!' primary={true}
-                      labelStyle={{fontSize: 20}}
-                      buttonStyle={{
-                        height: 60,
-                        minWidth: window.innerWidth / 2
-                      }}
-                      onTouchTap={() => this.props.handleContinue()}
-        />
       </div>
     );
   }
@@ -30,7 +20,6 @@ class SuccessPage extends React.Component {
 
 SuccessPage.propTypes = {
   circleProgressPercent: PropTypes.number.isRequired,
-  handleContinue: PropTypes.func.isRequired,
 };
 
 export default SuccessPage;

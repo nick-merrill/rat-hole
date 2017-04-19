@@ -71,7 +71,10 @@ class App extends Component {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className="main-container"
-             style={{color: muiTheme.palette.textColor}}>
+             style={{
+               color: muiTheme.palette.textColor,
+               backgroundColor: muiTheme.palette.canvasColor,
+             }}>
           <Screen className='container' />
         </div>
       </MuiThemeProvider>

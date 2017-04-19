@@ -3,6 +3,7 @@ import {Paper} from 'material-ui';
 import PropTypes from 'prop-types';
 import muiTheme from '../styles/muiTheme';
 import {getFlag, setFlag} from '../data/students';
+import * as _ from 'lodash';
 
 class StudentProfile extends React.Component {
   constructor(props) {
@@ -20,7 +21,10 @@ class StudentProfile extends React.Component {
 
   render() {
     let student = this.props.student;
-    const imageSize = 150;
+    const imageSize = _.min([
+      window.innerWidth * 0.75,
+      window.innerHeight / 2]
+    );
 
     return (
       <div style={{textAlign: 'center'}}>

@@ -21,9 +21,10 @@ class SideMenu extends React.Component {
       <div style={{textAlign: 'left'}}>
         <Drawer
           docked={false}
-          width={200}
+          // width={200}
           open={this.props.open}
           onRequestChange={this.props.onRequestChange}
+          disableSwipeToOpen={this.props.disableSwipeToOpen}
         >
           {this.props.items.map((item) => {
             let itemProps;
@@ -78,6 +79,11 @@ SideMenu.propTypes = {
   currentItemKey: React.PropTypes.string,
   handleClose: React.PropTypes.func,
   onRequestChange: React.PropTypes.func,
+  disableSwipeToOpen: React.PropTypes.bool,
+};
+
+SideMenu.defaultProps = {
+  disableSwipeToOpen: false,
 };
 
 export default SideMenu;

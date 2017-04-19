@@ -10,6 +10,7 @@ import GameData from '../../../data/GameData';
 import {getGreatWordShort} from '../generators';
 
 const GOOD_GUESS_DELAY = 400;
+const BAD_GUESS_DELAY = GOOD_GUESS_DELAY;
 const NUM_OTHER_STUDENTS = 3;
 
 class Question extends React.Component {
@@ -25,6 +26,7 @@ class Question extends React.Component {
   }
 
   componentDidMount() {}
+
   componentWillMount() {}
 
   componentWillReceiveProps(nextProps) {
@@ -41,7 +43,7 @@ class Question extends React.Component {
     }
   }
 
-  getFreshGuessPool(props, otherStudents = 3) {
+  getFreshGuessPool(props, otherStudents = NUM_OTHER_STUDENTS) {
     // other students, plus the correct one
     let allStudentOptions = [
       ...props.guessPool.slice(0, otherStudents),
@@ -53,8 +55,8 @@ class Question extends React.Component {
   }
 
   /**
-   * Gives time for the question subclass to show the user she was right,
-   * then notifies parent in order to move on.
+   Gives time for the question subclass to show the user she was right,
+   then notifies parent in order to move on.
    */
   handleGoodGuess() {
     GameData.registerGoodGuess(this.props.studentToGuess);
@@ -72,8 +74,23 @@ class Question extends React.Component {
     }, GOOD_GUESS_DELAY);
   }
 
+  /*
+   Delays BAD_GUESS_DELAY milliseconds, then tells the parent about the
+   bad guess.
+   */
   handleBadGuess(wrongStudent = null) {
     GameData.registerBadGuess(this.props.studentToGuess, wrongStudent);
+    this.setState({
+      wasJustUnsuccessful: true,
+      interactionAllowed: false,
+    });
+    setTimeout(() => {
+      // Callback for parent
+      this.props.handleBadGuess();
+      this.setState({
+        interactionAllowed: true,
+      });
+    }, BAD_GUESS_DELAY);
   }
 
   handleGuess(guessedStudent) {
@@ -96,6 +113,7 @@ Question.propTypes = {
   }).isRequired,
   guessPool: PropTypes.array.isRequired,
   handleGoodGuess: PropTypes.func.isRequired,
+  handleBadGuess: PropTypes.func.isRequired,
   style: PropTypes.object,
 };
 
