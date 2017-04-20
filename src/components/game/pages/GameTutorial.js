@@ -27,8 +27,7 @@ class GameTutorial extends React.Component {
         </h2>
         <div style={{textAlign: 'left'}}>
           <p>
-            While playing, your social abilities will be tested and
-            extended.
+            Your social abilities are about to be tested and extended.
           </p>
           <p>
             You can always change who you want to practice on with the filter

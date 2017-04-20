@@ -10,6 +10,11 @@ class SuccessPage extends React.Component {
     if (this.props.circleProgressPercent > 75) {
       smallMessage = 'Great work!';
     }
+    const encouragement = (
+      <p>
+        Don't worry. The more you play, the more you'll learn!
+      </p>
+    );
     return (
       <div>
         <h3>{smallMessage}</h3>
@@ -18,6 +23,7 @@ class SuccessPage extends React.Component {
           size={100}
           percent={this.props.circleProgressPercent}
           color={colors.greenA400} />
+        {this.props.circleProgressPercent < 40 && encouragement}
       </div>
     );
   }
