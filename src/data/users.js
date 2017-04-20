@@ -70,9 +70,10 @@ add(
   }
 );
 add(
-  'Chris', 'Mosch', leverett, staff,
+  'Chris', 'Mosch', leverett, dean,
   {
     imageURL: 'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15895094_1242892179109617_1467619406834022630_n.jpg?oh=45ae683d52efc9e55570d79740db1bc8&oe=594D4E43',
+    email: 'chris.p.mosch@gmail.com',
   }
 );
 add(
