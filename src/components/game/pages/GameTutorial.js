@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {RaisedButton} from 'material-ui';
 
-import StorageEngine from '../../lib/StorageEngine';
-import {getCurrentUser} from '../../data/users';
+import StorageEngine from '../../../lib/StorageEngine';
+import {getCurrentUser} from '../../../data/users';
 
 export const storage = new StorageEngine('game_tutorial');
 
@@ -18,17 +18,14 @@ class GameTutorial extends React.Component {
     const userHouseNickname = user.house.nickname || user.house.name;
     return (
       <div className='padding'>
-        <h1>How to Play</h1>
+        <h1>Welcome to the dojo.</h1>
         <div style={{textAlign: 'left'}}>
           <p>
-            Welcome to The Game.
-          </p>
-          <p>
-            While playing, your social abilities will both be tested and
+            While playing, your social abilities will be tested and
             extended.
           </p>
           <p>
-            By playing The Game, you are not only contributing to
+            By practicing in the Dojo, you are not only contributing to
             making {userHouseNickname} feel like a real home.
           </p>
         </div>

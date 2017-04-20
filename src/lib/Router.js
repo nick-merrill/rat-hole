@@ -1,10 +1,18 @@
 import $ from 'jquery';
+import * as _ from 'lodash';
+import routes from './routes';
+
+const goToPath = (path) => {
+  window.location.hash = path;
+};
 
 window.Router = window.Router ||
   {
-    goToPath: (path) => {
-      window.location.hash = path;
+    goToRoute: (routeKey) => {
+      const route = _.find(routes, {key: routeKey});
+      goToPath(route.path);
     },
+    goToPath: goToPath,
     getCurrentPath: () => {
       return window.location.hash.slice(1);
     },

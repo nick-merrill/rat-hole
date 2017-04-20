@@ -6,6 +6,7 @@ import CircleProgress from '../components/CircleProgress';
 import * as _ from 'lodash';
 import GameData from '../data/GameData';
 import {BarChart, Bar} from 'recharts';
+import {FlatButton} from 'material-ui';
 
 const buttonStyle = {
   margin: 15,
@@ -66,6 +67,15 @@ class Home extends React.Component {
     ];
     return (
       <div>
+        <RaisedButton label="Enter the Dojo"
+                      primary={true}
+                      style={buttonStyle}
+                      buttonStyle={{
+                        height: 50,
+                        minWidth: window.innerWidth * 0.75,
+                      }}
+                      onClick={() => Router.goToRoute('game')} />
+
         <div className='padding' style={{
           display: 'flex',
           flexDirection: 'row',
@@ -85,14 +95,10 @@ class Home extends React.Component {
           }
         </div>
 
-        <RaisedButton label="Test your knowledge"
-                      primary={true}
-                      style={buttonStyle}
-                      onClick={() => Router.goToPath('/game')} />
-        <RaisedButton label="See My Stats"
-                      secondary={true}
-                      style={buttonStyle}
-                      onClick={() => Router.goToPath('/stats')} />
+        <FlatButton label="See My Stats"
+                    primary={true}
+                    style={buttonStyle}
+                    onClick={() => Router.goToPath('/stats')} />
       </div>
     );
   }

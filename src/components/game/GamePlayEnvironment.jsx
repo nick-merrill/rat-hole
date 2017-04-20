@@ -3,6 +3,7 @@ import React from 'react';
 import {FlatButton, LinearProgress, RaisedButton} from 'material-ui';
 import {ImageNavigateNext} from 'material-ui/svg-icons'
 import _ from 'lodash';
+import * as colors from 'material-ui/styles/colors';
 
 import StorageEngine from '../../lib/StorageEngine';
 import Router from '../../lib/Router';
@@ -12,11 +13,14 @@ import {
   PhotoToTextQuestion,
 } from './questions';
 import GameData from '../../data/GameData';
-import LiveGameScore from './LiveGameScore';
+import LiveGameScore from './small_components/LiveGameScore';
 import SuccessPage from './pages/SuccessPage';
 import DEBUG from '../../lib/debug';
 import StudentProfile from '../StudentProfile';
 import muiTheme from '../../styles/muiTheme';
+import GameTutorial, {
+  storage as tutorialStorage
+} from '../../components/game/pages/GameTutorial';
 
 // Storage and its keys
 const storage = new StorageEngine('game_play_environment');
@@ -185,8 +189,18 @@ class GamePlayEnvironment extends React.Component {
       />
     );
 
+    /**
+     * If this is the first time the user is playing, show the tutorial screen.
+     * Otherwise, start the game.
+     */
+    const userHasSeenTutorial = !!tutorialStorage.get('hasReadTutorial');
+
     let primaryComponent;
-    if (isSuccessPage) {
+    if (!userHasSeenTutorial) {
+      primaryComponent = (
+        <GameTutorial handleContinue={() => this.handleContinue()} />
+      );
+    } else if (isSuccessPage) {
       primaryComponent = (
         <div>
           <SuccessPage
@@ -215,7 +229,9 @@ class GamePlayEnvironment extends React.Component {
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'stretch',
-        minHeight: window.innerHeight - 64,
+        minHeight: window.innerHeight - muiTheme.appBar.height,
+        backgroundColor: muiTheme.game.canvasColor,
+        color: muiTheme.game.textColor,
       }}>
         <LinearProgress
           mode='determinate'

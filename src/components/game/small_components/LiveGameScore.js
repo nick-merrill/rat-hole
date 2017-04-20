@@ -2,7 +2,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 
 import {AreaChart, Area} from 'recharts';
-import GameData from '../../data/GameData';
+import GameData from '../../../data/GameData';
 
 // Maximum history analyzed for success ratio
 const MAX_DEPTH = 8;

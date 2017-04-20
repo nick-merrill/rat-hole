@@ -23,14 +23,14 @@ class TextToPhotoQuestion extends Question {
         flexDirection: 'column',
         justifyContent: 'flex-start',
       }}>
-        <h3 style={{fontWeight: 300}}>
+        <h3 style={{fontWeight: 300, opacity: 0.9}}>
           Can you guess
           <div style={{fontWeight: 'bold'}}>
-            <span style={{color: muiTheme.palette.focusTextColor}}>
+            <span style={{opacity: 1}}>
               {studentToGuess.firstName}
             </span>
             &nbsp;
-            <span style={{color: muiTheme.palette.softTextColor}}>
+            <span style={{opacity: 0.9}}>
               {studentToGuess.lastName}
             </span>
           </div>

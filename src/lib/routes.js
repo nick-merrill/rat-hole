@@ -23,13 +23,14 @@ const routes = [
   },
   {
     key: 'game',
-    title: 'Game',
-    path: '/game',
+    title: 'Dojo',
+    path: '/dojo',
     component: Game,
   },
   {
     key: 'stats',
     title: 'My Stats',
+    icon: <i className='fa fa-tachometer' />,
     path: '/stats',
     component: Stats,
   },

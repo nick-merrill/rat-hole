@@ -9,6 +9,8 @@ const BAR_SIZE = 7;
 class CircleProgress extends React.Component {
   render() {
     const width = this.props.size;
+    const labelText = _.isNaN(this.props.percent) ? '---'
+      : `${Math.round(this.props.percent)}%`;
     const label = (
       <div
         style={{
@@ -26,14 +28,14 @@ class CircleProgress extends React.Component {
         }}
       >
         {
-          _.isNil(this.props.label) ? `${Math.round(this.props.percent)}%`
+          _.isNil(this.props.label) ? labelText
             : this.props.label
         }
       </div>
     );
     const data = [
       {
-        value: this.props.percent,
+        value: this.props.percent || 0,
         fill: this.props.color || '#ff0000',
       },
     ];

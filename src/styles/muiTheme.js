@@ -1,8 +1,15 @@
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import {
+import * as colors from 'material-ui/styles/colors';
+const {
   amber500,
-  blue500, blueGrey500, grey700, grey800, grey900, red500, white
-} from 'material-ui/styles/colors';
+  blue500,
+  blueGrey500,
+  grey700,
+  grey800,
+  grey900,
+  red500,
+  white
+} = colors;
 
 // I don't think we want to go with Harvard branding because it makes an app
 // seem clunky and old. If we did go with school colors theme, it might make
@@ -17,12 +24,12 @@ const muiTheme = getMuiTheme({
     canvasColor: white,
     /*
      DESIGN: Use this color for text that is less important. This is perfect
-       for helping the user's eyes be drawn towards what is more important.
+     for helping the user's eyes be drawn towards what is more important.
      */
     softTextColor: grey800,
     /*
      DESIGN: Only use pure black for things we want to draw the user's
-       eye towards.
+     eye towards.
      */
     focusTextColor: '#000',
     primary1Color: blue500,
@@ -34,6 +41,10 @@ const muiTheme = getMuiTheme({
     color: grey700,
     titleFontWeight: 300,
     height: 44,
+  },
+  game: {
+    canvasColor: '#fff9e4',
+    // textColor: colors.white,
   }
 });
 
