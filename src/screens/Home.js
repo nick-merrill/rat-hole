@@ -5,7 +5,6 @@ import * as colors from 'material-ui/styles/colors';
 import CircleProgress from '../components/CircleProgress';
 import * as _ from 'lodash';
 import GameData from '../data/GameData';
-import {Paper} from 'material-ui';
 import {BarChart, Bar} from 'recharts';
 
 const buttonStyle = {
@@ -14,7 +13,7 @@ const buttonStyle = {
 
 class Home extends React.Component {
   renderChart(data) {
-    const availableWidth = window.innerWidth / 2 - 40;
+    const availableWidth = 130;
     let graphElement;
     if (!_.isNil(data.percent)) {
       graphElement = (
@@ -76,12 +75,12 @@ class Home extends React.Component {
         }}>
           {
             data.map((d, index) => (
-              <Paper key={index} className='small-stat'>
-                <h3 style={{margin: 0}}>
+              <div key={index} className='small-stat'>
+                <h4 className='title' style={{margin: 0}}>
                   {d.title}
-                </h3>
+                </h4>
                 {this.renderChart(d)}
-              </Paper>
+              </div>
             ))
           }
         </div>

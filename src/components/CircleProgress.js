@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import {RadialBar, RadialBarChart} from 'recharts';
 import _ from 'lodash';
 
-const BAR_SIZE = 11;
+// This is the width of the bar if the radius is 100
+const BAR_SIZE = 7;
 
 class CircleProgress extends React.Component {
   render() {
