@@ -16,7 +16,7 @@ import muiTheme from './styles/muiTheme';
 
 // Our Files
 // eslint-disable-next-line no-unused-vars
-import DEBUG from './lib/debug';
+import * as debug from './lib/debug';  // sets up ability to enable debug mode
 import styles from './styles/styles';
 import {getCurrentUser} from './data/users';
 import Router from './lib/Router';

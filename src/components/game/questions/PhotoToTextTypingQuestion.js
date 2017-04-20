@@ -98,7 +98,6 @@ class PhotoToTextTypingQuestion extends Question {
       }}>
         <h3>
           Who is this?
-          {window.DEBUG && this.state.studentToGuess.firstName}
         </h3>
         <div style={{
           position: 'relative',

@@ -12,7 +12,6 @@ import AVAILABLE_QUESTION_COMPONENTS from './questions';
 import GameData from '../../data/GameData';
 import LiveGameScore from './small_components/LiveGameScore';
 import SuccessPage from './pages/SuccessPage';
-import DEBUG from '../../lib/debug';
 import StudentProfile from '../StudentProfile';
 import muiTheme from '../../styles/muiTheme';
 import GameTutorial, {
@@ -29,9 +28,6 @@ const HAS_PLAYED_ALREADY = 'has_played_already';
 
 const QUESTIONS_TO_SHOW_BEFORE_BREAK_IF_FIRST_TIME_PLAYING = 3;
 let QUESTIONS_TO_SHOW_BEFORE_BREAK_RANGE = [6, 8];  // because 7 is lucky ;)
-if (DEBUG) {
-  QUESTIONS_TO_SHOW_BEFORE_BREAK_RANGE = [2, 2];
-}
 
 /**
  * Chooses which student to have the user guess and displays a question type

@@ -9,13 +9,11 @@ const storage = new StorageEngine('debug');
 
 const DEBUG_KEY = 'DEBUG';
 
-const DEBUG = storage.get(DEBUG_KEY) || false;
-window.DEBUG = DEBUG;
+export const get_debug = () => storage.get(DEBUG_KEY) || false;
+window.get_debug = get_debug;
 
 const set_debug = (true_or_false) => {
   storage.set(DEBUG_KEY, true_or_false);
   window.DEBUG = true_or_false;
 };
 window.set_debug = set_debug;
-
-export default DEBUG;
