@@ -42,10 +42,6 @@ const muiTheme = getMuiTheme({
     titleFontWeight: 300,
     height: 44,
   },
-  game: {
-    canvasColor: '#fff9e4',
-    // textColor: colors.white,
-  }
 });
 
 export default muiTheme;

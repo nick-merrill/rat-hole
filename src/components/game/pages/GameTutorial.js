@@ -18,29 +18,37 @@ class GameTutorial extends React.Component {
     const userHouseNickname = user.house.nickname || user.house.name;
     return (
       <div className='padding'>
-        <h1>Welcome to the dojo.</h1>
+        <h2 style={{fontWeight: 'normal'}}>
+          <span className='prefer-no-wrap'>Welcome to the</span>
+          &nbsp;
+          <span className='prefer-no-wrap'>
+            {userHouseNickname} dojo.
+          </span>
+        </h2>
         <div style={{textAlign: 'left'}}>
           <p>
             While playing, your social abilities will be tested and
             extended.
           </p>
-          <p>
-            By practicing in the Dojo, you are not only contributing to
-            making {userHouseNickname} feel like a real home.
-          </p>
         </div>
 
         <RaisedButton label='Play on Starred Students' primary={true}
-                      buttonStyle={{height: 50, minWidth: window.innerWidth / 2}}
+                      buttonStyle={{
+                        height: 50,
+                        minWidth: window.innerWidth / 2
+                      }}
                       onClick={() => this.handleContinue()}
-                      icon={<i className='color-white fa fa-chevron-right'/>}
+                      icon={<i className='color-white fa fa-chevron-right' />}
                       style={{margin: 10}}
-                      labelPosition='before'/>
+                      labelPosition='before' />
         <RaisedButton label='Play on Entire House' primary={true}
-                      buttonStyle={{height: 50, minWidth: window.innerWidth / 2}}
+                      buttonStyle={{
+                        height: 50,
+                        minWidth: window.innerWidth / 2
+                      }}
                       onClick={() => this.handleContinue()}
-                      icon={<i className='color-white fa fa-chevron-right'/>}
-                      labelPosition='before'/>
+                      icon={<i className='color-white fa fa-chevron-right' />}
+                      labelPosition='before' />
       </div>
     );
   }

@@ -36,7 +36,7 @@ class LiveGameScore extends React.Component {
       return (
         <div>
           {/*<h4>Correctness</h4>*/}
-          <AreaChart width={window.innerWidth - 20}
+          <AreaChart width={window.innerWidth}
                      height={70}
                      data={this.state.data}>
             <defs>

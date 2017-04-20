@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import GameData from '../data/GameData';
 import {BarChart, Bar} from 'recharts';
 import {FlatButton} from 'material-ui';
+import muiTheme from '../styles/muiTheme';
 
 const buttonStyle = {
   margin: 15,
@@ -86,7 +87,10 @@ class Home extends React.Component {
           {
             data.map((d, index) => (
               <div key={index} className='small-stat'>
-                <h4 className='title' style={{margin: 0}}>
+                <h4 className='title' style={{
+                  margin: 0,
+                  color: muiTheme.palette.softTextColor,
+                }}>
                   {d.title}
                 </h4>
                 {this.renderChart(d)}

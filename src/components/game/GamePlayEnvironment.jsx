@@ -1,7 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import {FlatButton, LinearProgress, RaisedButton} from 'material-ui';
-import {ImageNavigateNext} from 'material-ui/svg-icons'
+import {ImageNavigateNext} from 'material-ui/svg-icons';
 import _ from 'lodash';
 
 import StorageEngine from '../../lib/StorageEngine';
@@ -31,6 +31,7 @@ const QUESTIONS_TO_SHOW_BEFORE_BREAK_IF_FIRST_TIME_PLAYING = 3;
 let QUESTIONS_TO_SHOW_BEFORE_BREAK_RANGE = [6, 8];  // 7 is lucky ;)
 if (DEBUG) {
   QUESTIONS_TO_SHOW_BEFORE_BREAK_RANGE = [2, 2];
+  // QUESTIONS_TO_SHOW_BEFORE_BREAK_RANGE = [0, 0];
 }
 
 const AVAILABLE_QUESTION_COMPONENTS = {
@@ -82,12 +83,16 @@ class GamePlayEnvironment extends React.Component {
   }
 
   handleContinue() {
-    const remainingQuestionsCount = this.getNewRemainingQuestionsCount();
     this.setState({
-      remainingQuestionsCount,
-      questionsInRound: remainingQuestionsCount,
       justBadlyGuessedStudent: null,
     });
+    if (this.state.remainingQuestionsCount === 0) {
+      const remainingQuestionsCount = this.getNewRemainingQuestionsCount();
+      this.setState({
+        remainingQuestionsCount,
+        questionsInRound: remainingQuestionsCount,
+      });
+    }
     this.loadNextQuestion();
   }
 
@@ -106,14 +111,19 @@ class GamePlayEnvironment extends React.Component {
     }
   }
 
-  handleGoodGuess() {
+  decrementRemainingQuestionsCount() {
     this.setState({
       remainingQuestionsCount: this.state.remainingQuestionsCount - 1,
     });
+  }
+
+  handleGoodGuess() {
+    this.decrementRemainingQuestionsCount();
     this.loadNextQuestion();
   }
 
   handleBadGuess() {
+    this.decrementRemainingQuestionsCount();
     this.setState({
       justBadlyGuessedStudent: this.state.studentToGuess,
     });
@@ -160,10 +170,9 @@ class GamePlayEnvironment extends React.Component {
         <RaisedButton label='Bring it on' primary={true}
                       icon={<ImageNavigateNext/>}
                       labelPosition='before'
-                      labelStyle={{fontSize: 20}}
                       buttonStyle={{
-                        height: 60,
-                        minWidth: window.innerWidth / 2
+                        height: 50,
+                        minWidth: window.innerWidth * 0.75,
                       }}
                       onTouchTap={() => this.handleContinue()} />
       </div>
@@ -210,10 +219,6 @@ class GamePlayEnvironment extends React.Component {
     } else if (this.state.justBadlyGuessedStudent) {
       primaryComponent = (
         <div className='padding'>
-          <h1 style={{
-            fontWeight: 300,
-            color: muiTheme.palette.softTextColor,
-          }}>For your edification...</h1>
           <StudentProfile student={this.state.justBadlyGuessedStudent} />
           {this.renderContinueBlock()}
         </div>
@@ -229,8 +234,6 @@ class GamePlayEnvironment extends React.Component {
         justifyContent: 'space-between',
         alignItems: 'stretch',
         minHeight: window.innerHeight - muiTheme.appBar.height,
-        backgroundColor: muiTheme.game.canvasColor,
-        color: muiTheme.game.textColor,
       }}>
         <LinearProgress
           mode='determinate'
