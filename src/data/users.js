@@ -76,6 +76,13 @@ add(
     email: 'chris.p.mosch@gmail.com',
   }
 );
+add(
+  'Evan', 'Gastman', pfoho, staff,
+  {
+    imageURL: '/img/users/evan.jpg',
+    email: 'evangastman@college.harvard.edu',
+  }
+);
 
 export const storage = new StorageEngine('users');
 

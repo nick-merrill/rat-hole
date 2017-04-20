@@ -15,6 +15,7 @@ import Router from '../lib/Router';
 import routes from '../lib/routes';
 import {getCurrentUser, setCurrentUser} from '../data/users';
 import {AppBar, Avatar} from 'material-ui';
+import gameMuiTheme from '../styles/gameMuiTheme';
 
 export const APP_BAR_HEIGHT = muiTheme.appBar.height;
 
@@ -50,7 +51,10 @@ class OurAppBar extends React.Component {
   }
 
   render() {
-    const appBarStyle = {
+    const currentRoute = this.props.currentRoute;
+    const currentPath = currentRoute.path;
+    const currentUser = getCurrentUser();
+    let appBarStyle = {
       position: 'fixed',
       width: '100%',
       left: 0,
@@ -59,6 +63,13 @@ class OurAppBar extends React.Component {
       margin: 0,
       height: APP_BAR_HEIGHT,
     };
+    const gameAppBarStyle = _.merge({}, appBarStyle, {
+      backgroundColor: gameMuiTheme.appBar.color,
+      color: gameMuiTheme.appBar.textColor,
+    });
+    if (currentRoute.key === 'game') {
+      _.merge(appBarStyle, gameAppBarStyle);
+    }
     const appBarTitleStyle = {
       position: 'absolute',
       textAlign: 'center',
@@ -68,8 +79,6 @@ class OurAppBar extends React.Component {
       top: 0,
       fontSize: 20,
     };
-    const currentPath = this.props.currentRoute.path;
-    const currentUser = getCurrentUser();
     const HomeAppBar = () => (
       <div>
         <AppBar
