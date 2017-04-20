@@ -30,24 +30,19 @@ class GameTutorial extends React.Component {
             While playing, your social abilities will be tested and
             extended.
           </p>
+          <p>
+            You can always change who you want to practice on with the filter
+            in the navigation bar at the top.
+          </p>
         </div>
 
-        <RaisedButton label='Play on Starred Students' primary={true}
+        <RaisedButton label='Begin' primary={true}
                       buttonStyle={{
                         height: 50,
                         minWidth: window.innerWidth / 2
                       }}
                       onClick={() => this.handleContinue()}
-                      icon={<i className='color-white fa fa-chevron-right' />}
-                      style={{margin: 10}}
-                      labelPosition='before' />
-        <RaisedButton label='Play on Entire House' primary={true}
-                      buttonStyle={{
-                        height: 50,
-                        minWidth: window.innerWidth / 2
-                      }}
-                      onClick={() => this.handleContinue()}
-                      icon={<i className='color-white fa fa-chevron-right' />}
+                      icon={<i className='color-white ion-chevron-right' />}
                       labelPosition='before' />
       </div>
     );

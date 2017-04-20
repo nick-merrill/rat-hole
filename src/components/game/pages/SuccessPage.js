@@ -6,9 +6,13 @@ import CircleProgress from '../../CircleProgress';
 
 class SuccessPage extends React.Component {
   render() {
+    let smallMessage = 'Good work!';
+    if (this.props.circleProgressPercent > 75) {
+      smallMessage = 'Great work!';
+    }
     return (
       <div>
-        <h3>You're doing great!</h3>
+        <h3>{smallMessage}</h3>
         <p>Here's how you did that round:</p>
         <CircleProgress
           size={100}

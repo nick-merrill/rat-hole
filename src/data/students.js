@@ -7,6 +7,7 @@ import {getCurrentUser} from './users';
 import StorageEngine from '../lib/StorageEngine';
 
 let storage = new StorageEngine('students');
+const IS_FLAGGED_KEY = 'is_flagged';
 
 let students = [];
 let idCount = 1;  // to mark each student with a unique ID
@@ -558,6 +559,16 @@ export const getStudentData = (student) => {
   return data[student.id] || {};
 };
 
+export const getFlaggedStudentIDs = () => {
+  let ret = [];
+  Object.entries(_getData()).forEach(([id, props]) => {
+    if (props[IS_FLAGGED_KEY]) {
+      ret.push(id);
+    }
+  });
+  return ret;
+};
+
 // Private method. Use `patchStudentData` for updates instead.
 const _setStudentData = (student, newData) => {
   let data = _getData();
@@ -571,8 +582,6 @@ export const patchStudentData = (student, patchObject) => {
   _setStudentData(student, studentData);
 };
 
-const IS_FLAGGED_KEY = 'is_flagged';
-
 export const setFlag = (student, isFlagged) => {
   let patch = {};
   patch[IS_FLAGGED_KEY] = isFlagged;
@@ -584,3 +593,6 @@ export const setFlag = (student, isFlagged) => {
 export const getFlag = (student) => {
   return !!getStudentData(student)[IS_FLAGGED_KEY];
 };
+
+// For debugging purposes
+window.students = students;

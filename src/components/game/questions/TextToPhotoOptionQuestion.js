@@ -4,8 +4,18 @@ import _ from 'lodash';
 
 import Question from './Question';
 import {GridList, GridTile} from 'material-ui';
+import {brightOverlayColors} from '../../../lib/colors';
 
-class TextToPhotoQuestion extends Question {
+class TextToPhotoOptionQuestion extends Question {
+  constructor(props) {
+    super(props);
+    // When the component is unmounted and remounted, these will get
+    // reinitialized.
+    Object.assign(this.state, {
+      brightOverlayColor: _.sample(brightOverlayColors),
+    });
+  }
+
   render() {
     const studentToGuess = this.state.studentToGuess;
     // Results in square photos if in portrait and reasonably sized photos if
@@ -50,6 +60,9 @@ class TextToPhotoQuestion extends Question {
                       key={s.id}
                       onTouchTap={() => this.handleGuess(s)}
                       style={{opacity: x}}
+                      titleStyle={{
+                        color: this.state.brightOverlayColor,
+                      }}
                       title={
                         s.id === studentToGuess.id && (
                           this.state.wasJustSuccessful
@@ -81,4 +94,4 @@ class TextToPhotoQuestion extends Question {
   }
 }
 
-export default TextToPhotoQuestion;
+export default TextToPhotoOptionQuestion;

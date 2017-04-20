@@ -5,9 +5,11 @@ import {AreaChart, Area} from 'recharts';
 import GameData from '../../../data/GameData';
 
 // Maximum history analyzed for success ratio
-const MAX_DEPTH = 8;
+// Allow for rapid changes to make choices appear more impactful
+const MAX_DEPTH = 5;
 // Max number of data points on graph
-const MAX_NUM_DATA_POINTS = 8;
+// Allow to see about 2 minutes worth of progress
+const MAX_NUM_DATA_POINTS = 16;
 
 class LiveGameScore extends React.Component {
   constructor(props) {

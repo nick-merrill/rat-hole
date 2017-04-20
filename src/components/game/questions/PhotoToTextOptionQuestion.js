@@ -3,14 +3,9 @@ import _ from 'lodash';
 
 import Question from './Question';
 import {RaisedButton} from 'material-ui';
-import {
-  cyanA100,
-  lightGreenA200,
-  pinkA200,
-  purpleA200
-} from 'material-ui/styles/colors';
+import {brightOverlayColors} from '../../../lib/colors';
 
-class PhotoToTextQuestion extends Question {
+class PhotoToTextOptionQuestion extends Question {
   render() {
     const studentToGuess = this.state.studentToGuess;
 
@@ -29,7 +24,6 @@ class PhotoToTextQuestion extends Question {
         <h3>
           Who is this?
         </h3>
-        {/* 2-by-2 table of photos */}
         <div style={{
           position: 'relative',
           textAlign: 'center',
@@ -51,7 +45,7 @@ class PhotoToTextQuestion extends Question {
             height: '100%',
             fontSize: 30,
             fontFamily: 'San Francisco Display',
-            color: _.sample([lightGreenA200, pinkA200, purpleA200, cyanA100]),
+            color: _.sample(brightOverlayColors),
             fontWeight: 'bold',
             textShadow: '0 0 4px #000',
           }}>
@@ -89,4 +83,4 @@ class PhotoToTextQuestion extends Question {
   }
 }
 
-export default PhotoToTextQuestion;
+export default PhotoToTextOptionQuestion;

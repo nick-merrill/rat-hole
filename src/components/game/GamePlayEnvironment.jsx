@@ -1,16 +1,14 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import {FlatButton, LinearProgress, RaisedButton} from 'material-ui';
+import * as colors from 'material-ui/styles/colors';
 import {ImageNavigateNext} from 'material-ui/svg-icons';
 import _ from 'lodash';
 
 import StorageEngine from '../../lib/StorageEngine';
 import Router from '../../lib/Router';
 import {getPermittedStudents} from '../../data/students';
-import {
-  TextToPhotoQuestion,
-  PhotoToTextQuestion,
-} from './questions';
+import AVAILABLE_QUESTION_COMPONENTS from './questions';
 import GameData from '../../data/GameData';
 import LiveGameScore from './small_components/LiveGameScore';
 import SuccessPage from './pages/SuccessPage';
@@ -20,6 +18,8 @@ import muiTheme from '../../styles/muiTheme';
 import GameTutorial, {
   storage as tutorialStorage
 } from '../../components/game/pages/GameTutorial';
+import {getValidQuestionTypesForStudentToGuess} from './questions/index';
+import CircleProgress from '../CircleProgress';
 
 // Storage and its keys
 const storage = new StorageEngine('game_play_environment');
@@ -28,16 +28,10 @@ const QUESTION_TYPE = 'questionType';
 const HAS_PLAYED_ALREADY = 'has_played_already';
 
 const QUESTIONS_TO_SHOW_BEFORE_BREAK_IF_FIRST_TIME_PLAYING = 3;
-let QUESTIONS_TO_SHOW_BEFORE_BREAK_RANGE = [6, 8];  // 7 is lucky ;)
+let QUESTIONS_TO_SHOW_BEFORE_BREAK_RANGE = [6, 8];  // because 7 is lucky ;)
 if (DEBUG) {
   QUESTIONS_TO_SHOW_BEFORE_BREAK_RANGE = [2, 2];
-  // QUESTIONS_TO_SHOW_BEFORE_BREAK_RANGE = [0, 0];
 }
-
-const AVAILABLE_QUESTION_COMPONENTS = {
-  TextToPhotoQuestion,
-  PhotoToTextQuestion,
-};
 
 /**
  * Chooses which student to have the user guess and displays a question type
@@ -66,7 +60,6 @@ class GamePlayEnvironment extends React.Component {
       remainingQuestionsCount = QUESTIONS_TO_SHOW_BEFORE_BREAK_IF_FIRST_TIME_PLAYING;
     }
     this.state = {
-      students: permittedStudents,
       studentToGuess: initialStudentToGuess,
       questionType: initialQuestionType,
       // This number will count down to 0.
@@ -82,6 +75,10 @@ class GamePlayEnvironment extends React.Component {
     return _.random(min, max);
   }
 
+  /**
+   * This is called from several places, including the tutorial page, the
+   * success page, and the failure/memory refresher page.
+   */
   handleContinue() {
     this.setState({
       justBadlyGuessedStudent: null,
@@ -135,24 +132,33 @@ class GamePlayEnvironment extends React.Component {
   loadNextQuestion(forcedStudent = null, forcedQuestionType = null) {
     // Don't let the last two guesses show up as options, unless that student
     // is forced.
-    const questionType = (
-      forcedQuestionType || _.sample(_.keys(AVAILABLE_QUESTION_COMPONENTS))
-    );
     const recentGuesses = GameData.getRecentlyGuessedStudentIDs().slice(0, 2);
-    const guessUniverse = _.filter(this.state.students, (s) => {
+    const guessUniverse = _.filter(GameData.getFilteredStudents(), (s) => {
       return (
         !recentGuesses.includes(s.id)
         || (forcedStudent && forcedStudent.id === s.id)
       );
     });
     const newStudent = forcedStudent || _.sample(guessUniverse);
+    if (_.isNil(newStudent)) {
+      alert(
+        'We could not find a new student. Perhaps review your filter' +
+        'settings before continuing.'
+      );
+      Router.goToPath('/');
+    }
+    // This helps us determine how difficult this student is for this user
+    const questionTypeUniverse = getValidQuestionTypesForStudentToGuess(newStudent);
+    const questionType = (
+      forcedQuestionType || _.sample(_.keys(questionTypeUniverse))
+    );
     // Don't include the same student as the student to be guessed or
     // any students of a different sex than the student to be guessed,
     // lest the game be too easy.
     let guessPool = _.reject(guessUniverse, (s) => {
       return s.id === newStudent.id || s.sex !== newStudent.sex;
     });
-    // OPTIMIZE:
+    // OPTIMIZE: The whole list needn't be shuffled just to get a random sample.
     guessPool = _.shuffle(guessPool);
     this.setState({
       studentToGuess: newStudent,
@@ -168,7 +174,7 @@ class GamePlayEnvironment extends React.Component {
       <div>
         <p>Are you ready to continue?</p>
         <RaisedButton label='Bring it on' primary={true}
-                      icon={<ImageNavigateNext/>}
+                      icon={<ImageNavigateNext />}
                       labelPosition='before'
                       buttonStyle={{
                         height: 50,
@@ -212,7 +218,7 @@ class GamePlayEnvironment extends React.Component {
       primaryComponent = (
         <div>
           <SuccessPage
-            circleProgressPercent={GameData.getGuessRatio({maxDepth: this.props.questionsInRound}) * 100} />
+            circleProgressPercent={GameData.getGuessRatio({maxDepth: this.state.questionsInRound}) * 100} />
           {this.renderContinueBlock()}
         </div>
       );
@@ -224,11 +230,28 @@ class GamePlayEnvironment extends React.Component {
         </div>
       );
     } else {
-      primaryComponent = question();
+      primaryComponent = (
+        <div>
+          {/* Tiny status indicator about how easy this guess probably is */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            margin: 2,
+          }}>
+            <CircleProgress size={20}
+                            color={colors.green500}
+                            percent={GameData.guessRatioForStudent(this.state.studentToGuess) * 100}
+                            label='' />
+          </div>
+          {question()}
+        </div>
+      );
     }
 
     return (
       <div style={{
+        position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',

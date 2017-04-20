@@ -13,6 +13,11 @@ import StorageEngine from '../lib/StorageEngine';
 
 export const CURRENT_USER_KEY = 'current_user';
 
+// To give each user a unique ID
+// SECURITY: This allows a user to be logged in as a different user if a
+//   developer adds new users in a different order.
+let currentID = 1;
+
 let users = [];
 
 // User's email is like kunhok@x.com
@@ -32,6 +37,7 @@ const add = (firstName, lastName, house, role, extra = {}) => {
     throw new Error('"extra" parameter must be an object');
   }
   let user = {
+    id: currentID++,
     role,
     house,
     firstName,
@@ -86,11 +92,11 @@ add(
 export const storage = new StorageEngine('users');
 
 export const getCurrentUser = () => {
-  return storage.get(CURRENT_USER_KEY);
+  const userID = storage.get(CURRENT_USER_KEY);
+  return _.find(users, {id: userID});
 };
-window.getCurrentUser = getCurrentUser;
 export const setCurrentUser = (user) => {
-  storage.set(CURRENT_USER_KEY, user);
+  storage.set(CURRENT_USER_KEY, user.id);
 };
 
 // Returns nil if user with that email does not exist.

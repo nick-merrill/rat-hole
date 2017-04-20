@@ -19,14 +19,14 @@ let gameMuiTheme = getMuiTheme(
     },
     appBar: {
       color: lighten(canvasColor, 0.2),
-      // textColor:
+      textColor: colors.white,
     },
   })
 );
 
 _.merge(gameMuiTheme, {
   raisedButton: {
-    // primaryTextColor: gameMuiTheme.palette.textColor,
+    primaryTextColor: gameMuiTheme.palette.textColor,
     // fontWeight: 'normal',
   },
 });

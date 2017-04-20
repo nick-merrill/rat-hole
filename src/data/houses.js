@@ -3,6 +3,7 @@ let houses = [];
 const add = (name, extra = {}) => {
   let house = {
     name,
+    nickname: name,
     ...extra
   };
   houses.push(house);
@@ -11,6 +12,6 @@ const add = (name, extra = {}) => {
 
 export const pfoho = add('Pforzheimer', {nickname: 'Pfoho'});
 export const quincy = add('Quincy');
-export const leverett = add('Leverett');
+export const leverett = add('Leverett', {nickname: 'Lev'});
 
 export default houses;

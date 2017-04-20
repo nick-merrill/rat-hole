@@ -14,8 +14,12 @@ import SideMenu from '../components/SideMenu';
 import Router from '../lib/Router';
 import routes from '../lib/routes';
 import {getCurrentUser, setCurrentUser} from '../data/users';
-import {AppBar, Avatar} from 'material-ui';
+import {
+  AppBar, Avatar, DropDownMenu, MenuItem,
+  MuiThemeProvider
+} from 'material-ui';
 import gameMuiTheme from '../styles/gameMuiTheme';
+import GameData, {FILTER_MODES} from '../data/GameData';
 
 export const APP_BAR_HEIGHT = muiTheme.appBar.height;
 
@@ -102,11 +106,47 @@ class OurAppBar extends React.Component {
       </div>
     );
     const ScreenAppBar = () => (
-      <AppBar title={this.props.currentRoute.title}
-              iconClassNameLeft='ion ion-chevron-left'
-              onLeftIconButtonTouchTap={() => Router.goToPath('/')}
-              style={appBarStyle}
-              titleStyle={appBarTitleStyle} />
+      <MuiThemeProvider
+        muiTheme={currentRoute.key === 'game' ? gameMuiTheme : muiTheme}>
+        <AppBar title={currentRoute.key !== 'game' && currentRoute.title}
+                iconClassNameLeft='ion ion-chevron-left'
+                onLeftIconButtonTouchTap={() => Router.goToPath('/')}
+                iconElementRight={
+                  currentRoute.key === 'game' ?
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      left: 0,
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'flex-end',
+                    }}>
+                      <div>Dojo Mode</div>
+                      <DropDownMenu
+                        value={GameData.getFilterMode()}
+                        maxHeight={window.innerHeight / 2}
+                        onChange={(event, index, value) => {
+                          GameData.setFilterMode(value);
+                          // HACK: Should update the game properly, through a
+                          //   Redux store, perhaps. These two lines are bad.
+                          this.forceUpdate();
+                          Router.informOfChangeManually();
+                        }}>
+                        {
+                          Object.entries(FILTER_MODES).map(([key, props]) => (
+                            <MenuItem key={key}
+                                      value={key}
+                                      primaryText={props.getTitle()} />
+                          ))
+                        }
+                      </DropDownMenu>
+                    </div> : <span />
+                }
+                style={appBarStyle}
+                titleStyle={appBarTitleStyle} />
+      </MuiThemeProvider>
     );
     // Returns the appropriate App Bar
     const isHome = this.props.currentRoute.key === 'home';
