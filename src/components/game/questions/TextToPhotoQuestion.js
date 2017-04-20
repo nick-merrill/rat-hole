@@ -3,7 +3,6 @@ import {Motion, spring} from 'react-motion';
 import _ from 'lodash';
 
 import Question from './Question';
-import muiTheme from '../../../styles/muiTheme';
 import {GridList, GridTile} from 'material-ui';
 
 class TextToPhotoQuestion extends Question {

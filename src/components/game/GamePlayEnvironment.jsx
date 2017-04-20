@@ -3,7 +3,6 @@ import React from 'react';
 import {FlatButton, LinearProgress, RaisedButton} from 'material-ui';
 import {ImageNavigateNext} from 'material-ui/svg-icons'
 import _ from 'lodash';
-import * as colors from 'material-ui/styles/colors';
 
 import StorageEngine from '../../lib/StorageEngine';
 import Router from '../../lib/Router';
