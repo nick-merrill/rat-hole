@@ -57,12 +57,6 @@ class PhotoToTextTypingQuestion extends Question {
   handleValueChange(event) {
     this.setState({
       guessValue: event.target.value,
-    }, () => {
-      // Once the state has certainly updated, checks the guess.
-      // Auto-submit guess if it is already correct ---->  FUN!!!
-      if (this.checkHasCorrectGuess()) {
-        this.handleGoodGuess();
-      }
     });
   }
 

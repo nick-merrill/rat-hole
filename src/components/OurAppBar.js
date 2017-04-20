@@ -27,9 +27,9 @@ const menuItems = [
   {
     route: _.find(routes, {key: 'studentList'}),
   },
-  {
-    route: _.find(routes, {key: 'stats'}),
-  },
+  // {
+  //   route: _.find(routes, {key: 'stats'}),
+  // },
   {
     route: _.find(routes, {key: 'settings'}),
   },

@@ -50,7 +50,6 @@ class GameData {
     this._storage = new StorageEngine('game_data');
     // Keeps track of student-specific data by using unique IDs as a
     // lookup method.
-    this._storage.set(STUDENTS, {});
     this._subscribers = [];
   }
 
@@ -152,6 +151,14 @@ class GameData {
 
   correctGuessCountForStudent(student) {
     return this._getStudentData(student).correctlyGuessedCount || 0;
+  }
+
+  averageRecentGuessRatio() {
+    let guessRatios = [];
+    getPermittedStudents().forEach((s) => {
+      guessRatios.push(this.guessRatioForStudent(s));
+    });
+    return _.mean(guessRatios);
   }
 
   getFilterMode() {

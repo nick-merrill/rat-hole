@@ -6,8 +6,8 @@ import CircleProgress from '../components/CircleProgress';
 import * as _ from 'lodash';
 import GameData from '../data/GameData';
 import {BarChart, Bar} from 'recharts';
-import {FlatButton} from 'material-ui';
 import muiTheme from '../styles/muiTheme';
+import {getCurrentUser} from '../data/users';
 
 const buttonStyle = {
   margin: 15,
@@ -15,13 +15,14 @@ const buttonStyle = {
 
 class Home extends React.Component {
   renderChart(data) {
-    const availableWidth = 130;
+    const availableWidth = data.fullWidth ? 200 : 130;
     let graphElement;
     if (!_.isNil(data.percent)) {
       graphElement = (
         <CircleProgress
           size={availableWidth}
           percent={data.percent}
+          label={data.label}
           color={data.color} />
       );
     } else if (!_.isNil(data.bars)) {
@@ -37,33 +38,39 @@ class Home extends React.Component {
       throw new Error('Could not render this type of data');
     }
     return (
-      <div onClick={() => Router.goToPath('/stats')}>
+      <div>
         {graphElement}
       </div>
     );
   }
 
   render() {
+    const rand1 = 64;
+    const averageRecentGuessRatio = GameData.averageRecentGuessRatio() * 100;
+    const currentUser = getCurrentUser();
     const data = [
       {
         title: 'House Knowledge',
-        percent: GameData.getGuessRatio(),
+        percent: averageRecentGuessRatio,
+        label: `${Math.round(averageRecentGuessRatio)}% of ${currentUser.house.nickname}`,
         color: colors.pink500,
+        fullWidth: true,
       },
       {
-        title: 'Radar Coverage',
-        percent: GameData.getGuessRatio(),
+        title: 'Latest Record',
+        percent: GameData.getGuessRatio() * 100,
         color: colors.lightBlue500,
       },
       {
         title: 'Improvement',
-        bars: [{value: 10}, {value: 20}],
+        bars: [{value: 7}, {value: 9}, {value: 15}],
         color: colors.green500,
       },
       {
         title: 'Ranking',
-        percent: _.random(0, 100),
-        color: colors.amber500,
+        percent: 100 - rand1,
+        label: `Top ${rand1}%`,
+        color: colors.deepOrange500,
       },
     ];
     return (
@@ -99,10 +106,10 @@ class Home extends React.Component {
           }
         </div>
 
-        <FlatButton label="See My Stats"
-                    primary={true}
-                    style={buttonStyle}
-                    onClick={() => Router.goToPath('/stats')} />
+        {/*<FlatButton label="See My Stats"*/}
+                    {/*primary={true}*/}
+                    {/*style={buttonStyle}*/}
+                    {/*onClick={() => Router.goToPath('/stats')} />*/}
       </div>
     );
   }
