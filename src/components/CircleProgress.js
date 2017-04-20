@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {RadialBar, RadialBarChart} from 'recharts';
 import _ from 'lodash';
 
-const BAR_SIZE = 15;
+const BAR_SIZE = 11;
 
 class CircleProgress extends React.Component {
   render() {

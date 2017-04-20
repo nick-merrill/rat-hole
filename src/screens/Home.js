@@ -14,7 +14,7 @@ const buttonStyle = {
 
 class Home extends React.Component {
   renderChart(data) {
-    const availableWidth = window.innerWidth / 2 - 30;
+    const availableWidth = window.innerWidth / 2 - 40;
     let graphElement;
     if (!_.isNil(data.percent)) {
       graphElement = (
@@ -77,7 +77,7 @@ class Home extends React.Component {
           {
             data.map((d, index) => (
               <Paper key={index} className='small-stat'>
-                <h3 style={{flex: '0 0 auto', margin: 0}}>
+                <h3 style={{margin: 0}}>
                   {d.title}
                 </h3>
                 {this.renderChart(d)}
