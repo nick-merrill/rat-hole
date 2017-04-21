@@ -12,14 +12,31 @@ const IS_FLAGGED_KEY = 'is_flagged';
 let students = [];
 let idCount = 1;  // to mark each student with a unique ID
 
+const getYearString = (year) => {
+  switch (year) {
+  case 2017:
+    return 'senior';
+  case 2018:
+    return 'junior';
+  case 2019:
+    return 'sophomore';
+  case 2020:
+    return 'freshman';
+  default:
+    return 'alumnus';
+  }
+};
+
 const add = (firstName, lastName, house, year, concentration, sex, imageURL, bio) => {
   students.push({
     id: idCount++,
     role: roles.student,
     firstName,
     lastName,
+    fullName: `${firstName} ${lastName}`, // for Fuse search score purposes
     house,
     year,
+    yearString: getYearString(year),
     concentration,
     sex,
     imageURL,
@@ -54,7 +71,7 @@ add(
   '2020',
   'Philosophy',
   'M',
-'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-1/15079033_10211581463516017_8272026401114106521_n.jpg?oh=adbde74a22790c659e145af0e7e26715&oe=598FA558',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-1/15079033_10211581463516017_8272026401114106521_n.jpg?oh=adbde74a22790c659e145af0e7e26715&oe=598FA558',
   'Nebras likes to read Kant'
 );
 

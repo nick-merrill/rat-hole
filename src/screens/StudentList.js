@@ -15,17 +15,19 @@ class StudentList extends React.Component {
     // See http://fusejs.io/ to understand these options.
     this.studentFuse = new Fuse(this.permittedStudents, {
       shouldSort: true,
-      threshold: 0.6,
+      include: ['score'],
+      threshold: 0.4,
       location: 0,
-      distance: 60,
+      distance: 2000,  // allows for long bios
       maxPatternLength: 32,
-      minMatchCharLength: 1,
+      minMatchCharLength: 3,
       keys: [
         'firstName',
         'lastName',
-        'year',
+        'fullName',
+        'year',       // 2017, for example
+        'yearString', // 'sophomore', for example
         'concentration',
-        'sex',
         'bio',
       ]
     });
@@ -37,7 +39,6 @@ class StudentList extends React.Component {
     });
   }
 
-  // TODO: debounce this bad boy!
   filterStudents(search) {
     let ret = getPermittedStudents();
     if (search) {
@@ -52,13 +53,14 @@ class StudentList extends React.Component {
       <div>
         <TextField value={this.state.search}
                    name='student-search'
-                   floatingLabelText="Search"
+                   floatingLabelText="Search (name, year, bio)"
                    onChange={this.handleSearchChange.bind(this)}/>
         {
           filteredStudents.map((s, index) => (
             <Card className='margin padding' style={{background: '#f4f4f4'}}
                   key={index}>
-              <StudentProfile student={s}/>
+              <span>{s.score}</span>
+              <StudentProfile student={s.item || s}/>
             </Card>
           ))
         }
