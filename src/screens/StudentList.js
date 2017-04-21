@@ -59,7 +59,6 @@ class StudentList extends React.Component {
           filteredStudents.map((s, index) => (
             <Card className='margin padding' style={{background: '#f4f4f4'}}
                   key={index}>
-              <span>{s.score}</span>
               <StudentProfile student={s.item || s}/>
             </Card>
           ))
