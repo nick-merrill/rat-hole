@@ -37,9 +37,14 @@ class App extends Component {
     const currentPath = Router.getCurrentPath();
     const currentRoute = _.find(routes, {path: currentPath});
     if (_.isNil(currentRoute)) {
+      setTimeout(function() {
+        Router.goToPath('/');
+        window.location.reload();
+      }, 100);
       throw new Error(`
       ${currentPath} is not a valid route. See lib/routes.js file.
       You may need to go to http://localhost:3000/#/
+      Redirecting you to the home page.
       `);
     }
 
