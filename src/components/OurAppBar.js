@@ -121,12 +121,12 @@ class OurAppBar extends React.Component {
                       top: 0,
                       right: 0,
                       left: 0,
+                      height: APP_BAR_HEIGHT - 4,
                       display: 'flex',
                       flexDirection: 'row',
                       alignItems: 'center',
                       justifyContent: 'flex-end',
                     }}>
-                      <div>Dojo Mode</div>
                       <DropDownMenu
                         value={GameData.getFilterMode()}
                         maxHeight={window.innerHeight / 2}
@@ -141,7 +141,7 @@ class OurAppBar extends React.Component {
                           Object.entries(FILTER_MODES).map(([key, props]) => (
                             <MenuItem key={key}
                                       value={key}
-                                      primaryText={props.getTitle()} />
+                                      primaryText={`Filter: ${props.getTitle()}`} />
                           ))
                         }
                       </DropDownMenu>
