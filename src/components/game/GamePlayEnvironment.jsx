@@ -4,6 +4,7 @@ import {FlatButton, LinearProgress, RaisedButton} from 'material-ui';
 import * as colors from 'material-ui/styles/colors';
 import {ImageNavigateNext} from 'material-ui/svg-icons';
 import _ from 'lodash';
+import $ from 'jquery';
 
 import StorageEngine from '../../lib/StorageEngine';
 import Router from '../../lib/Router';
@@ -19,6 +20,7 @@ import GameTutorial, {
 } from '../../components/game/pages/GameTutorial';
 import {getValidQuestionTypesForStudentToGuess} from './questions/index';
 import CircleProgress from '../CircleProgress';
+// const KEYBOARD_HEIGHT = 44;
 
 // Storage and its keys
 const storage = new StorageEngine('game_play_environment');
@@ -245,6 +247,11 @@ class GamePlayEnvironment extends React.Component {
       );
     }
 
+    let minimumHeight = $(window).height() - muiTheme.appBar.height;
+    // if (this.state.questionType === 'PhotoToTextTypingQuestion') {
+    //   minimumHeight -= KEYBOARD_HEIGHT;
+    // }
+
     return (
       <div style={{
         position: 'relative',
@@ -252,7 +259,7 @@ class GamePlayEnvironment extends React.Component {
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'stretch',
-        minHeight: window.innerHeight - muiTheme.appBar.height,
+        minHeight: minimumHeight,
       }}>
         <LinearProgress
           mode='determinate'
