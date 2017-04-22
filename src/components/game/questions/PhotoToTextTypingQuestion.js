@@ -142,6 +142,10 @@ class PhotoToTextTypingQuestion extends Question {
             hintText='First name is enough'
             onChange={this.handleValueChange.bind(this)}
             value={this.state.guessValue}
+            // It's annoying to have the phone try to correct your spelling on
+            // names that are not included in the device's spelling history.
+            autoCorrect='off'
+            spellCheck='off'
           />
           <RaisedButton type='submit' label='Submit Guess' primary={true} />
         </form>
