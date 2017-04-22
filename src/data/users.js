@@ -52,10 +52,33 @@ const add = (firstName, lastName, house, role, extra = {}) => {
   return user;
 };
 
+// Pfoho specific testers
 add('Brigitte', 'Libby', pfoho, dean);
 add('Stacy', 'Blondin', pfoho, tutor);
 add('Mario', 'León', pfoho, staff, {imageURL: 'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/16388119_10211533632637074_8685994266444723417_n.jpg?oh=1663c341aecd69e94388583ff97967ef&oe=5982E07C'});
+add('Matt', 'Young', pfoho, tutor);
 
+// Generic login for pfoho, quincy, and leverett with password "1234".
+// Use the email "role@house.com", where "house" is the house NICKNAME,
+// like "lev".
+_.each([
+  pfoho,
+  quincy,
+  leverett,
+], (house) => {
+  _.each([
+    dean,
+    tutor,
+    staff,
+  ], (role) => {
+    add(
+      house.nickname, role, house, role,
+      {email: `${role}@${house.nickname.toLowerCase()}.com`, password: '1234'}
+    );
+  });
+});
+
+// Rats
 add(
   'Nick', 'Merrill', pfoho, staff,
   {
@@ -97,6 +120,10 @@ export const getCurrentUser = () => {
   return _.find(users, {id: userID});
 };
 export const setCurrentUser = (user) => {
+  if (_.isNil(user)) {
+    storage.set(CURRENT_USER_KEY, null);
+    return;
+  }
   storage.set(CURRENT_USER_KEY, user.id);
 };
 
@@ -106,3 +133,6 @@ export const getUserFromEmail = (email) => {
 };
 
 export default users;
+
+// For debugging
+window.users = users;
