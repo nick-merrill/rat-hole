@@ -97,10 +97,13 @@ class OurAppBar extends React.Component {
             right: 0,
             marginRight: 16,
           }}>
-            <Avatar src={currentUser.imageURL}
-                    size={APP_BAR_HEIGHT - 4}
-                    style={{margin: 2}}
-            />
+            {
+              currentUser.imageURL &&
+              <Avatar src={currentUser.imageURL}
+                      size={APP_BAR_HEIGHT - 4}
+                      style={{margin: 2}}
+              />
+            }
           </div>
         </AppBar>
       </div>
