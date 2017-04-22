@@ -36,7 +36,7 @@ class StudentProfile extends React.Component {
                  margin: '0 auto',
                }}>
           <img src={student.imageURL} alt={student.firstName}
-               style={{height: imageSize}}/>
+               style={{height: imageSize}} />
         </Paper>
         <h2 style={{textAlign: 'left'}}>
           {student.firstName} {student.lastName} &nbsp;
@@ -45,9 +45,15 @@ class StudentProfile extends React.Component {
              onClick={() => this.flag()} />
         </h2>
         <div style={{textAlign: 'left'}}>
+          <p>
+            <strong>Concentration:</strong> {student.concentration}
+          </p>
+          <p>
+            <strong>Year:</strong> {student.year}
+          </p>
           {
             student.bio.split('\n').map((item, key) => {
-              return <span key={key}>{item}<br/></span>;
+              return <span key={key}>{item}<br /></span>;
             })
           }
         </div>

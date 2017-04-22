@@ -16,7 +16,7 @@ class StudentList extends React.Component {
     this.studentFuse = new Fuse(this.permittedStudents, {
       shouldSort: true,
       include: ['score'],
-      threshold: 0.4,
+      threshold: 0.1,
       location: 0,
       distance: 2000,  // allows for long bios
       maxPatternLength: 32,
