@@ -15,7 +15,7 @@ import Router from '../lib/Router';
 import routes from '../lib/routes';
 import {getCurrentUser, setCurrentUser} from '../data/users';
 import {
-  AppBar, Avatar, DropDownMenu, MenuItem,
+  AppBar, Avatar, DropDownMenu, FlatButton, IconButton, MenuItem,
   MuiThemeProvider
 } from 'material-ui';
 import gameMuiTheme from '../styles/gameMuiTheme';
@@ -112,8 +112,36 @@ class OurAppBar extends React.Component {
       <MuiThemeProvider
         muiTheme={currentRoute.key === 'game' ? gameMuiTheme : muiTheme}>
         <AppBar title={currentRoute.key !== 'game' && currentRoute.title}
-                iconClassNameLeft='ion ion-chevron-left'
-                onLeftIconButtonTouchTap={() => Router.goToPath('/')}
+                iconElementLeft={
+                  <div
+                    style={{
+                      // This counteracts a margin built in to Material-UI
+                      marginTop: 2,
+                      color: muiTheme.appBar.textColor,
+                      fontSize: 20,
+                      height: APP_BAR_HEIGHT,
+                      lineHeight: `${APP_BAR_HEIGHT}px`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      // position: 'absolute',
+                      // top: 0,
+                      // left: 0,
+                    }}>
+                    {
+                      currentRoute.key === 'game' ?
+                        <FlatButton
+                          onTouchTap={() => Router.goToPath('/')}
+                          labelStyle={{paddingLeft: 0}}
+                          label='Exit' /> :
+                        <IconButton
+                          iconClassName='ion ion-chevron-left'
+                          iconStyle={{
+                            color: muiTheme.appBar.textColor,
+                          }}
+                          onTouchTap={() => Router.goToPath('/')} />
+                    }
+                  </div>
+                }
                 iconElementRight={
                   currentRoute.key === 'game' ?
                     <div style={{

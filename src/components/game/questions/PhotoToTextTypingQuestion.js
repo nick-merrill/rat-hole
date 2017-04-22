@@ -10,6 +10,7 @@ import {
   pinkA200,
   purpleA200
 } from 'material-ui/styles/colors';
+import gameMuiTheme from '../../../styles/gameMuiTheme';
 
 // TODO: Also normalize for accents and special characters.
 const normalize = (value) => value ? value.toLowerCase() : '';
@@ -60,6 +61,22 @@ class PhotoToTextTypingQuestion extends Question {
     });
   }
 
+  handleInputFocus(event) {
+    /*
+     For the next few seconds,
+     listen for scrolling, caused by soft keyboard on a mobile screen, and
+     keep forcing the scroll position to be one such that the user can see
+     both the image they are trying to guess AND the text field.
+     */
+    $(window).on('scroll', () => {
+      $(window).scrollTop($('#image-to-guess').offset().top);
+    });
+    setTimeout(() => {
+      // Stop listening
+      $(window).off('scroll');
+    }, 1000);
+  }
+
   /**
    * Overrides Question method.
    */
@@ -84,10 +101,9 @@ class PhotoToTextTypingQuestion extends Question {
   render() {
     const studentToGuess = this.state.studentToGuess;
 
-    const dimension = _.min([
-      window.innerHeight,
-      window.innerWidth
-    ]);
+    const KEYBOARD_HEIGHT = 250;
+    const APP_BAR_HEIGHT = gameMuiTheme.appBar.height;
+    const imageToGuessOffsetTop = APP_BAR_HEIGHT + 25;
 
     return (
       <div style={{
@@ -99,7 +115,7 @@ class PhotoToTextTypingQuestion extends Question {
         <h3>
           Who is this?
         </h3>
-        <div style={{
+        <div id='image-to-guess' style={{
           position: 'relative',
           textAlign: 'center',
           margin: '0 auto',
@@ -108,8 +124,14 @@ class PhotoToTextTypingQuestion extends Question {
           backgroundSize: 'contain',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: '50% 50%',
-          width: dimension * 0.75,
-          height: dimension * 0.75,
+          width: window.innerWidth,
+          // Make room for the keyboard on small phones, but still allow the
+          // photo to be at least 100 pixels high, in case the user is on a
+          // teeny, tiny, itsy-bitsy mouse phone.
+          height: _.max([
+            100,
+            window.innerHeight - KEYBOARD_HEIGHT - imageToGuessOffsetTop,
+          ]),
         }}>
           <div style={{
             position: 'absolute',
@@ -146,8 +168,15 @@ class PhotoToTextTypingQuestion extends Question {
             // names that are not included in the device's spelling history.
             autoCorrect='off'
             spellCheck='off'
+            onFocus={this.handleInputFocus.bind(this)}
+            style={{
+              width: _.min([
+                window.innerWidth / 2,
+                180,
+              ])
+            }}
           />
-          <RaisedButton type='submit' label='Submit Guess' primary={true} />
+          <RaisedButton type='submit' label='Submit' primary={true} />
         </form>
       </div>
     );

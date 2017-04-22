@@ -1,6 +1,6 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import {FlatButton, LinearProgress, RaisedButton} from 'material-ui';
+import {LinearProgress, RaisedButton} from 'material-ui';
 import * as colors from 'material-ui/styles/colors';
 import {ImageNavigateNext} from 'material-ui/svg-icons';
 import _ from 'lodash';
@@ -14,12 +14,12 @@ import GameData from '../../data/GameData';
 import LiveGameScore from './small_components/LiveGameScore';
 import SuccessPage from './pages/SuccessPage';
 import StudentProfile from '../StudentProfile';
-import muiTheme from '../../styles/muiTheme';
 import GameTutorial, {
   storage as tutorialStorage
 } from '../../components/game/pages/GameTutorial';
 import {getValidQuestionTypesForStudentToGuess} from './questions/index';
 import CircleProgress from '../CircleProgress';
+import gameMuiTheme from '../../styles/gameMuiTheme';
 // const KEYBOARD_HEIGHT = 44;
 
 // Storage and its keys
@@ -95,7 +95,7 @@ class GamePlayEnvironment extends React.Component {
     // Only loads a new student on mount if there wasn't already a student
     // loaded. This prevents a user from cheating by refreshing the app
     // manually.
-    this.loadNextQuestion(this.state.studentToGuess);
+    this.loadNextQuestion(this.state.studentToGuess, this.state.questionType);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -196,6 +196,7 @@ class GamePlayEnvironment extends React.Component {
         guessPool={this.state.guessPool}
         handleGoodGuess={() => this.handleGoodGuess()}
         handleBadGuess={() => this.handleBadGuess()}
+        forceUpdateParent={() => {console.log('updating parent'); this.forceUpdate();}}
         // Have the question element take up as much space as possible.
         style={{flex: '1 1 auto'}}
       />
@@ -247,10 +248,7 @@ class GamePlayEnvironment extends React.Component {
       );
     }
 
-    let minimumHeight = $(window).height() - muiTheme.appBar.height;
-    // if (this.state.questionType === 'PhotoToTextTypingQuestion') {
-    //   minimumHeight -= KEYBOARD_HEIGHT;
-    // }
+    const minimumHeight = $(window).height() - gameMuiTheme.appBar.height;
 
     return (
       <div style={{
@@ -262,7 +260,14 @@ class GamePlayEnvironment extends React.Component {
         minHeight: minimumHeight,
       }}>
         <LinearProgress
+          style={{
+            position: 'fixed',
+            top: gameMuiTheme.appBar.height,
+            left: 0,
+            right: 0,
+          }}
           mode='determinate'
+          color={colors.greenA400}
           value={this.state.questionsInRound - this.state.remainingQuestionsCount}
           max={this.state.questionsInRound}
         />
@@ -270,14 +275,6 @@ class GamePlayEnvironment extends React.Component {
         {primaryComponent}
 
         <LiveGameScore />
-
-        {/* DESIGN: Escape hatch + Redundancy (to back button in menu bar) */}
-        <div className='margin'>
-          <FlatButton secondary={true}
-                      onClick={() => Router.goToPath('/')}>
-            Exit Game
-          </FlatButton>
-        </div>
       </div>
     );
   }

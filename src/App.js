@@ -9,6 +9,11 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 import './App.css';
 import _ from 'lodash';
+import $ from 'jquery';
+
+// For debugging
+window._ = _;
+window.$ = $;
 
 // MUI
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';

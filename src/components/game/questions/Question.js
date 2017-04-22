@@ -115,6 +115,9 @@ Question.propTypes = {
   handleGoodGuess: PropTypes.func.isRequired,
   handleBadGuess: PropTypes.func.isRequired,
   style: PropTypes.object,
+  // This is called when the question needs the parent to update, usually
+  // to resize the window due to some change like the soft keyboard being shown.
+  forceUpdateParent: PropTypes.func.isRequired,
 };
 
 export default Question;
