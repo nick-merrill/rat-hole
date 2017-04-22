@@ -1,5 +1,4 @@
 import React from 'react';
-import {Motion, spring} from 'react-motion';
 import _ from 'lodash';
 
 import Question from './Question';
@@ -49,43 +48,32 @@ class TextToPhotoOptionQuestion extends Question {
         <GridList cols={2} cellHeight={cellHeight}>
           {
             this.state.guessPool.map((s, index) => (
-              <Motion
+              <GridTile
                 key={s.id}
-                defaultStyle={{x: 0.01}}
-                style={{x: spring(1, {stiffness: 120, damping: 30})}}
-              >
-                {
-                  ({x}) => (
-                    <GridTile
-                      key={s.id}
-                      onTouchTap={() => this.handleGuess(s)}
-                      style={{opacity: x}}
-                      titleStyle={{
-                        color: this.state.brightOverlayColor,
-                      }}
-                      title={
-                        s.id === studentToGuess.id && (
-                          this.state.wasJustSuccessful
-                          ? this.state.greatWordShort
-                          : this.state.wasJustUnsuccessful &&
-                            <span>
-                              <i className='fa fa-arrow-right' />
-                              {studentToGuess.firstName}
-                            </span>
-                        )
-                      }
-                    >
-                      <img
-                        src={s.imageURL}
-                        // TODO: Figure out a way blind users can play this game
-                        //   (e.g. by sound or by matching students to their
-                        //   interests).
-                        alt={`student guess option ${index+1}`}
-                      />
-                    </GridTile>
+                onTouchTap={() => this.handleGuess(s)}
+                titleStyle={{
+                  color: this.state.brightOverlayColor,
+                }}
+                title={
+                  s.id === studentToGuess.id && (
+                    this.state.wasJustSuccessful
+                      ? this.state.greatWordShort
+                      : this.state.wasJustUnsuccessful &&
+                      <span>
+                        <i className='fa fa-arrow-right' />
+                        {studentToGuess.firstName}
+                      </span>
                   )
                 }
-              </Motion>
+              >
+                <img
+                  src={s.imageURL}
+                  // TODO: Figure out a way blind users can play this game
+                  //   (e.g. by sound or by matching students to their
+                  //   interests).
+                  alt={`student guess option ${index + 1}`}
+                />
+              </GridTile>
             ))
           }
         </GridList>
