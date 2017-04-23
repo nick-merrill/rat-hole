@@ -9,11 +9,6 @@ class PhotoToTextOptionQuestion extends Question {
   render() {
     const studentToGuess = this.state.studentToGuess;
 
-    const dimension = _.min([
-      window.innerHeight,
-      window.innerWidth
-    ]);
-
     return (
       <div style={{
         ...this.props.style,
@@ -33,8 +28,8 @@ class PhotoToTextOptionQuestion extends Question {
           backgroundSize: 'contain',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: '50% 50%',
-          width: dimension * 0.75,
-          height: dimension * 0.75,
+          width: window.innerWidth - 20,
+          height: window.innerHeight / 2,
         }}>
           <div style={{
             position: 'absolute',

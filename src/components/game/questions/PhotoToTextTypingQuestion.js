@@ -55,26 +55,49 @@ class PhotoToTextTypingQuestion extends Question {
     }
   }
 
+  componentWillUnmount() {
+    super.componentWillUnmount();
+    this._clearAutoScrollInterval();
+  }
+
   handleValueChange(event) {
     this.setState({
       guessValue: event.target.value,
     });
   }
 
+  scrollToOptimalTypingPosition() {
+    $(window).scrollTop($('#image-to-guess').offset().top);
+  }
+
+  /*
+  HACK:
+    This is an unfortunate but temporarily necessary function to make sure the
+    user doesn't have to scroll back up to view the image she is currently
+    guessing. For the next few seconds, this
+    listen for scrolling, caused by soft keyboard on a mobile screen, and
+    keep forcing the scroll position to be one such that the user can see
+    both the image they are trying to guess AND the text field.
+   */
   handleInputFocus(event) {
-    /*
-     For the next few seconds,
-     listen for scrolling, caused by soft keyboard on a mobile screen, and
-     keep forcing the scroll position to be one such that the user can see
-     both the image they are trying to guess AND the text field.
-     */
-    $(window).on('scroll', () => {
-      $(window).scrollTop($('#image-to-guess').offset().top);
-    });
-    setTimeout(() => {
-      // Stop listening
-      $(window).off('scroll');
-    }, 1000);
+    this._autoScrollIntervalID = setInterval(() => {
+      console.log('auto scrolling');
+      this.scrollToOptimalTypingPosition();
+    }, 100);
+    // Give the keyboard time to show before we stop auto-scrolling
+    if (this._autoScrollTimeoutID) {
+      clearTimeout(this._autoScrollTimeoutID);
+    }
+    this._autoScrollTimeoutID = setTimeout(() => {
+      this._clearAutoScrollInterval();
+    }, 1500);
+  }
+
+  _clearAutoScrollInterval() {
+    if (this._autoScrollIntervalID) {
+      clearInterval(this._autoScrollIntervalID);
+      this._autoScrollIntervalID = null;
+    }
   }
 
   /**
@@ -102,8 +125,7 @@ class PhotoToTextTypingQuestion extends Question {
     const studentToGuess = this.state.studentToGuess;
 
     const KEYBOARD_HEIGHT = 250;
-    const APP_BAR_HEIGHT = gameMuiTheme.appBar.height;
-    const imageToGuessOffsetTop = APP_BAR_HEIGHT + 25;
+    const inputAreaHeight = 48;
 
     return (
       <div style={{
@@ -130,7 +152,7 @@ class PhotoToTextTypingQuestion extends Question {
           // teeny, tiny, itsy-bitsy mouse phone.
           height: _.max([
             100,
-            window.innerHeight - KEYBOARD_HEIGHT - imageToGuessOffsetTop,
+            window.innerHeight - KEYBOARD_HEIGHT - inputAreaHeight,
           ]),
         }}>
           <div style={{
@@ -169,6 +191,7 @@ class PhotoToTextTypingQuestion extends Question {
             autoCorrect='off'
             spellCheck='off'
             onFocus={this.handleInputFocus.bind(this)}
+            onClick={this.handleInputFocus.bind(this)}
             style={{
               width: _.min([
                 window.innerWidth / 2,

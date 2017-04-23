@@ -29,6 +29,8 @@ class Question extends React.Component {
 
   componentWillMount() {}
 
+  componentWillUnmount() {}
+
   componentWillReceiveProps(nextProps) {
     // Reset for next question.
     this.setState({

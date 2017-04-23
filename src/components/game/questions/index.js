@@ -12,11 +12,8 @@ const easyQuestions = {
   TextToPhotoOptionQuestion,
   PhotoToTextOptionQuestion,
 };
-// FIXME: go back to proper thresholds
-// const EASY_TO_HARD_CUTOFF = 0.8;
-// const EASY_TO_HARD_MIN_CORRECT_GUESS_COUNT = 2;
-const EASY_TO_HARD_CUTOFF = 0;
-const EASY_TO_HARD_MIN_CORRECT_GUESS_COUNT = 0;
+const EASY_TO_HARD_CUTOFF = 0.8;
+const EASY_TO_HARD_MIN_CORRECT_GUESS_COUNT = 2;
 const hardQuestions = {
   PhotoToTextTypingQuestion,
 };

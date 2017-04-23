@@ -20,7 +20,6 @@ import GameTutorial, {
 import {getValidQuestionTypesForStudentToGuess} from './questions/index';
 import CircleProgress from '../CircleProgress';
 import gameMuiTheme from '../../styles/gameMuiTheme';
-// const KEYBOARD_HEIGHT = 44;
 
 // Storage and its keys
 const storage = new StorageEngine('game_play_environment');

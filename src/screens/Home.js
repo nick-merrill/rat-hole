@@ -8,12 +8,19 @@ import GameData from '../data/GameData';
 import {BarChart, Bar} from 'recharts';
 import muiTheme from '../styles/muiTheme';
 import {getCurrentUser} from '../data/users';
+import $ from 'jquery';
 
 const buttonStyle = {
   margin: 15,
 };
 
 class Home extends React.Component {
+  componentDidMount() {
+    // Start window at the top in case user was scrolled down on the previous
+    // page.
+    $(window).scrollTop(0);
+  }
+
   renderChart(data) {
     const availableWidth = data.fullWidth ? 200 : 130;
     let graphElement;
