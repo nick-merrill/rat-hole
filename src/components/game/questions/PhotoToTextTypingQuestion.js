@@ -34,12 +34,20 @@ class PhotoToTextTypingQuestion extends Question {
     super(props);
     Object.assign(this.state, {
       guessValue: '',
+      focused: false,
+      funColor: this.getFunColor(),
     });
+  }
+
+  getFunColor() {
+    return _.sample([lightGreenA200, pinkA200, purpleA200, cyanA100]);
   }
 
   componentDidMount() {
     super.componentDidMount();
-    // Make it easy for the user to start typing the person's name
+
+    // Make it easy for the user to start typing the person's name by focusing
+    // on the text field right away.
     $('#quick-entry').focus();
   }
 
@@ -50,6 +58,7 @@ class PhotoToTextTypingQuestion extends Question {
       this.setState({
         // Reset guess value
         guessValue: '',
+        funColor: this.getFunColor(),
       });
     }
   }
@@ -65,20 +74,19 @@ class PhotoToTextTypingQuestion extends Question {
     });
   }
 
-  scrollToOptimalTypingPosition() {
-    $(window).scrollTop($('#image-to-guess').offset().top);
+  handleKeyPress(event) {
+    if (event.key === 'Enter') {
+      this.handleGuess();
+    }
   }
 
-  /*
-  HACK:
-    This is an unfortunate but temporarily necessary function to make sure the
-    user doesn't have to scroll back up to view the image she is currently
-    guessing. For the next few seconds, this
-    listen for scrolling, caused by soft keyboard on a mobile screen, and
-    keep forcing the scroll position to be one such that the user can see
-    both the image they are trying to guess AND the text field.
-   */
-  handleInputFocus(event) {
+  scrollToOptimalTypingPosition() {
+    this.forceUpdate(() => {
+      $(window).scrollTop($('#image-to-guess').offset().top);
+    });
+  }
+
+  beginAutoScroll() {
     this._autoScrollIntervalID = setInterval(() => {
       this.scrollToOptimalTypingPosition();
     }, 100);
@@ -89,6 +97,25 @@ class PhotoToTextTypingQuestion extends Question {
     this._autoScrollTimeoutID = setTimeout(() => {
       this._clearAutoScrollInterval();
     }, 1500);
+  }
+
+  /*
+   HACK:
+   This is an unfortunate but temporarily necessary function to make sure the
+   user doesn't have to scroll back up to view the image she is currently
+   guessing. For the next few seconds, this
+   listen for scrolling, caused by soft keyboard on a mobile screen, and
+   keep forcing the scroll position to be one such that the user can see
+   both the image they are trying to guess AND the text field.
+   */
+  handleInputFocus(event) {
+    this.setState({focused: true});
+    this.beginAutoScroll();
+  }
+
+  handleInputBlur(event) {
+    this.setState({focused: false});
+    this.beginAutoScroll();
   }
 
   _clearAutoScrollInterval() {
@@ -125,6 +152,16 @@ class PhotoToTextTypingQuestion extends Question {
     const KEYBOARD_HEIGHT = 250;
     const inputAreaHeight = 48;
 
+    /*
+     If the keyboard is shown on mobile, then we can trust the height
+     given by the system. But if the keyboard is not shown (input is not
+     focused), we must estimate the height of the keyboard.
+     */
+    let suggestedHeight = window.innerHeight - inputAreaHeight;
+    if (!this.state.focused) {
+      suggestedHeight -= KEYBOARD_HEIGHT;
+    }
+
     return (
       <div style={{
         ...this.props.style,
@@ -150,7 +187,7 @@ class PhotoToTextTypingQuestion extends Question {
           // teeny, tiny, itsy-bitsy mouse phone.
           height: _.max([
             100,
-            window.innerHeight - KEYBOARD_HEIGHT - inputAreaHeight,
+            suggestedHeight,
           ]),
         }}>
           <div style={{
@@ -162,7 +199,7 @@ class PhotoToTextTypingQuestion extends Question {
             height: '100%',
             fontSize: 30,
             fontFamily: 'San Francisco Display',
-            color: _.sample([lightGreenA200, pinkA200, purpleA200, cyanA100]),
+            color: this.state.funColor,
             fontWeight: 'bold',
             textShadow: '0 0 4px #000',
           }}>
@@ -177,8 +214,10 @@ class PhotoToTextTypingQuestion extends Question {
             </div>
           </div>
         </div>
-        <form onSubmit={this.handleGuess.bind(this)}
-              style={{textAlign: 'center'}}>
+        <div style={{
+          textAlign: 'center',
+          display: 'inline-block',
+        }}>
           <TextField
             id='quick-entry'
             hintText='First name is enough'
@@ -189,7 +228,9 @@ class PhotoToTextTypingQuestion extends Question {
             autoCorrect='off'
             spellCheck='off'
             onFocus={this.handleInputFocus.bind(this)}
-            onClick={this.handleInputFocus.bind(this)}
+            onBlur={this.handleInputBlur.bind(this)}
+            onKeyPress={this.handleKeyPress.bind(this)}
+            //onClick={this.handleInputFocus.bind(this)}
             style={{
               width: _.min([
                 window.innerWidth / 2,
@@ -197,8 +238,12 @@ class PhotoToTextTypingQuestion extends Question {
               ])
             }}
           />
-          <RaisedButton type='submit' label='Submit' primary={true} />
-        </form>
+          <RaisedButton type='submit'
+                        label='Submit'
+                        primary={true}
+                        onTouchTap={this.handleGuess.bind(this)}
+          />
+        </div>
       </div>
     );
   }
