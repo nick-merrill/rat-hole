@@ -140,7 +140,7 @@ class PhotoToTextTypingQuestion extends Question {
      */
     let suggestedHeight = window.innerHeight - inputAreaHeight;
     if (!this.state.focused) {
-      suggestedHeight = suggestedHeight - KEYBOARD_HEIGHT;
+      suggestedHeight -= KEYBOARD_HEIGHT;
     }
 
     return (
