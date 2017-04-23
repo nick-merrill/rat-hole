@@ -10,7 +10,6 @@ import {
   pinkA200,
   purpleA200
 } from 'material-ui/styles/colors';
-import gameMuiTheme from '../../../styles/gameMuiTheme';
 
 // TODO: Also normalize for accents and special characters.
 const normalize = (value) => value ? value.toLowerCase() : '';
@@ -81,7 +80,6 @@ class PhotoToTextTypingQuestion extends Question {
    */
   handleInputFocus(event) {
     this._autoScrollIntervalID = setInterval(() => {
-      console.log('auto scrolling');
       this.scrollToOptimalTypingPosition();
     }, 100);
     // Give the keyboard time to show before we stop auto-scrolling
