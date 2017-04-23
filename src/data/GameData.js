@@ -11,6 +11,7 @@ const RECENT_GUESS_IDS = 'recent_guess_ids';
 const GUESS_LOG = 'guess_log';
 const GOOD = 'good';
 const BAD = 'bad';
+const MAX_GOOD_GUESS_STREAK = 'max_good_guess_streak';
 
 const FILTER_MODE_KEY = 'filter_mode';
 export const FILTER_MODES = {
@@ -55,6 +56,7 @@ class GameData {
 
   /**
    * Call this when the user makes a correct guess.
+   * This is a good method to hook into to record data.
    * @param student - The student correctly guessed.
    */
   registerGoodGuess(student) {
@@ -68,10 +70,15 @@ class GameData {
       (this._storage.get(RECENT_GUESS_IDS) || []).concat(student.id)
     );
     this.callGuessingCallbacks(student);
+    const goodGuessStreak = this.getLatestGoodGuessStreakCount();
+    if (goodGuessStreak > this.getMaxGoodGuessStreakCount()) {
+      this._storage.set(MAX_GOOD_GUESS_STREAK, goodGuessStreak);
+    }
   }
 
   /**
    * Call this when the user makes an incorrect guess.
+   * This is a good method to hook into to record data.
    * @param student - The student supposed to be guessed.
    * @param wrongStudent - (optional) The student the user did guess,
    *                       incorrectly.
@@ -178,6 +185,30 @@ class GameData {
   getFilteredStudents() {
     const filter = FILTER_MODES[this.getFilterMode()];
     return filter.apply(getPermittedStudents());
+  }
+
+  /**
+   * Counts the number of recent good guesses that are not interrupted by
+   * any bad guesses.
+   * [GOOD, GOOD, BAD, GOOD] => 2
+   * [BAD, GOOD, GOOD, GOOD] => 0
+   */
+  getLatestGoodGuessStreakCount() {
+    let ret = 0;
+    _.each(this.getGuessLog(), (guess) => {
+      if (guess !== GOOD) {
+        return false;
+      }
+      ret++;
+    });
+    return ret;
+  }
+
+  /**
+   * Returns the highest number of good guesses the user has ever made in a row.
+   */
+  getMaxGoodGuessStreakCount() {
+    return this._storage.get(MAX_GOOD_GUESS_STREAK) || 0;
   }
 
   /*

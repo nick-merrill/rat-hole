@@ -52,9 +52,10 @@ class Home extends React.Component {
   }
 
   render() {
-    const rand1 = 64;
+    // const rand1 = 64;
     const averageRecentGuessRatio = GameData.averageRecentGuessRatio() * 100;
     const currentUser = getCurrentUser();
+    const bestStreak = GameData.getMaxGoodGuessStreakCount();
     const data = [
       {
         title: 'House Knowledge',
@@ -73,10 +74,16 @@ class Home extends React.Component {
         bars: [{value: 7}, {value: 9}, {value: 15}],
         color: colors.green500,
       },
+      // {
+      //   title: 'Ranking',
+      //   percent: 100 - rand1,
+      //   label: `Top ${rand1}%`,
+      //   color: colors.deepOrange500,
+      // },
       {
-        title: 'Ranking',
-        percent: 100 - rand1,
-        label: `Top ${rand1}%`,
+        title: 'Best Streak',
+        percent: bestStreak > 0 ? 100 : 0,
+        label: `${bestStreak}`,
         color: colors.deepOrange500,
       },
     ];
