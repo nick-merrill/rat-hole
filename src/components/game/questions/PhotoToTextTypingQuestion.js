@@ -54,10 +54,48 @@ class PhotoToTextTypingQuestion extends Question {
     }
   }
 
+  componentWillUnmount() {
+    super.componentWillUnmount();
+    this._clearAutoScrollInterval();
+  }
+
   handleValueChange(event) {
     this.setState({
       guessValue: event.target.value,
     });
+  }
+
+  scrollToOptimalTypingPosition() {
+    $(window).scrollTop($('#image-to-guess').offset().top);
+  }
+
+  /*
+  HACK:
+    This is an unfortunate but temporarily necessary function to make sure the
+    user doesn't have to scroll back up to view the image she is currently
+    guessing. For the next few seconds, this
+    listen for scrolling, caused by soft keyboard on a mobile screen, and
+    keep forcing the scroll position to be one such that the user can see
+    both the image they are trying to guess AND the text field.
+   */
+  handleInputFocus(event) {
+    this._autoScrollIntervalID = setInterval(() => {
+      this.scrollToOptimalTypingPosition();
+    }, 100);
+    // Give the keyboard time to show before we stop auto-scrolling
+    if (this._autoScrollTimeoutID) {
+      clearTimeout(this._autoScrollTimeoutID);
+    }
+    this._autoScrollTimeoutID = setTimeout(() => {
+      this._clearAutoScrollInterval();
+    }, 1500);
+  }
+
+  _clearAutoScrollInterval() {
+    if (this._autoScrollIntervalID) {
+      clearInterval(this._autoScrollIntervalID);
+      this._autoScrollIntervalID = null;
+    }
   }
 
   /**
@@ -84,10 +122,8 @@ class PhotoToTextTypingQuestion extends Question {
   render() {
     const studentToGuess = this.state.studentToGuess;
 
-    const dimension = _.min([
-      window.innerHeight,
-      window.innerWidth
-    ]);
+    const KEYBOARD_HEIGHT = 250;
+    const inputAreaHeight = 48;
 
     return (
       <div style={{
@@ -99,7 +135,7 @@ class PhotoToTextTypingQuestion extends Question {
         <h3>
           Who is this?
         </h3>
-        <div style={{
+        <div id='image-to-guess' style={{
           position: 'relative',
           textAlign: 'center',
           margin: '0 auto',
@@ -108,8 +144,14 @@ class PhotoToTextTypingQuestion extends Question {
           backgroundSize: 'contain',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: '50% 50%',
-          width: dimension * 0.75,
-          height: dimension * 0.75,
+          width: window.innerWidth - 20,
+          // Make room for the keyboard on small phones, but still allow the
+          // photo to be at least 100 pixels high, in case the user is on a
+          // teeny, tiny, itsy-bitsy mouse phone.
+          height: _.max([
+            100,
+            window.innerHeight - KEYBOARD_HEIGHT - inputAreaHeight,
+          ]),
         }}>
           <div style={{
             position: 'absolute',
@@ -146,8 +188,16 @@ class PhotoToTextTypingQuestion extends Question {
             // names that are not included in the device's spelling history.
             autoCorrect='off'
             spellCheck='off'
+            onFocus={this.handleInputFocus.bind(this)}
+            onClick={this.handleInputFocus.bind(this)}
+            style={{
+              width: _.min([
+                window.innerWidth / 2,
+                180,
+              ])
+            }}
           />
-          <RaisedButton type='submit' label='Submit Guess' primary={true} />
+          <RaisedButton type='submit' label='Submit' primary={true} />
         </form>
       </div>
     );

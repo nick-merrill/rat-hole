@@ -3,6 +3,7 @@ import * as colors from 'material-ui/styles/colors';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import * as _ from 'lodash';
 import {lighten} from 'material-ui/utils/colorManipulator';
+import muiTheme from './muiTheme';
 
 const canvasColor = colors.grey800;
 
@@ -20,6 +21,7 @@ let gameMuiTheme = getMuiTheme(
     appBar: {
       color: lighten(canvasColor, 0.2),
       textColor: colors.white,
+      height: muiTheme.appBar.height,
     },
   })
 );
