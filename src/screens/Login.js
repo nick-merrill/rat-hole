@@ -10,6 +10,9 @@ import {
 } from '../data/users';
 import {Dialog, FlatButton} from 'material-ui';
 import Router from '../lib/Router';
+import StorageEngine from '../lib/StorageEngine';
+
+const USER_HAS_LOGGED_IN_ONCE_KEY = 'user_has_logged_in_once';
 
 class Login extends React.Component {
   constructor(props) {
@@ -21,6 +24,7 @@ class Login extends React.Component {
       password: '',
       errorDialog: null,
     };
+    this.storage = new StorageEngine('login');
   }
 
   handleEmailUpdate(event) {
@@ -55,8 +59,17 @@ class Login extends React.Component {
       // Login succeeded
       setCurrentUser(user);
       this.props.successCallback();
-      // Always send user to the home page upon login
-      Router.goToPath('/');
+      /*
+      If user has logged in before, send user to the home page.
+      If this is the first time the user is logging in, send user to the game
+      to receive the game tutorial for instant value at fewer steps.
+       */
+      if (this.storage.get(USER_HAS_LOGGED_IN_ONCE_KEY)) {
+        Router.goToRoute('home');
+      } else {
+        Router.goToRoute('game');
+      }
+      this.storage.set(USER_HAS_LOGGED_IN_ONCE_KEY, true);
     } else {
       this.setState({
         // TODO: Don't tell the hacker that this user even exists.
