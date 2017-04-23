@@ -34,13 +34,21 @@ class PhotoToTextTypingQuestion extends Question {
     super(props);
     Object.assign(this.state, {
       guessValue: '',
+      focused: false,
     });
   }
 
   componentDidMount() {
     super.componentDidMount();
-    // Make it easy for the user to start typing the person's name
-    $('#quick-entry').focus();
+
+    $('#quick-entry').on('focus', () => {
+      this.setState({focused: true});
+    }).on('blur', () => {
+      this.setState({focused: false});
+    })
+    // Make it easy for the user to start typing the person's name by focusing
+    // on the text field right away.
+      .focus();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -70,13 +78,13 @@ class PhotoToTextTypingQuestion extends Question {
   }
 
   /*
-  HACK:
-    This is an unfortunate but temporarily necessary function to make sure the
-    user doesn't have to scroll back up to view the image she is currently
-    guessing. For the next few seconds, this
-    listen for scrolling, caused by soft keyboard on a mobile screen, and
-    keep forcing the scroll position to be one such that the user can see
-    both the image they are trying to guess AND the text field.
+   HACK:
+   This is an unfortunate but temporarily necessary function to make sure the
+   user doesn't have to scroll back up to view the image she is currently
+   guessing. For the next few seconds, this
+   listen for scrolling, caused by soft keyboard on a mobile screen, and
+   keep forcing the scroll position to be one such that the user can see
+   both the image they are trying to guess AND the text field.
    */
   handleInputFocus(event) {
     this._autoScrollIntervalID = setInterval(() => {
@@ -125,6 +133,16 @@ class PhotoToTextTypingQuestion extends Question {
     const KEYBOARD_HEIGHT = 250;
     const inputAreaHeight = 48;
 
+    /*
+    If the keyboard is shown on mobile, then we can trust the height
+    given by the system. But if the keyboard is not shown (input is not
+    focused), we must estimate the height of the keyboard.
+     */
+    let suggestedHeight = window.innerHeight - inputAreaHeight;
+    if (!this.state.focused) {
+      suggestedHeight = suggestedHeight - KEYBOARD_HEIGHT;
+    }
+
     return (
       <div style={{
         ...this.props.style,
@@ -150,7 +168,7 @@ class PhotoToTextTypingQuestion extends Question {
           // teeny, tiny, itsy-bitsy mouse phone.
           height: _.max([
             100,
-            window.innerHeight - KEYBOARD_HEIGHT - inputAreaHeight,
+            suggestedHeight,
           ]),
         }}>
           <div style={{
