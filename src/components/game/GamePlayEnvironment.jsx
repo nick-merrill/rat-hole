@@ -140,7 +140,7 @@ class GamePlayEnvironment extends React.Component {
     if (_.isNil(newStudent)) {
       alert(
         'We could not find a new student. Perhaps review your filter' +
-        'settings before continuing.'
+        ' settings before continuing.'
       );
       Router.goToPath('/');
     }
