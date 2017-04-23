@@ -21,19 +21,42 @@ class StudentProfile extends React.Component {
 
   render() {
     let student = this.props.student;
-    const imageSize = _.min([
+    const imageSize = this.props.size === 'small' ? 70 : _.min([
       window.innerWidth * 0.75,
       window.innerHeight / 2]
+    );
+
+    const imageStyle = this.props.size === 'small' ?
+      {
+        float: 'right',
+      } : {
+        margin: '0 auto',
+      };
+
+    const defaultChildren = (
+      <div>
+        <p>
+          <strong>Concentration:</strong> {student.concentration}
+        </p>
+        <p>
+          <strong>Year:</strong> {student.year}
+        </p>
+        {
+          student.bio.split('\n').map((item, key) => {
+            return <span key={key}>{item}<br /></span>;
+          })
+        }
+      </div>
     );
 
     return (
       <div style={{textAlign: 'center'}}>
         <Paper circle={true}
                style={{
+                 ...imageStyle,
                  height: imageSize,
                  width: imageSize,
                  overflow: 'hidden',
-                 margin: '0 auto',
                }}>
           <img src={student.imageURL} alt={student.firstName}
                style={{height: imageSize}} />
@@ -45,26 +68,20 @@ class StudentProfile extends React.Component {
              onClick={() => this.flag()} />
         </h2>
         <div style={{textAlign: 'left'}}>
-          <p>
-            <strong>Concentration:</strong> {student.concentration}
-          </p>
-          <p>
-            <strong>Year:</strong> {student.year}
-          </p>
-          {
-            student.bio.split('\n').map((item, key) => {
-              return <span key={key}>{item}<br /></span>;
-            })
-          }
+          {this.props.children || defaultChildren}
         </div>
-
       </div>
     );
   }
 }
 
 StudentProfile.propTypes = {
-  student: PropTypes.object.isRequired
+  student: PropTypes.object.isRequired,
+  size: PropTypes.oneOf(['small', 'large']),
+};
+
+StudentProfile.defaultProps = {
+  size: 'large',
 };
 
 export default StudentProfile;

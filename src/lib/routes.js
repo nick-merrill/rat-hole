@@ -9,6 +9,7 @@ import Stats from '../screens/Stats';
 import Home from '../screens/Home';
 import StudentList from '../screens/StudentList';
 import Settings from '../screens/Settings';
+import UnrecognizedStudentsList from '../screens/UnrecognizedStudentsList';
 
 /**
  * Define your routes here. These are primary screens/items the user can access.
@@ -47,7 +48,14 @@ const routes = [
     path: '/settings',
     icon: <i className='fa fa-cog' />,
     component: Settings,
-  }
+  },
+  {
+    key: 'unrecognizedStudents',
+    title: 'Unrecognized Students',
+    path: '/students/unrecognized',
+    icon: <i className='fa fa-handshake-o' />,
+    component: UnrecognizedStudentsList,
+  },
 ];
 
 const routeProps = ['key', 'title', 'path', 'component'];

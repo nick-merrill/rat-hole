@@ -12,39 +12,16 @@ import _ from 'lodash';
 import muiTheme from '../styles/muiTheme';
 import SideMenu from '../components/SideMenu';
 import Router from '../lib/Router';
-import routes from '../lib/routes';
-import {getCurrentUser, setCurrentUser} from '../data/users';
+import {getCurrentUser} from '../data/users';
 import {
   AppBar, Avatar, DropDownMenu, FlatButton, IconButton, MenuItem,
   MuiThemeProvider
 } from 'material-ui';
 import gameMuiTheme from '../styles/gameMuiTheme';
 import GameData, {FILTER_MODES} from '../data/GameData';
+import {getMenuItems} from '../lib/menuItems';
 
 export const APP_BAR_HEIGHT = muiTheme.appBar.height;
-
-const menuItems = [
-  {
-    route: _.find(routes, {key: 'studentList'}),
-  },
-  // {
-  //   route: _.find(routes, {key: 'stats'}),
-  // },
-  {
-    route: _.find(routes, {key: 'settings'}),
-  },
-  {
-    key: 'logout',
-    title: 'Sign Out',
-    labelPosition: 'left',
-    icon: <i className='fa fa-sign-out' />,
-    color: muiTheme.palette.dangerColor,
-    handleClick: () => {
-      setCurrentUser(null);
-      Router.informOfChangeManually();
-    },
-  },
-];
 
 class OurAppBar extends React.Component {
   constructor(props, context) {
@@ -192,7 +169,7 @@ class OurAppBar extends React.Component {
         {appBar}
         <SideMenu
           open={this.state.isMenuOpen}
-          items={menuItems}
+          items={getMenuItems()}
           // Allows the menu to style the current page for reference
           currentItemKey={currentPath}
           // Allows the open state to be changed on touch outside of

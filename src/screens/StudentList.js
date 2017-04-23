@@ -57,7 +57,7 @@ class StudentList extends React.Component {
                    onChange={this.handleSearchChange.bind(this)}/>
         {
           filteredStudents.map((s, index) => (
-            <Card className='margin padding' style={{background: '#f4f4f4'}}
+            <Card className='margin padding student'
                   key={index}>
               <StudentProfile student={s.item || s}/>
             </Card>
