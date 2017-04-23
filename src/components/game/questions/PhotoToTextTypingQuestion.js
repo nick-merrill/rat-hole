@@ -144,7 +144,7 @@ class PhotoToTextTypingQuestion extends Question {
           backgroundSize: 'contain',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: '50% 50%',
-          width: window.innerWidth,
+          width: window.innerWidth - 20,
           // Make room for the keyboard on small phones, but still allow the
           // photo to be at least 100 pixels high, in case the user is on a
           // teeny, tiny, itsy-bitsy mouse phone.
