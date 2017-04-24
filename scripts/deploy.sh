@@ -39,7 +39,7 @@ rsync -r --links --compress --omit-dir-times --ignore-times --delete \
 HTTP_URL="http://${NORMALIZED_BRANCH_NAME}.x.house.cs164.com"
 if [ "$BRANCH" = "master" ]; then
     HTTP_URL="https://house.cs164.com"
-else if [ "$BRANCH" = "develop" ]; then
+elif [ "$BRANCH" = "develop" ]; then
     HTTP_URL="https://develop.house.cs164.com"
 fi
 MESSAGE="See your rats live at ${HTTP_URL}"
