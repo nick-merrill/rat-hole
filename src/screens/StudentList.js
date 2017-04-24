@@ -56,9 +56,12 @@ class StudentList extends React.Component {
                    floatingLabelText="Search (name, year, bio)"
                    onChange={this.handleSearchChange.bind(this)}/>
         {
-          filteredStudents.map((s, index) => (
-            <StudentProfileCard key={index} student={s.item || s}/>
-          ))
+          filteredStudents.map((x) => {
+            const student = x.item || x;
+            return (
+              <StudentProfileCard key={student.id} student={student} />
+            );
+          })
         }
       </div>
     );
