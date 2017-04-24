@@ -27,6 +27,7 @@ const muiTheme = getMuiTheme({
      for helping the user's eyes be drawn towards what is more important.
      */
     softTextColor: grey800,
+    verySoftTextColor: colors.grey500,
     /*
      DESIGN: Only use pure black for things we want to draw the user's
      eye towards.

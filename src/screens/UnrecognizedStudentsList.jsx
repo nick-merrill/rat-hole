@@ -3,10 +3,9 @@ import {getCurrentUser} from '../data/users';
 import {getPermittedStudents} from '../data/students';
 import * as _ from 'lodash';
 import {roles} from '../data/constants';
-import StudentProfile from '../components/StudentProfile';
-import {Card} from 'material-ui';
 import pluralize from 'pluralize';
 import * as colors from 'material-ui/styles/colors';
+import StudentProfileCard from '../components/StudentProfileCard';
 
 class UnrecognizedStudentsList extends React.Component {
   constructor(props) {
@@ -58,18 +57,19 @@ class UnrecognizedStudentsList extends React.Component {
         <div>
           {
             sortedStudents.map((s) => (
-              <Card key={s.id} className='margin padding student'>
-                <StudentProfile student={s}
-                                shouldCollapseDetails={true}>
-                  <p style={{color: colors.red900}}>
-                    Recognized by {s.numIdentifications > 0 && 'only'}
-                    {' '}
-                    <strong>{s.numIdentifications}</strong>
-                    {' '}
-                    {pluralize('tutor', s.numIdentifications)}
-                  </p>
-                </StudentProfile>
-              </Card>
+              <StudentProfileCard
+                key={s.id}
+                student={s}
+                shouldCollapseDetails={true}
+              >
+                <p style={{color: colors.red900}}>
+                  Recognized by {s.numIdentifications > 0 && 'only'}
+                  {' '}
+                  <strong>{s.numIdentifications}</strong>
+                  {' '}
+                  {pluralize('tutor', s.numIdentifications)}
+                </p>
+              </StudentProfileCard>
             ))
           }
         </div>

@@ -75,12 +75,12 @@ class StudentProfile extends React.Component {
           <img src={student.imageURL} alt={student.firstName}
                style={{height: imageSize}} />
         </Paper>
-        <h2 style={{textAlign: 'left'}}>
+        <h3 style={{textAlign: 'left'}}>
           {student.firstName} {student.lastName} &nbsp;
           <i className={this.state.isFlagged ? 'fa fa-star' : 'fa fa-star-o' }
              style={{color: muiTheme.palette.flagColor}}
              onClick={() => this.flag()} />
-        </h2>
+        </h3>
         <div style={{textAlign: 'left'}}>
           {this.props.children}
           {shouldCollapseDetails ?
@@ -105,7 +105,7 @@ StudentProfile.propTypes = {
 
 StudentProfile.defaultProps = {
   isLarge: false,
-  shouldShowDetails: false,
+  shouldCollapseDetails: false,
 };
 
 export default StudentProfile;

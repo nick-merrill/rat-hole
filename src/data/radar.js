@@ -36,8 +36,16 @@ export const getLastCheckInForStudent = (student) => {
   return _.first(checkIns);
 };
 
+/**
+ * If a check-in exists for this student, returns the Moment object of the
+ * time at which that check-in occurred.
+ * Returns null if no recent check-in exists.
+ */
 export const momentOfLastCheckInForStudent = (student) => {
   const lastCheckIn = getLastCheckInForStudent(student);
+  if (_.isNil(lastCheckIn)) {
+    return null;
+  }
   const timestamp = lastCheckIn[TIMESTAMP];
   return moment(timestamp);
 };
@@ -53,5 +61,9 @@ const _setStudentsData = (data) => {
 };
 
 const _setCheckInDataForStudent = (data) => {
+  // FIXME
+};
+
+export const addCheckIn = (studentID, body) => {
   // FIXME
 };

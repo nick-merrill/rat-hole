@@ -2,8 +2,8 @@ import React from 'react';
 const Fuse = window.Fuse;
 
 import {getPermittedStudents} from '../data/students';
-import {Card, TextField} from 'material-ui';
-import StudentProfile from '../components/StudentProfile';
+import {TextField} from 'material-ui';
+import StudentProfileCard from '../components/StudentProfileCard';
 
 class StudentList extends React.Component {
   constructor(props) {
@@ -57,10 +57,7 @@ class StudentList extends React.Component {
                    onChange={this.handleSearchChange.bind(this)}/>
         {
           filteredStudents.map((s, index) => (
-            <Card className='margin padding student'
-                  key={index}>
-              <StudentProfile student={s.item || s}/>
-            </Card>
+            <StudentProfileCard key={index} student={s.item || s}/>
           ))
         }
       </div>
