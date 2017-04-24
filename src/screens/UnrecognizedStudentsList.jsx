@@ -59,7 +59,8 @@ class UnrecognizedStudentsList extends React.Component {
           {
             sortedStudents.map((s) => (
               <Card key={s.id} className='margin padding student'>
-                <StudentProfile student={s} size='small'>
+                <StudentProfile student={s}
+                                shouldCollapseDetails={true}>
                   <p style={{color: colors.red900}}>
                     Recognized by {s.numIdentifications > 0 && 'only'}
                     {' '}
