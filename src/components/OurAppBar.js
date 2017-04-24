@@ -58,7 +58,7 @@ class OurAppBar extends React.Component {
       left: 0,
       right: 0,
       top: 0,
-      fontSize: 20,
+      fontSize: muiTheme.appBar.titleFontSize,
     };
     const HomeAppBar = () => (
       <div>

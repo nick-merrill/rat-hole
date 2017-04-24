@@ -41,6 +41,7 @@ const muiTheme = getMuiTheme({
   appBar: {
     color: grey700,
     titleFontWeight: 300,
+    titleFontSize: 20,
     height: 44,
   },
 });

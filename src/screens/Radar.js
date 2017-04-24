@@ -1,9 +1,10 @@
 import React from 'react';
 import {
   AutoComplete,
-  Dialog, FlatButton, FloatingActionButton, MenuItem,
-  RaisedButton, TextField
+  FlatButton, FloatingActionButton, MenuItem,
+  TextField
 } from 'material-ui';
+import {Dialog} from 'material-ui-build-next';
 import {ContentCreate} from 'material-ui/svg-icons';
 import {momentOfLastCheckInForStudent} from '../data/radar';
 import {getFlaggedStudentIDs, getPermittedStudents} from '../data/students';
@@ -45,6 +46,10 @@ class Radar extends React.Component {
 
   componentWillMount() {
     this.clearCreateData();
+    // FIXME!!!!!!!!!!!!!!
+    this.setState({
+      isCreating: true,
+    });
   }
 
   clearCreateData() {
@@ -87,7 +92,6 @@ class Radar extends React.Component {
           }}>{encryption.getKey()}</div>
         </InfoLabel>
 
-        <h2>Longest Since Check-in</h2>
         <div>
           {
             this.state.students.map((s) => (
@@ -120,27 +124,34 @@ class Radar extends React.Component {
         </FloatingActionButton>
 
         <Dialog
+          onRequestClose={() => this.clearCreateData()}
           title="Check-in"
-          actions={[
+          titleStyle={{textAlign: 'left', fontSize: muiTheme.appBar.titleFontSize}}
+          contentStyle={{width: '90%'}}
+          actionButton={
             <FlatButton
-              label='Cancel'
-              secondary={true}
-              onTouchTap={() => this.setState({isCreating: false})}
-            />,
-            <RaisedButton
               label='Record Check-in'
               primary={true}
+              labelStyle={{color: muiTheme.palette.primary1Color}}
               onTouchTap={this.handleCreate.bind(this)}
             />
-          ]}
+          }
+            // actions={[
+          //   <FlatButton
+          //     label='Cancel'
+          //     secondary={true}
+          //     onTouchTap={() => this.clearCreateData()}
+          //   />,
+          // ]}
           modal={true}
           open={this.state.isCreating}
         >
           <AutoComplete name='student'
                         required={true}
-                        dataSource={this.state.students}
+                        dataSource={this.state.studentDataSource}
                         floatingLabelText='Student'
                         fullWidth={true}
+                        openOnFocus={true}
                         onUpdateInput={(v) => this.setState({checkInStudent: v})} />
           <TextField name='check-in'
                      multiLine={true}

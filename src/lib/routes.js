@@ -54,14 +54,14 @@ const routes = [
     key: 'unrecognizedStudents',
     title: 'Unrecognized Students',
     path: '/students/unrecognized',
-    icon: <i className='fa fa-eye-slash' />,
+    icon: <i className='fa fa-street-view' />,
     component: UnrecognizedStudentsList,
   },
   {
     key: 'radar',
     title: 'My Radar',
     path: '/radar',
-    icon: <i className='fa fa-dot-circle-o' />,
+    icon: <i className='fa fa-handshake-o' />,
     component: Radar,
   },
 ];
