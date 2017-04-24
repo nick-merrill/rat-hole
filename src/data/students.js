@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 import {roles} from './constants';
 // eslint-disable-next-line no-unused-vars
-import {pfoho, quincy, leverett} from './houses';
+import {leverett, pfoho, quincy} from './houses';
 import {getCurrentUser} from './users';
 import StorageEngine from '../lib/StorageEngine';
 
@@ -461,7 +461,7 @@ add(
   '2017',
   'Human Developmental and Regenerative Biology',
   'F',
-  'http://facebook.college.harvard.edu//photos/75fd665b944f855a2f3fc51bbae5ba54-559762-250.jpg',
+  '/img/students/brw_q.jpg',
   'Brittany is obsessed with Quincy. \n\n she/her/hers'
 );
 
@@ -501,7 +501,7 @@ add(
   '2018',
   'Human Developmental and Regenerative Biology',
   'F',
-  'http://facebook.college.harvard.edu//photos/5d45e356ab9ae2d3d08410389c978b46-657759-250.jpg',
+  '/img/students/pk_q.jpg',
   'PJ works in the Quincy Building Manager office. \n\n she/her/hers'
 );
 
@@ -531,7 +531,7 @@ add(
   '2017',
   'Economics',
   'F',
-  'http://facebook.college.harvard.edu//photos/fed02216ef17d8cd33a38e39bc5f9a30-561412-250.jpg',
+  '/img/students/st_q.jpg',
   'Curtis loves theater, improv, and playwriting. \n\n he/him/his'
 );
 
