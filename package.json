@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://house.cs164.com/#/",
   "dependencies": {
+    "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",
     "material-design-icons": "^3.0.1",

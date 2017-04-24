@@ -24,6 +24,9 @@ export const getMenuItems = () => {
     menuItems.push({
       route: _.find(routes, {key: 'unrecognizedStudents'}),
     });
+    menuItems.push({
+      route: _.find(routes, {key: 'checkIns'}),
+    });
   }
 
   menuItems.push({
