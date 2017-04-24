@@ -14,7 +14,7 @@ REPO_NAME=rat-hole
 
 # Replace slashes with hyphens, in case of something like "feature/my-feature"
 NORMALIZED_BRANCH_NAME=${BRANCH//\//\-}
-TRAVIS_REPO_SLUG=${TRAVIS_REPO_SLUG:"${REPO_OWNER}/${REPO_NAME}"}
+TRAVIS_REPO_SLUG=${TRAVIS_REPO_SLUG:-"${REPO_OWNER}/${REPO_NAME}"}
 DEST_DIR=/var/www/${REPO_NAME}-${NORMALIZED_BRANCH_NAME}
 
 # Create destination directory if it does not yet exist
@@ -36,7 +36,13 @@ rsync -r --links --compress --omit-dir-times --ignore-times --delete \
     -e "ssh -o 'StrictHostKeyChecking no'" \
     build ${USER}@${DOMAIN}:${DEST_DIR}/
 
-MESSAGE="See your rats live at http://${NORMALIZED_BRANCH_NAME}.x.house.cs164.com"
+HTTP_URL="http://${NORMALIZED_BRANCH_NAME}.x.house.cs164.com"
+if [ "$BRANCH" = "master" ]; then
+    HTTP_URL="https://house.cs164.com"
+else if [ "$BRANCH" = "develop" ]; then
+    HTTP_URL="https://develop.house.cs164.com"
+fi
+MESSAGE="See your rats live at ${HTTP_URL}"
 
 echo -e "\n"
 echo "-----------------------------------------------------------------"
