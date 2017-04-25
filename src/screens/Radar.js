@@ -128,7 +128,7 @@ class Radar extends React.Component {
               >
                 {
                   s.momentOfLastCheckIn ?
-                    s.momentOfLastCheckIn.fromNow()
+                    `Last checked in ${s.momentOfLastCheckIn.fromNow()}`
                     : '—Never checked in—'
                 }
               </StudentProfileCard>
