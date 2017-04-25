@@ -195,7 +195,7 @@ class GamePlayEnvironment extends React.Component {
         guessPool={this.state.guessPool}
         handleGoodGuess={() => this.handleGoodGuess()}
         handleBadGuess={() => this.handleBadGuess()}
-        forceUpdateParent={() => {console.log('updating parent'); this.forceUpdate();}}
+        forceUpdateParent={() => this.forceUpdate()}
         // Have the question element take up as much space as possible.
         style={{flex: '1 1 auto'}}
       />

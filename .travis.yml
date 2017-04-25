@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- "6"
+- '6'
 cache:
   yarn: true
   directories:
@@ -12,19 +12,18 @@ script:
 before_deploy:
 - yarn run build
 deploy:
-- provider: script
+  provider: script
   skip_cleanup: true
-  script: scripts/deploy.sh master
+  script: scripts/deploy.sh $TRAVIS_BRANCH
   on:
-    branch: master
-- provider: script
-  skip_cleanup: true
-  script: scripts/deploy.sh develop
-  on:
-    branch: develop
+    all_branches: true
 notifications:
   email: false
   slack:
     on_success: change
     on_failure: always
     secure: Hd59C+jYSHpe5anO3YGg7WQg+h/fBIYBr74W1Qs2dBjv0t/2XbDKqao+2AOmAs+gvTqlET+IcC89AnJVma25ryyQTd81OnRCZ4eMkttJNBdl8vqHFx+dMzcrEFH4vsuvxoL46CITo0NclgrnHvGTJRW2/Xskt2Lr02VtfGkt3dDpJp7KYX8sJQZxQ3rV+YgWGNisAmWM0xxWVltzER6epLcqlBvjjxVuUyDxkhrQppxbGvrW8TB9Y2lGZuaOZiJPKmKflAfxG6Sq5f7xzP2sMJF8INLNYv5Lk6xcL6HDXaJKILfWW447weGavozzvf8RRMyGdGhkhSIOy0UniPonrFS/1tEbkZdQGiyJrF6PKpUVqYRJ1l5jIPCQBnykLYTiT9qQiIfg1wGNuyjTzE81zAesniVbSuOTxoQCwu9ABlWQdb4CJwBy2wSwiYaOJrjBI417DphhcGWggx+HfnWgLqWaPqQ9icIQENZiY73lmD7Nz4x197/7omLOftwsRe6P9cgoYK9z+ERxS2Wfzn63EJHlNy9sr3Wl0IpNKOquU17dECVvTkKRkrSUW4JPxmYSayvk752iaJYbRJxRfvb0JzSTZMoxp8xUmLj/b6zX6MbLc9aiJxPBbHxIUptMHY4srbTY3al3+g7AfdL4+UIuxyhbOkWxH+0Sxc9XPEIjd0M=
+env:
+  global:
+  # GITHUB_ACCESS_TOKEN
+  - secure: sN4Ce5u3e7dtrI+T8ybAWyN1w/epgW/Kl9rzRB6/RyfoGl07HN9jyJOlMbR6kZ5WNm4vre1JtipfFOVaFpRGdQqDyBcfpFQI6UG1s3u03FIy7IoY29F/8l8aAeDrfZ76pfNGV3q8GmQ57/2d3S/VWyEgT4Ya9GjFs+QJazsJVlYvhH1I/Tknfq0codj5USV5Y7xJpvRN8EAvsLZbUEERfs8+zIdHRX2obfQ5CTeYRVt/B/cp11e4GkQY320++2lNtToLasfneUOp7LHL2nz3f4/K++TGsyAS4gjZQLopKxt6kaDatV892w7itAtXPjKuegNcBJMMu/fAvAEJFIXiUGACUGoYKkatq3L0SjvdOaYW1wHYV+PKJ55fj08Cc19A317DVWzov7SodkXHozAyWywtsaM+Opprh/u9xcMCdQ9w+lictNu5Ivfj5GiRSwfYDJjcZiktMjStmLnSb8bU1j+bHlIR7cE5v3GrUHdFeSXvrTWS/CRnQ8pb76d7X4VpTt/3xeUWKv1D79OSu6b2UIxlFrSr9PvDFy730UpgGrAVTzUDfKuM6dCh4MXkg78aerxBpfra5NMQUrkQIqn3NzRuybby2tJPNkYPEmI0jPrCQKn6gCdMaVbSol6bqBRDYm4Yza+sBMnC+X0Tba4doaSm+Dyo/+8VKxm3us+NeTc=

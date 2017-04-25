@@ -10,6 +10,7 @@ import Home from '../screens/Home';
 import StudentList from '../screens/StudentList';
 import Settings from '../screens/Settings';
 import UnrecognizedStudentsList from '../screens/UnrecognizedStudentsList';
+import Radar from '../screens/Radar';
 
 /**
  * Define your routes here. These are primary screens/items the user can access.
@@ -53,8 +54,15 @@ const routes = [
     key: 'unrecognizedStudents',
     title: 'Unrecognized Students',
     path: '/students/unrecognized',
-    icon: <i className='fa fa-handshake-o' />,
+    icon: <i className='fa fa-street-view' />,
     component: UnrecognizedStudentsList,
+  },
+  {
+    key: 'radar',
+    title: 'My Radar',
+    path: '/radar',
+    icon: <i className='fa fa-handshake-o' />,
+    component: Radar,
   },
 ];
 

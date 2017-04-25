@@ -580,7 +580,7 @@ export const getFlaggedStudentIDs = () => {
   let ret = [];
   Object.entries(_getData()).forEach(([id, props]) => {
     if (props[IS_FLAGGED_KEY]) {
-      ret.push(id);
+      ret.push(parseInt(id, 10));
     }
   });
   return ret;
