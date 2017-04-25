@@ -1,12 +1,9 @@
 import React from 'react';
 import {
-  AutoComplete,
   FlatButton, FloatingActionButton, MenuItem,
-  TextField
+  TextField, Dialog, SelectField
 } from 'material-ui';
-import {Dialog} from 'material-ui-build-next';
 import {ContentCreate} from 'material-ui/svg-icons';
-import {momentOfLastCheckInForStudent} from '../data/radar';
 import {getFlaggedStudentIDs, getPermittedStudents} from '../data/students';
 import * as _ from 'lodash';
 import InfoLabel from '../components/InfoLabel';
@@ -18,37 +15,49 @@ import StudentProfileCard from '../components/StudentProfileCard';
 class Radar extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      students: [],
+    };
+    window.radar = radar;
+  }
 
+  componentWillMount() {
+    this.clearCreateData();
+    this.updateStudents();
+  }
+
+  componentDidMount() {
+    // To keep moment times somewhat accurate.
+    this.updateIntervalID = setInterval(() => {
+      this.forceUpdate();
+    }, 30 * 1000);  // every 30 seconds
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.updateIntervalID);
+  }
+
+  /**
+   * These students have been marked as "On My Radar".
+   * Puts never checked-in students first, then sorts by longest-ago check-in
+   * first and most recent check-in last.
+   */
+  updateStudents() {
     const flaggedStudentIDs = getFlaggedStudentIDs();
     let students = _.filter(getPermittedStudents(), (s) => {
       return flaggedStudentIDs.includes(s.id);
     });
     // Set relevant student data directly on the student object.
     _.each(students, (s) => {
-      s.momentOfLastCheckIn = momentOfLastCheckInForStudent(s);
+      s.momentOfLastCheckIn = radar.momentOfLastCheckInForStudent(s);
     });
-
-    const studentDataSource = _.map(students, (s) => {
-      return {
-        text: s.fullName,
-        value: (
-          <MenuItem primaryText={s.fullName} secondaryText={s.id} />
-        )
-      };
-    });
-
-    this.state = {
-      // These students have been marked as "On My Radar"
-      students,
-      studentDataSource,
-    };
-  }
-
-  componentWillMount() {
-    this.clearCreateData();
-    // FIXME!!!!!!!!!!!!!!
+    const neverCheckedInStudents = _.filter(students, {momentOfLastCheckIn: null});
+    const checkedInStudents = _.reject(students, {momentOfLastCheckIn: null});
+    students = neverCheckedInStudents.concat(
+      _.sortBy(checkedInStudents, 'momentOfLastCheckIn')
+    );
     this.setState({
-      isCreating: true,
+      students,
     });
   }
 
@@ -57,13 +66,21 @@ class Radar extends React.Component {
       // These have to do with creating a check in for a student.
       isCreating: false,
       createStudent: null,
-      createNote: '',
+      createStudentErrorText: null,
+      createNoteInput: '',
     });
   }
 
   handleCreate() {
-    radar.addCheckIn(this.state.checkInStudent.id, this.state.checkInBody);
+    if (_.isNil(this.state.createStudent)) {
+      this.setState({
+        createStudentErrorText: 'Student is required',
+      });
+      return;
+    }
+    radar.addCheckIn(this.state.createStudent, this.state.createNoteInput);
     this.clearCreateData();
+    this.updateStudents();
   }
 
   render() {
@@ -91,6 +108,14 @@ class Radar extends React.Component {
             textAlign: 'center',
           }}>{encryption.getKey()}</div>
         </InfoLabel>
+
+        {
+          this.state.students.length === 0 &&
+          <p className='padding'>
+            Add students to your Radar by starring them from the
+            Student List.
+          </p>
+        }
 
         <div>
           {
@@ -124,40 +149,45 @@ class Radar extends React.Component {
         </FloatingActionButton>
 
         <Dialog
-          onRequestClose={() => this.clearCreateData()}
           title="Check-in"
-          titleStyle={{textAlign: 'left', fontSize: muiTheme.appBar.titleFontSize}}
+          titleStyle={{
+            textAlign: 'left',
+            fontSize: muiTheme.appBar.titleFontSize
+          }}
           contentStyle={{width: '90%'}}
-          actionButton={
+          actions={[
+            <FlatButton
+              label='Cancel'
+              secondary={true}
+              onTouchTap={() => this.clearCreateData()}
+            />,
             <FlatButton
               label='Record Check-in'
               primary={true}
-              labelStyle={{color: muiTheme.palette.primary1Color}}
               onTouchTap={this.handleCreate.bind(this)}
-            />
-          }
-            // actions={[
-          //   <FlatButton
-          //     label='Cancel'
-          //     secondary={true}
-          //     onTouchTap={() => this.clearCreateData()}
-          //   />,
-          // ]}
+            />,
+          ]}
           modal={true}
           open={this.state.isCreating}
         >
-          <AutoComplete name='student'
-                        required={true}
-                        dataSource={this.state.studentDataSource}
-                        floatingLabelText='Student'
-                        fullWidth={true}
-                        openOnFocus={true}
-                        onUpdateInput={(v) => this.setState({checkInStudent: v})} />
-          <TextField name='check-in'
+          <SelectField
+            floatingLabelText="Student"
+            value={this.state.createStudent}
+            onChange={(event, index, value) => this.setState({createStudent: value})}
+            errorText={this.state.createStudentErrorText}
+            autoWidth={true}
+          >
+            {
+              this.state.students.map((s) => (
+                <MenuItem key={s.id} value={s} primaryText={s.fullName} />
+              ))
+            }
+          </SelectField>
+          <TextField id='note-input'
                      multiLine={true}
-                     floatingLabelText='Note'
-                     onChange={(event) => this.setState({checkInBody: event.target.value})}
-                     value={this.state.checkInBody}
+                     floatingLabelText='Note (optional)'
+                     onChange={(event) => this.setState({createNoteInput: event.target.value})}
+                     value={this.state.createNoteInput}
                      fullWidth={true} />
         </Dialog>
       </div>

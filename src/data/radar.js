@@ -8,6 +8,7 @@ const storage = new StorageEngine('check_ins');
 const STUDENTS = 'students'; // object of students, by they IDs
 const CHECK_INS = 'check_ins';
 const TIMESTAMP = 'timestamp';
+const BODY = 'body';
 
 /*
 Getters
@@ -52,18 +53,29 @@ export const momentOfLastCheckInForStudent = (student) => {
 
 
 /*
-FIXME:
 Setters
  */
 
-const _setStudentsData = (data) => {
+const _setStudentsData = (data = {}) => {
   storage.set(STUDENTS, data);
 };
 
-const _setCheckInDataForStudent = (data) => {
-  // FIXME
+const _setCheckInDataForStudent = (student, newData) => {
+  let data = _getStudentsData();
+  data[student.id] = newData;
+  _setStudentsData(data);
 };
 
-export const addCheckIn = (studentID, body) => {
-  // FIXME
+const _setCheckInListForStudent = (student, list) => {
+  let data = _getCheckInDataForStudent(student);
+  data[CHECK_INS] = list;
+  _setCheckInDataForStudent(student, data);
+};
+
+export const addCheckIn = (student, body) => {
+  const currentList = getCheckInListForStudent(student);
+  let checkIn = {};
+  checkIn[TIMESTAMP] = moment();
+  checkIn[BODY] = body;
+  _setCheckInListForStudent(student, [checkIn].concat(currentList));
 };
