@@ -73,7 +73,7 @@ CircleProgress.propTypes = {
   size: PropTypes.number.isRequired,
   percent: PropTypes.number.isRequired,
   label: PropTypes.string,
-  fill: PropTypes.string,
+  color: PropTypes.string,
   shouldAnimate: PropTypes.bool,
   onClick: PropTypes.func,
 };
