@@ -32,7 +32,7 @@ class TextToPhotoOptionQuestion extends Question {
         justifyContent: 'flex-start',
       }}>
         <h3 style={{fontWeight: 300, opacity: 0.9}}>
-          Can you guess
+          Who is
           <div style={{fontWeight: 'bold'}}>
             <span style={{opacity: 1}}>
               {studentToGuess.firstName}
@@ -41,8 +41,8 @@ class TextToPhotoOptionQuestion extends Question {
             <span style={{opacity: 0.9}}>
               {studentToGuess.lastName}
             </span>
+            ?
           </div>
-          from these photos?
         </h3>
         {/* 2-by-2 table of photos */}
         <GridList cols={2} cellHeight={cellHeight} style={{padding: 4}}>
