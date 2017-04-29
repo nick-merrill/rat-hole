@@ -45,7 +45,7 @@ class TextToPhotoOptionQuestion extends Question {
           from these photos?
         </h3>
         {/* 2-by-2 table of photos */}
-        <GridList cols={2} cellHeight={cellHeight}>
+        <GridList cols={2} cellHeight={cellHeight} style={{padding: 4}}>
           {
             this.state.guessPool.map((s, index) => (
               <GridTile
