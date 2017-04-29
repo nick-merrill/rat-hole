@@ -23,6 +23,12 @@ export const FILTER_MODES = {
       },
     }),
   },
+  sophomores: {
+    getTitle: () => 'Sophomores',
+    apply: (students) => _.filter(students, {
+      yearString: 'Sophomore',
+    }),
+  },
   advisees: {
     getTitle: () => 'Advisees',
     apply: (students) => _.filter(students, {
