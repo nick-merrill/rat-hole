@@ -21,6 +21,7 @@ class Question extends React.Component {
       interactionAllowed: true,
       wasJustSuccessful: false,
       studentToGuess: props.studentToGuess,
+      guessedStudent: null,
       guessPool: this.getFreshGuessPool(props, NUM_OTHER_STUDENTS),
     };
   }
@@ -41,6 +42,7 @@ class Question extends React.Component {
       this.setState({
         studentToGuess: nextProps.studentToGuess,
         guessPool: this.getFreshGuessPool(nextProps, NUM_OTHER_STUDENTS),
+        guessedStudent: null,
       });
     }
   }
@@ -101,6 +103,9 @@ class Question extends React.Component {
       console.log('interaction not allowed at this time');
       return;
     }
+    this.setState({
+      guessedStudent,
+    });
     if (guessedStudent.id === this.props.studentToGuess.id) {
       this.handleGoodGuess();
     } else {

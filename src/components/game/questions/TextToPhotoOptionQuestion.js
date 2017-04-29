@@ -3,26 +3,18 @@ import _ from 'lodash';
 
 import Question from './Question';
 import {GridList, GridTile} from 'material-ui';
-import {brightOverlayColors} from '../../../lib/colors';
+import SuccessIndicatorOverlay from '../small_components/SuccessIndicatorOverlay';
 
 class TextToPhotoOptionQuestion extends Question {
-  constructor(props) {
-    super(props);
-    // When the component is unmounted and remounted, these will get
-    // reinitialized.
-    Object.assign(this.state, {
-      brightOverlayColor: _.sample(brightOverlayColors),
-    });
-  }
-
   render() {
-    const studentToGuess = this.state.studentToGuess;
+    const {studentToGuess, guessedStudent} = this.state;
     // Results in square photos if in portrait and reasonably sized photos if
     // in landscape.
-    const cellHeight = _.min([
+    const cellDimension = _.min([
       window.innerWidth / 2,
       window.innerHeight / 2
     ]);
+    const iconSize = cellDimension * 0.5;
 
     return (
       <div style={{
@@ -45,24 +37,27 @@ class TextToPhotoOptionQuestion extends Question {
           </div>
         </h3>
         {/* 2-by-2 table of photos */}
-        <GridList cols={2} cellHeight={cellHeight} style={{padding: 4}}>
+        <GridList cols={2} cellHeight={cellDimension} style={{padding: 4}}>
           {
             this.state.guessPool.map((s, index) => (
               <GridTile
                 key={s.id}
                 onTouchTap={() => this.handleGuess(s)}
                 titleStyle={{
-                  color: this.state.brightOverlayColor,
+                  height: cellDimension,
+                  fontSize: 20,
+                  fontFamily: 'San Francisco Display',
                 }}
+                titlePosition='top'
+                titleBackground=''
                 title={
-                  s.id === studentToGuess.id && (
-                    this.state.wasJustSuccessful
-                      ? this.state.greatWordShort
-                      : this.state.wasJustUnsuccessful &&
-                      <span>
-                        <i className='fa fa-arrow-right' />
-                        {studentToGuess.firstName}
-                      </span>
+                  guessedStudent && s.id === guessedStudent.id && (
+                    <SuccessIndicatorOverlay
+                      style={{height: cellDimension}}
+                      guessedStudent={guessedStudent}
+                      studentToGuess={studentToGuess}
+                      iconSize={iconSize}
+                    />
                   )
                 }
               >

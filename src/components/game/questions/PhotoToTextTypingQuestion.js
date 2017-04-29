@@ -10,6 +10,7 @@ import {
   pinkA200,
   purpleA200
 } from 'material-ui/styles/colors';
+import SuccessIndicatorOverlay from '../small_components/SuccessIndicatorOverlay';
 
 // TODO: Also normalize for accents and special characters.
 const normalize = (value) => value ? value.toLowerCase() : '';
@@ -162,6 +163,11 @@ class PhotoToTextTypingQuestion extends Question {
       suggestedHeight -= KEYBOARD_HEIGHT;
     }
 
+    const height = _.max([
+      100,
+      suggestedHeight,
+    ]);
+
     return (
       <div style={{
         ...this.props.style,
@@ -185,34 +191,13 @@ class PhotoToTextTypingQuestion extends Question {
           // Make room for the keyboard on small phones, but still allow the
           // photo to be at least 100 pixels high, in case the user is on a
           // teeny, tiny, itsy-bitsy mouse phone.
-          height: _.max([
-            100,
-            suggestedHeight,
-          ]),
+          height,
         }}>
-          <div style={{
-            position: 'absolute',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '100%',
-            height: '100%',
-            fontSize: 30,
-            fontFamily: 'San Francisco Display',
-            color: this.state.funColor,
-            fontWeight: 'bold',
-            textShadow: '0 0 4px #000',
-          }}>
-            <div>
-              {
-                this.state.wasJustSuccessful && this.state.greatWordShort
-              }
-              {
-                this.state.wasJustUnsuccessful &&
-                <span><i className='fa fa-frown-o' />Sorry</span>
-              }
-            </div>
-          </div>
+          <SuccessIndicatorOverlay
+            guessedStudent={this.state.guessedStudent}
+            studentToGuess={studentToGuess}
+            iconSize={height * 0.4}
+          />
         </div>
         <div style={{
           textAlign: 'center',

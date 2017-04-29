@@ -6,3 +6,6 @@ export const brightOverlayColors = [
   colors.purpleA200,
   colors.cyanA100,
 ];
+
+export const brightSuccessColor = colors.greenA400;
+export const brightFailureColor = colors.redA200;
