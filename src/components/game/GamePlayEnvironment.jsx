@@ -14,9 +14,7 @@ import GameData from '../../data/GameData';
 import LiveGameScore from './small_components/LiveGameScore';
 import SuccessPage from './pages/SuccessPage';
 import StudentProfile from '../StudentProfile';
-import GameTutorial, {
-  storage as tutorialStorage
-} from '../../components/game/pages/GameTutorial';
+import GameTutorial, {storage as tutorialStorage} from '../../components/game/pages/GameTutorial';
 import {getValidQuestionTypesForStudentToGuess} from './questions/index';
 import CircleProgress from '../CircleProgress';
 import gameMuiTheme from '../../styles/gameMuiTheme';
@@ -49,7 +47,7 @@ class GamePlayEnvironment extends React.Component {
     const initialStudentToGuess = _.find(permittedStudents, {
       id: storage.get(STUDENT_TO_GUESS_ID),
     });
-    const initialQuestionType = storage.get(QUESTION_TYPE);
+    const initialQuestionType = window.initialQuestionType || storage.get(QUESTION_TYPE);
     let remainingQuestionsCount;
     if (storage.get(HAS_PLAYED_ALREADY)) {
       remainingQuestionsCount = this.getNewRemainingQuestionsCount();
@@ -223,7 +221,10 @@ class GamePlayEnvironment extends React.Component {
     } else if (this.state.justBadlyGuessedStudent) {
       primaryComponent = (
         <div className='padding'>
-          <StudentProfile student={this.state.justBadlyGuessedStudent} />
+          <StudentProfile
+            student={this.state.justBadlyGuessedStudent}
+            isLarge={true}
+          />
           {this.renderContinueBlock()}
         </div>
       );
