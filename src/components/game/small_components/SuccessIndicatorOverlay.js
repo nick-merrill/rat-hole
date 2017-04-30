@@ -7,8 +7,6 @@ import FailureIcon from './icons/FailureIcon';
 class SuccessIndicatorOverlay extends React.Component {
   render() {
     const {
-      guessedStudent,
-      studentToGuess,
       iconSize,
       wasJustSuccessful,
       wasJustUnsuccessful,

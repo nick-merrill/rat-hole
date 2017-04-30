@@ -141,7 +141,7 @@ class PhotoToTextTypingQuestion extends Question {
   render() {
     const studentToGuess = this.state.studentToGuess;
 
-    const KEYBOARD_HEIGHT = 250;
+    // const KEYBOARD_HEIGHT = 250;
     const inputAreaHeight = 48;
 
     /*
