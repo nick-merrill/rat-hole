@@ -14,6 +14,7 @@ class SuccessIndicatorOverlay extends React.Component {
       wasJustUnsuccessful,
     } = this.props;
 
+    // Don't display anything if a guess did not just occur.
     if (!(wasJustSuccessful || wasJustUnsuccessful)) {
       return <div />;
     }
@@ -33,7 +34,7 @@ class SuccessIndicatorOverlay extends React.Component {
     return (
       <div style={style}>
         {
-          guessedStudent.id === studentToGuess.id ?
+          wasJustSuccessful ?
             <SuccessIcon size={iconSize} />
             :
             <FailureIcon size={iconSize} />

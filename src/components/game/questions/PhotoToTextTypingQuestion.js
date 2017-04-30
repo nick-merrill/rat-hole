@@ -158,6 +158,7 @@ class PhotoToTextTypingQuestion extends Question {
       100,
       suggestedHeight,
     ]);
+    const width = window.innerWidth - 20;
 
     return (
       <div style={{
@@ -178,7 +179,7 @@ class PhotoToTextTypingQuestion extends Question {
           backgroundSize: 'contain',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: '50% 50%',
-          width: window.innerWidth - 20,
+          width,
           // Make room for the keyboard on small phones, but still allow the
           // photo to be at least 100 pixels high, in case the user is on a
           // teeny, tiny, itsy-bitsy mouse phone.
@@ -189,7 +190,7 @@ class PhotoToTextTypingQuestion extends Question {
             wasJustUnsuccessful={this.state.wasJustUnsuccessful}
             guessedStudent={this.state.guessedStudent}
             studentToGuess={studentToGuess}
-            iconSize={height * 0.4}
+            iconSize={width * 0.4}
           />
         </div>
         <div style={{
