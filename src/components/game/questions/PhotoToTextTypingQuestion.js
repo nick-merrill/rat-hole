@@ -194,6 +194,8 @@ class PhotoToTextTypingQuestion extends Question {
           height,
         }}>
           <SuccessIndicatorOverlay
+            wasJustSuccessful={this.state.wasJustSuccessful}
+            wasJustUnsuccessful={this.state.wasJustUnsuccessful}
             guessedStudent={this.state.guessedStudent}
             studentToGuess={studentToGuess}
             iconSize={height * 0.4}

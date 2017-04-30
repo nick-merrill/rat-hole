@@ -53,10 +53,12 @@ class TextToPhotoOptionQuestion extends Question {
                 title={
                   guessedStudent && s.id === guessedStudent.id && (
                     <SuccessIndicatorOverlay
-                      style={{height: cellDimension}}
+                      wasJustSuccessful={this.state.wasJustSuccessful}
+                      wasJustUnsuccessful={this.state.wasJustUnsuccessful}
                       guessedStudent={guessedStudent}
                       studentToGuess={studentToGuess}
                       iconSize={iconSize}
+                      style={{height: cellDimension}}
                     />
                   )
                 }

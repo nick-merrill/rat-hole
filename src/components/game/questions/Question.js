@@ -20,6 +20,7 @@ class Question extends React.Component {
       // User cannot interact with the game when this is false
       interactionAllowed: true,
       wasJustSuccessful: false,
+      wasJustUnsuccessful: false,
       studentToGuess: props.studentToGuess,
       guessedStudent: null,
       guessPool: this.getFreshGuessPool(props, NUM_OTHER_STUDENTS),
@@ -58,12 +59,17 @@ class Question extends React.Component {
     return allStudentOptions;
   }
 
+  // This code gets called on every guess
+  handleGuessHook() {}
+
   /**
    Gives time for the question subclass to show the user she was right,
    then notifies parent in order to move on.
    */
   handleGoodGuess() {
+    this.handleGuessHook();
     this.setState({
+      guessedStudent: this.props.studentToGuess,
       wasJustSuccessful: true,
       greatWordShort: getGreatWordShort(),
       interactionAllowed: false,
@@ -83,8 +89,10 @@ class Question extends React.Component {
    bad guess.
    */
   handleBadGuess(wrongStudent = null) {
+    this.handleGuessHook();
     GameData.registerBadGuess(this.props.studentToGuess, wrongStudent);
     this.setState({
+      guessedStudent: wrongStudent,
       wasJustUnsuccessful: true,
       interactionAllowed: false,
     });
@@ -97,15 +105,15 @@ class Question extends React.Component {
     }, BAD_GUESS_DELAY);
   }
 
+  // This is called by a concrete question when the user makes a guess.
+  // DO NOT INCLUDE ANY ADDITIONAL CODE HERE. IF YOU HAVE CODE YOU WANT TO
+  // ADD TO BOTH GOOD AND BAD GUESSES, ADD IT TO handleGuessHook().
   handleGuess(guessedStudent) {
     if (!this.state.interactionAllowed) {
       // eslint-disable-next-line no-console
       console.log('interaction not allowed at this time');
       return;
     }
-    this.setState({
-      guessedStudent,
-    });
     if (guessedStudent.id === this.props.studentToGuess.id) {
       this.handleGoodGuess();
     } else {

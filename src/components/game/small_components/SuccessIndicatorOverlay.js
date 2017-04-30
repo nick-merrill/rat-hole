@@ -10,9 +10,11 @@ class SuccessIndicatorOverlay extends React.Component {
       guessedStudent,
       studentToGuess,
       iconSize,
+      wasJustSuccessful,
+      wasJustUnsuccessful,
     } = this.props;
 
-    if (_.isNil(guessedStudent)) {
+    if (!(wasJustSuccessful || wasJustUnsuccessful)) {
       return <div />;
     }
 
@@ -45,6 +47,8 @@ SuccessIndicatorOverlay.propTypes = {
   guessedStudent: PropTypes.object,
   studentToGuess: PropTypes.object.isRequired,
   iconSize: PropTypes.number.isRequired,
+  wasJustSuccessful: PropTypes.bool.isRequired,
+  wasJustUnsuccessful: PropTypes.bool.isRequired,
   style: PropTypes.object,
 };
 
