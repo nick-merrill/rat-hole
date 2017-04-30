@@ -4,12 +4,6 @@ import $ from 'jquery';
 
 import Question from './Question';
 import {RaisedButton, TextField} from 'material-ui';
-import {
-  cyanA100,
-  lightGreenA200,
-  pinkA200,
-  purpleA200
-} from 'material-ui/styles/colors';
 import SuccessIndicatorOverlay from '../small_components/SuccessIndicatorOverlay';
 
 // TODO: Also normalize for accents and special characters.
@@ -36,12 +30,7 @@ class PhotoToTextTypingQuestion extends Question {
     Object.assign(this.state, {
       guessValue: '',
       focused: false,
-      funColor: this.getFunColor(),
     });
-  }
-
-  getFunColor() {
-    return _.sample([lightGreenA200, pinkA200, purpleA200, cyanA100]);
   }
 
   componentDidMount() {
@@ -59,7 +48,6 @@ class PhotoToTextTypingQuestion extends Question {
       this.setState({
         // Reset guess value
         guessValue: '',
-        funColor: this.getFunColor(),
       });
     }
   }
@@ -88,6 +76,8 @@ class PhotoToTextTypingQuestion extends Question {
   }
 
   beginAutoScroll() {
+    this.forceUpdate();
+    /*
     this._autoScrollIntervalID = setInterval(() => {
       this.scrollToOptimalTypingPosition();
     }, 100);
@@ -98,6 +88,7 @@ class PhotoToTextTypingQuestion extends Question {
     this._autoScrollTimeoutID = setTimeout(() => {
       this._clearAutoScrollInterval();
     }, 1500);
+    */
   }
 
   /*
@@ -159,9 +150,9 @@ class PhotoToTextTypingQuestion extends Question {
      focused), we must estimate the height of the keyboard.
      */
     let suggestedHeight = window.innerHeight - inputAreaHeight;
-    if (!this.state.focused) {
-      suggestedHeight -= KEYBOARD_HEIGHT;
-    }
+    // if (!this.state.focused) {
+    //   suggestedHeight -= KEYBOARD_HEIGHT;
+    // }
 
     const height = _.max([
       100,
