@@ -83,6 +83,13 @@ class GamePlayEnvironment extends React.Component {
     this.setState({
       justBadlyGuessedStudent: null,
     });
+
+    // Don't skip past the success page if we just guessed badly but were
+    // done with that round.
+    if (fromFailurePage && this.state.remainingQuestionsCount === 0) {
+      return;
+    }
+
     if (this.state.remainingQuestionsCount === 0) {
       const remainingQuestionsCount = this.getNewRemainingQuestionsCount();
       this.setState({
@@ -169,7 +176,7 @@ class GamePlayEnvironment extends React.Component {
     storage.set(QUESTION_TYPE, questionType);
   }
 
-  renderContinueBlock() {
+  renderContinueBlock(fromFailurePage = false) {
     return (
       <div>
         <p>Are you ready to continue?</p>
@@ -180,13 +187,13 @@ class GamePlayEnvironment extends React.Component {
                         height: 50,
                         minWidth: window.innerWidth * 0.75,
                       }}
-                      onTouchTap={() => this.handleContinue(true)} />
+                      onTouchTap={() => this.handleContinue(fromFailurePage)} />
       </div>
     );
   }
 
   render() {
-    const isSuccessPage = this.state.remainingQuestionsCount === 0;
+    const isSuccessPage = this.state.remainingQuestionsCount === 0 && _.isNil(this.state.justBadlyGuessedStudent);
 
     // Note that although this is called a Question, it is a specific subclass
     // of the Question class. It's called Question so that it's easier for an
@@ -231,7 +238,7 @@ class GamePlayEnvironment extends React.Component {
             isLarge={true}
             showFlagTutorial={!storage.get(HAS_SEEN_FLAG_TUTORIAL)}
           />
-          {this.renderContinueBlock()}
+          {this.renderContinueBlock(true)}
         </div>
       );
     } else {
