@@ -7,18 +7,23 @@ import TextToPhotoOptionQuestion from './TextToPhotoOptionQuestion';
 import PhotoToTextOptionQuestion from './PhotoToTextOptionQuestion';
 import PhotoToTextTypingQuestion from './PhotoToTextTypingQuestion';
 import * as _ from 'lodash';
+import {isDemoMode} from '../../../data/debugStorage';
 
 const easyQuestions = {
   TextToPhotoOptionQuestion,
   PhotoToTextOptionQuestion,
 };
-const EASY_TO_HARD_CUTOFF = 0.8;
-const EASY_TO_HARD_MIN_CORRECT_GUESS_COUNT = 2;
 const hardQuestions = {
   PhotoToTextTypingQuestion,
 };
 
 export const getValidQuestionTypesForStudentToGuess = (studentToGuess) => {
+  let EASY_TO_HARD_CUTOFF = 0.8;
+  let EASY_TO_HARD_MIN_CORRECT_GUESS_COUNT = 2;
+  if (isDemoMode()) {
+    EASY_TO_HARD_MIN_CORRECT_GUESS_COUNT = 1;
+  }
+
   const correctnessRatio = GameData.guessRatioForStudent(studentToGuess);
   const correctGuessCount = GameData.correctGuessCountForStudent(studentToGuess);
 

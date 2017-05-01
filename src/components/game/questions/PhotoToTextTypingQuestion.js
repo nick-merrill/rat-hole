@@ -205,6 +205,7 @@ class PhotoToTextTypingQuestion extends Question {
             // It's annoying to have the phone try to correct your spelling on
             // names that are not included in the device's spelling history.
             autoCorrect='off'
+            autoComplete='off'
             spellCheck='off'
             onFocus={this.handleInputFocus.bind(this)}
             onBlur={this.handleInputBlur.bind(this)}

@@ -9,15 +9,15 @@ import $ from 'jquery';
 import StorageEngine from '../../lib/StorageEngine';
 import Router from '../../lib/Router';
 import {getPermittedStudents} from '../../data/students';
-import AVAILABLE_QUESTION_COMPONENTS from './questions';
+import AVAILABLE_QUESTION_COMPONENTS, {getValidQuestionTypesForStudentToGuess} from './questions';
 import GameData from '../../data/GameData';
 import LiveGameScore from './small_components/LiveGameScore';
 import SuccessPage from './pages/SuccessPage';
 import StudentProfile from '../StudentProfile';
 import GameTutorial, {storage as tutorialStorage} from '../../components/game/pages/GameTutorial';
-import {getValidQuestionTypesForStudentToGuess} from './questions/index';
 import CircleProgress from '../CircleProgress';
 import gameMuiTheme from '../../styles/gameMuiTheme';
+import debugStorage from '../../data/debugStorage';
 
 // Storage and its keys
 const storage = new StorageEngine('game_play_environment');
@@ -48,7 +48,7 @@ class GamePlayEnvironment extends React.Component {
     const initialStudentToGuess = _.find(permittedStudents, {
       id: storage.get(STUDENT_TO_GUESS_ID),
     });
-    const initialQuestionType = window.initialQuestionType || storage.get(QUESTION_TYPE);
+    const initialQuestionType = debugStorage.get('initialQuestionType') || storage.get(QUESTION_TYPE);
     let remainingQuestionsCount;
     if (storage.get(HAS_PLAYED_ALREADY)) {
       remainingQuestionsCount = this.getNewRemainingQuestionsCount();
