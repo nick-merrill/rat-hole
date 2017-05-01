@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CircleProgress from './CircleProgress';
-import {Bar, BarChart} from 'recharts';
+import {Bar, BarChart, YAxis} from 'recharts';
 import * as _ from 'lodash';
 
 class SingleChart extends React.Component {
@@ -10,8 +10,10 @@ class SingleChart extends React.Component {
     const shouldAnimate = !mini;
 
     let availableWidth = data.fullWidth ? 200 : 130;
+    let availableHeight = availableWidth;
     if (mini) {
-      availableWidth = 30;
+      availableWidth = 60;
+      availableHeight = 30;
     }
 
     let graphElement;
@@ -19,7 +21,7 @@ class SingleChart extends React.Component {
       graphElement = (
         <CircleProgress
           shouldAnimate={shouldAnimate}
-          size={availableWidth}
+          size={availableHeight}
           percent={data.percent}
           label={mini ? '' : data.label}
           color={data.color} />
@@ -28,11 +30,17 @@ class SingleChart extends React.Component {
       graphElement = (
         <BarChart
           width={availableWidth}
-          height={availableWidth}
+          height={availableHeight}
           data={data.bars}>
+          <YAxis
+            hide={true}
+            dataKey='value'
+            domain={[0, 1]}
+          />
           <Bar
             dataKey='value'
             fill={data.color}
+            minPointSize={2}
             isAnimationActive={shouldAnimate}
           />
         </BarChart>
