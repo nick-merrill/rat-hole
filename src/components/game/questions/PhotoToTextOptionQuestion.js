@@ -1,13 +1,16 @@
 import React from 'react';
-import _ from 'lodash';
 
 import Question from './Question';
 import {RaisedButton} from 'material-ui';
-import {brightOverlayColors} from '../../../lib/colors';
+import SuccessIndicatorOverlay from '../small_components/SuccessIndicatorOverlay';
 
 class PhotoToTextOptionQuestion extends Question {
   render() {
-    const studentToGuess = this.state.studentToGuess;
+    const {studentToGuess, guessedStudent} = this.state;
+
+    const width = window.innerWidth - 20;
+    const height = window.innerHeight / 2;
+    const iconSize = height * 0.4;
 
     return (
       <div style={{
@@ -28,32 +31,16 @@ class PhotoToTextOptionQuestion extends Question {
           backgroundSize: 'contain',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: '50% 50%',
-          width: window.innerWidth - 20,
-          height: window.innerHeight / 2,
+          width: width,
+          height: height,
         }}>
-          <div style={{
-            position: 'absolute',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '100%',
-            height: '100%',
-            fontSize: 30,
-            fontFamily: 'San Francisco Display',
-            color: _.sample(brightOverlayColors),
-            fontWeight: 'bold',
-            textShadow: '0 0 4px #000',
-          }}>
-            <div>
-              {
-                this.state.wasJustSuccessful && this.state.greatWordShort
-              }
-              {
-                this.state.wasJustUnsuccessful &&
-                <span><i className='fa fa-frown-o' />Sorry</span>
-              }
-            </div>
-          </div>
+          <SuccessIndicatorOverlay
+            wasJustSuccessful={this.state.wasJustSuccessful}
+            wasJustUnsuccessful={this.state.wasJustUnsuccessful}
+            guessedStudent={guessedStudent}
+            studentToGuess={studentToGuess}
+            iconSize={iconSize}
+          />
         </div>
         <div style={{
           marginTop: '1em',

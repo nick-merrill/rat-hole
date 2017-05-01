@@ -3,26 +3,25 @@ import _ from 'lodash';
 
 import Question from './Question';
 import {GridList, GridTile} from 'material-ui';
-import {brightOverlayColors} from '../../../lib/colors';
+import SuccessIndicatorOverlay from '../small_components/SuccessIndicatorOverlay';
 
 class TextToPhotoOptionQuestion extends Question {
   constructor(props) {
     super(props);
-    // When the component is unmounted and remounted, these will get
-    // reinitialized.
-    Object.assign(this.state, {
-      brightOverlayColor: _.sample(brightOverlayColors),
+    Object.assign({}, this.state, {
+      mouseDownIndex: null,
     });
   }
 
   render() {
-    const studentToGuess = this.state.studentToGuess;
+    const {studentToGuess, guessedStudent} = this.state;
     // Results in square photos if in portrait and reasonably sized photos if
     // in landscape.
-    const cellHeight = _.min([
+    const cellDimension = _.min([
       window.innerWidth / 2,
       window.innerHeight / 2
     ]);
+    const iconSize = cellDimension * 0.5;
 
     return (
       <div style={{
@@ -32,7 +31,7 @@ class TextToPhotoOptionQuestion extends Question {
         justifyContent: 'flex-start',
       }}>
         <h3 style={{fontWeight: 300, opacity: 0.9}}>
-          Can you guess
+          Who is
           <div style={{fontWeight: 'bold'}}>
             <span style={{opacity: 1}}>
               {studentToGuess.firstName}
@@ -41,30 +40,38 @@ class TextToPhotoOptionQuestion extends Question {
             <span style={{opacity: 0.9}}>
               {studentToGuess.lastName}
             </span>
+            ?
           </div>
-          from these photos?
         </h3>
         {/* 2-by-2 table of photos */}
-        <GridList cols={2} cellHeight={cellHeight}>
+        <GridList cols={2} cellHeight={cellDimension} style={{padding: 4}}>
           {
             this.state.guessPool.map((s, index) => (
               <GridTile
                 key={s.id}
                 onTouchTap={() => this.handleGuess(s)}
                 titleStyle={{
-                  color: this.state.brightOverlayColor,
+                  height: cellDimension,
+                  fontSize: 20,
+                  fontFamily: 'San Francisco Display',
                 }}
+                titlePosition='top'
+                titleBackground=''
                 title={
-                  s.id === studentToGuess.id && (
-                    this.state.wasJustSuccessful
-                      ? this.state.greatWordShort
-                      : this.state.wasJustUnsuccessful &&
-                      <span>
-                        <i className='fa fa-arrow-right' />
-                        {studentToGuess.firstName}
-                      </span>
+                  guessedStudent && s.id === guessedStudent.id && (
+                    <SuccessIndicatorOverlay
+                      wasJustSuccessful={this.state.wasJustSuccessful}
+                      wasJustUnsuccessful={this.state.wasJustUnsuccessful}
+                      guessedStudent={guessedStudent}
+                      studentToGuess={studentToGuess}
+                      iconSize={iconSize}
+                      style={{height: cellDimension}}
+                    />
                   )
                 }
+                onTouchStart={() => this.setState({mouseDownIndex: index})}
+                onTouchEnd={() => this.setState({mouseDownIndex: null})}
+                style={this.state.mouseDownIndex === index ? {opacity: 0.65} : {}}
               >
                 <img
                   src={s.imageURL}

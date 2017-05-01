@@ -9,23 +9,23 @@ import $ from 'jquery';
 import StorageEngine from '../../lib/StorageEngine';
 import Router from '../../lib/Router';
 import {getPermittedStudents} from '../../data/students';
-import AVAILABLE_QUESTION_COMPONENTS from './questions';
+import AVAILABLE_QUESTION_COMPONENTS, {getValidQuestionTypesForStudentToGuess} from './questions';
 import GameData from '../../data/GameData';
 import LiveGameScore from './small_components/LiveGameScore';
 import SuccessPage from './pages/SuccessPage';
 import StudentProfile from '../StudentProfile';
-import GameTutorial, {
-  storage as tutorialStorage
-} from '../../components/game/pages/GameTutorial';
-import {getValidQuestionTypesForStudentToGuess} from './questions/index';
+import GameTutorial, {storage as tutorialStorage} from '../../components/game/pages/GameTutorial';
 import CircleProgress from '../CircleProgress';
 import gameMuiTheme from '../../styles/gameMuiTheme';
+import debugStorage from '../../data/debugStorage';
+import {get_debug} from '../../lib/debug';
 
 // Storage and its keys
 const storage = new StorageEngine('game_play_environment');
 const STUDENT_TO_GUESS_ID = 'studentToGuessID';
 const QUESTION_TYPE = 'questionType';
 const HAS_PLAYED_ALREADY = 'has_played_already';
+const HAS_SEEN_FLAG_TUTORIAL = 'has_seen_flag_tutorial';
 
 const QUESTIONS_TO_SHOW_BEFORE_BREAK_IF_FIRST_TIME_PLAYING = 3;
 let QUESTIONS_TO_SHOW_BEFORE_BREAK_RANGE = [6, 8];  // because 7 is lucky ;)
@@ -49,7 +49,7 @@ class GamePlayEnvironment extends React.Component {
     const initialStudentToGuess = _.find(permittedStudents, {
       id: storage.get(STUDENT_TO_GUESS_ID),
     });
-    const initialQuestionType = storage.get(QUESTION_TYPE);
+    const initialQuestionType = debugStorage.get('initialQuestionType') || storage.get(QUESTION_TYPE);
     let remainingQuestionsCount;
     if (storage.get(HAS_PLAYED_ALREADY)) {
       remainingQuestionsCount = this.getNewRemainingQuestionsCount();
@@ -77,6 +77,7 @@ class GamePlayEnvironment extends React.Component {
    * success page, and the failure/memory refresher page.
    */
   handleContinue() {
+    storage.set(HAS_SEEN_FLAG_TUTORIAL, true);
     this.setState({
       justBadlyGuessedStudent: null,
     });
@@ -223,7 +224,11 @@ class GamePlayEnvironment extends React.Component {
     } else if (this.state.justBadlyGuessedStudent) {
       primaryComponent = (
         <div className='padding'>
-          <StudentProfile student={this.state.justBadlyGuessedStudent} />
+          <StudentProfile
+            student={this.state.justBadlyGuessedStudent}
+            isLarge={true}
+            showFlagTutorial={!storage.get(HAS_SEEN_FLAG_TUTORIAL)}
+          />
           {this.renderContinueBlock()}
         </div>
       );
@@ -237,10 +242,13 @@ class GamePlayEnvironment extends React.Component {
             right: 0,
             margin: 2,
           }}>
-            <CircleProgress size={20}
-                            color={colors.green500}
-                            percent={GameData.guessRatioForStudent(this.state.studentToGuess) * 100}
-                            label='' />
+            {
+              get_debug() &&
+              <CircleProgress size={20}
+                              color={colors.green500}
+                              percent={GameData.guessRatioForStudent(this.state.studentToGuess) * 100}
+                              label='' />
+            }
           </div>
           {question()}
         </div>
@@ -254,7 +262,7 @@ class GamePlayEnvironment extends React.Component {
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         alignItems: 'stretch',
         minHeight: minimumHeight,
       }}>
@@ -271,9 +279,12 @@ class GamePlayEnvironment extends React.Component {
           max={this.state.questionsInRound}
         />
 
-        {primaryComponent}
+        {
+          userHasSeenTutorial &&
+          <LiveGameScore style={{marginTop: 8}} />
+        }
 
-        <LiveGameScore />
+        {primaryComponent}
       </div>
     );
   }

@@ -62,6 +62,12 @@ class StudentProfile extends React.Component {
       </div>
     );
 
+    const flag = (
+      <i className={this.state.isFlagged ? 'fa fa-star' : 'fa fa-star-o' }
+         style={{color: muiTheme.palette.flagColor}}
+         onClick={() => this.flag()} />
+    );
+
     return (
       <div style={{textAlign: 'center'}}>
         <Paper circle={true}
@@ -75,12 +81,34 @@ class StudentProfile extends React.Component {
           <img src={student.imageURL} alt={student.firstName}
                style={{height: imageSize}} />
         </Paper>
-        <h3 style={{textAlign: 'left'}}>
-          {student.firstName} {student.lastName} &nbsp;
-          <i className={this.state.isFlagged ? 'fa fa-star' : 'fa fa-star-o' }
-             style={{color: muiTheme.palette.flagColor}}
-             onClick={() => this.flag()} />
-        </h3>
+        <div style={{textAlign: 'left'}}>
+          <h3 style={{
+            textAlign: 'left',
+            display: 'inline-block',
+            marginBottom: 0
+          }}>
+            {student.firstName} {student.lastName} &nbsp;
+          </h3>
+          {
+            this.props.showFlagTutorial ?
+            <Paper zDepth={3} style={{
+              display: 'inline-block',
+              padding: 8,
+              color: muiTheme.palette.flagColor,
+              background: 'transparent',
+              border: '1px solid',
+              borderColor: muiTheme.palette.flagColor,
+            }}>
+              {flag}
+              {' '}
+              <i className='ion ion-arrow-left-c' />
+              {' '}
+              Star to add to "My Radar"
+            </Paper>
+              :
+              flag
+          }
+        </div>
         <div style={{textAlign: 'left'}}>
           {this.props.children}
           {shouldCollapseDetails ?
@@ -101,6 +129,7 @@ StudentProfile.propTypes = {
   student: PropTypes.object.isRequired,
   isLarge: PropTypes.bool,
   shouldCollapseDetails: PropTypes.bool,
+  showFlagTutorial: PropTypes.bool,
 };
 
 StudentProfile.defaultProps = {

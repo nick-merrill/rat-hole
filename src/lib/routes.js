@@ -25,8 +25,8 @@ const routes = [
   },
   {
     key: 'game',
-    title: 'Dojo',
-    path: '/dojo',
+    title: 'Game',
+    path: '/game',
     component: Game,
   },
   {
