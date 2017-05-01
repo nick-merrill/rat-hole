@@ -14,13 +14,13 @@ let idCount = 1;  // to mark each student with a unique ID
 
 const getYearString = (year) => {
   switch (year) {
-  case 2017:
+  case '2017':
     return 'senior';
-  case 2018:
+  case '2018':
     return 'junior';
-  case 2019:
+  case '2019':
     return 'sophomore';
-  case 2020:
+  case '2020':
     return 'freshman';
   default:
     return 'alumnus';
@@ -53,6 +53,36 @@ add(
   'M',
   'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/417556_4604809077869_865814500_n.jpg?oh=096c4f3f2aa402cc5b7ded76d9606501&oe=59567461',
   'Nick is a senior studying computer science. He took two gap years to work on a startup. \n\n he/him/his'
+);
+
+add(
+  'Annie', 'Schugart',
+  pfoho,
+  '2018',
+  'Computer Science',
+  'F',
+  'https://scontent-iad3-1.xx.fbcdn.net/v/t31.0-8/14525085_1216566931742134_7204994523829239446_o.jpg?oh=ae0e72e9b48b0581f1b42ec8ea376138&oe=59531292',
+  'Annie is from Kansas. \n\n she/her/hers'
+);
+
+add(
+  'Chris', 'Mosch',
+  pfoho,
+  '2018',
+  'Masters in Statistics',
+  'M',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/15895094_1242892179109617_1467619406834022630_n.jpg?oh=5ebc6abc92b5b6585ef94235c17030e9&oe=5974DB43',
+  'Chris is not from Kansas. He likes yoghurt very much. \n\n he/him/his'
+);
+
+add(
+  'Kunho', 'Kim',
+  pfoho,
+  '2017',
+  'Folklore and mythology',
+  'M',
+  'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/10268487_219869451556277_126286291676155279_n.jpg?oh=625d841cd43a2317f3c6dfe9edc16b87&oe=599AACDC',
+  'Kunho eats everything!'
 );
 
 add(
