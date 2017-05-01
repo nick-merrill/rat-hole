@@ -262,7 +262,7 @@ class GamePlayEnvironment extends React.Component {
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         alignItems: 'stretch',
         minHeight: minimumHeight,
       }}>
@@ -279,7 +279,10 @@ class GamePlayEnvironment extends React.Component {
           max={this.state.questionsInRound}
         />
 
-        <LiveGameScore style={{marginTop: 8}} />
+        {
+          userHasSeenTutorial &&
+          <LiveGameScore style={{marginTop: 8}} />
+        }
 
         {primaryComponent}
       </div>

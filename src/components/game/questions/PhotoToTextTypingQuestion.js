@@ -5,6 +5,7 @@ import $ from 'jquery';
 import Question from './Question';
 import {RaisedButton, TextField} from 'material-ui';
 import SuccessIndicatorOverlay from '../small_components/SuccessIndicatorOverlay';
+import muiTheme from '../../../styles/muiTheme';
 
 // TODO: Also normalize for accents and special characters.
 const normalize = (value) => value ? value.toLowerCase() : '';
@@ -141,20 +142,17 @@ class PhotoToTextTypingQuestion extends Question {
   render() {
     const studentToGuess = this.state.studentToGuess;
 
-    // const KEYBOARD_HEIGHT = 250;
-    const inputAreaHeight = 48;
-
     /*
      If the keyboard is shown on mobile, then we can trust the height
      given by the system. But if the keyboard is not shown (input is not
      focused), we must estimate the height of the keyboard.
      */
-    let suggestedHeight = window.innerHeight - inputAreaHeight;
+    let suggestedHeight = window.innerHeight - muiTheme.appBar.height - 30 - 8;
     // if (!this.state.focused) {
     //   suggestedHeight -= KEYBOARD_HEIGHT;
     // }
 
-    const height = _.max([
+    const minHeight = _.max([
       100,
       suggestedHeight,
     ]);
@@ -166,24 +164,28 @@ class PhotoToTextTypingQuestion extends Question {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
+        flex: '10 0 auto',
+        minHeight,
       }}>
         <h3>
           Who is this?
         </h3>
         <div id='image-to-guess' style={{
           position: 'relative',
+          flex: '1 0 auto',
+          alignItems: 'stretch',
           textAlign: 'center',
-          margin: '0 auto',
+          // margin: '0 auto',
           backgroundImage: `url(${studentToGuess.imageURL})`,
           backgroundAttachment: 'center center',
           backgroundSize: 'contain',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: '50% 50%',
-          width,
+          // width,
           // Make room for the keyboard on small phones, but still allow the
           // photo to be at least 100 pixels high, in case the user is on a
           // teeny, tiny, itsy-bitsy mouse phone.
-          height,
+          // minHeight,
         }}>
           <SuccessIndicatorOverlay
             wasJustSuccessful={this.state.wasJustSuccessful}
@@ -195,6 +197,7 @@ class PhotoToTextTypingQuestion extends Question {
         </div>
         <div style={{
           textAlign: 'center',
+          flex: '0 1 auto',
           display: 'inline-block',
         }}>
           <TextField
@@ -210,7 +213,6 @@ class PhotoToTextTypingQuestion extends Question {
             onFocus={this.handleInputFocus.bind(this)}
             onBlur={this.handleInputBlur.bind(this)}
             onKeyPress={this.handleKeyPress.bind(this)}
-            //onClick={this.handleInputFocus.bind(this)}
             style={{
               width: _.min([
                 window.innerWidth / 2,

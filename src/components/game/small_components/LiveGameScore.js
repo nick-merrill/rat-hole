@@ -29,7 +29,7 @@ class LiveGameScore extends React.Component {
         data: GameData.getCommonData(),
       });
 
-      let newTimeBars = this.state.data.concat({
+      let newTimeBars = this.state.timeData.bars.concat({
         value: GameData.getGuessRatio({maxDepth: MAX_DEPTH}),
       });
       if (newTimeBars.length > MAX_NUM_DATA_POINTS) {
@@ -69,7 +69,13 @@ class LiveGameScore extends React.Component {
             <div key={index} style={{height: 30, width: 30}}>
               {
                 d.textOnly ?
-                  <span style={{color: d.color}}>{d.text}</span>
+                  <div style={{
+                    color: d.color,
+                    display: 'inline-block',
+                    textAlign: 'center',
+                    verticalAlign: 'middle',
+                    height: 30,
+                  }}>{d.text}</div>
                   :
                   <SingleChart data={d} mini={true} />
               }

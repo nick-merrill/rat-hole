@@ -135,8 +135,6 @@ StudentProfile.propTypes = {
 StudentProfile.defaultProps = {
   isLarge: false,
   shouldCollapseDetails: false,
-  // FIXME
-  showFlagTutorial: true,
 };
 
 export default StudentProfile;
