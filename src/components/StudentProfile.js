@@ -64,7 +64,7 @@ class StudentProfile extends React.Component {
 
     const flag = (
       <i
-        className={this.state.isFlagged ? 'ion ion-ios-checkmark-outline' : 'ion ion-ios-checkmark' }
+        className={this.state.isFlagged ? 'ion ion-ios-checkmark' : 'ion ion-ios-checkmark-outline' }
         style={{color: muiTheme.palette.flagColor, fontSize: '1.7em'}}
         onClick={() => this.flag()} />
     );
