@@ -24,6 +24,7 @@ const storage = new StorageEngine('game_play_environment');
 const STUDENT_TO_GUESS_ID = 'studentToGuessID';
 const QUESTION_TYPE = 'questionType';
 const HAS_PLAYED_ALREADY = 'has_played_already';
+const HAS_SEEN_FLAG_TUTORIAL = 'has_seen_flag_tutorial';
 
 const QUESTIONS_TO_SHOW_BEFORE_BREAK_IF_FIRST_TIME_PLAYING = 3;
 let QUESTIONS_TO_SHOW_BEFORE_BREAK_RANGE = [6, 8];  // because 7 is lucky ;)
@@ -75,6 +76,7 @@ class GamePlayEnvironment extends React.Component {
    * success page, and the failure/memory refresher page.
    */
   handleContinue() {
+    storage.set(HAS_SEEN_FLAG_TUTORIAL, true);
     this.setState({
       justBadlyGuessedStudent: null,
     });
@@ -224,6 +226,7 @@ class GamePlayEnvironment extends React.Component {
           <StudentProfile
             student={this.state.justBadlyGuessedStudent}
             isLarge={true}
+            showFlagTutorial={!storage.get(HAS_SEEN_FLAG_TUTORIAL)}
           />
           {this.renderContinueBlock()}
         </div>
