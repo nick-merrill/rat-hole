@@ -22,7 +22,7 @@ class GameTutorial extends React.Component {
           <span className='prefer-no-wrap'>Welcome to the</span>
           &nbsp;
           <span className='prefer-no-wrap'>
-            {userHouseNickname} dojo.
+            {userHouseNickname} Game.
           </span>
         </h2>
         <div style={{textAlign: 'left'}}>

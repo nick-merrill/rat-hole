@@ -5,7 +5,7 @@ import * as colors from 'material-ui/styles/colors';
 import CircleProgress from '../components/CircleProgress';
 import * as _ from 'lodash';
 import GameData from '../data/GameData';
-import {BarChart, Bar} from 'recharts';
+import {Bar, BarChart} from 'recharts';
 import muiTheme from '../styles/muiTheme';
 import {getCurrentUser} from '../data/users';
 import $ from 'jquery';
@@ -89,7 +89,7 @@ class Home extends React.Component {
     ];
     return (
       <div>
-        <RaisedButton label="Enter the Dojo"
+        <RaisedButton label="Enter the Game"
                       primary={true}
                       style={buttonStyle}
                       buttonStyle={{
@@ -119,11 +119,6 @@ class Home extends React.Component {
             ))
           }
         </div>
-
-        {/*<FlatButton label="See My Stats"*/}
-                    {/*primary={true}*/}
-                    {/*style={buttonStyle}*/}
-                    {/*onClick={() => Router.goToPath('/stats')} />*/}
       </div>
     );
   }
