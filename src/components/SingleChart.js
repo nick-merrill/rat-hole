@@ -6,16 +6,22 @@ import * as _ from 'lodash';
 
 class SingleChart extends React.Component {
   render() {
-    const {data} = this.props;
+    const {data, mini} = this.props;
+    const shouldAnimate = !mini;
 
-    const availableWidth = data.fullWidth ? 200 : 130;
+    let availableWidth = data.fullWidth ? 200 : 130;
+    if (mini) {
+      availableWidth = 30;
+    }
+
     let graphElement;
     if (!_.isNil(data.percent)) {
       graphElement = (
         <CircleProgress
+          shouldAnimate={shouldAnimate}
           size={availableWidth}
           percent={data.percent}
-          label={data.label}
+          label={mini ? '' : data.label}
           color={data.color} />
       );
     } else if (!_.isNil(data.bars)) {
@@ -24,7 +30,11 @@ class SingleChart extends React.Component {
           width={availableWidth}
           height={availableWidth}
           data={data.bars}>
-          <Bar dataKey='value' fill={data.color} />
+          <Bar
+            dataKey='value'
+            fill={data.color}
+            isAnimationActive={shouldAnimate}
+          />
         </BarChart>
       );
     } else {
@@ -40,6 +50,11 @@ class SingleChart extends React.Component {
 
 SingleChart.propTypes = {
   data: PropTypes.object.isRequired,
+  mini: PropTypes.bool,
+};
+
+SingleChart.defaultProps = {
+  mini: false,
 };
 
 export default SingleChart;

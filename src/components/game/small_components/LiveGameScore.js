@@ -1,65 +1,83 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-
-import {AreaChart, Area} from 'recharts';
 import GameData from '../../../data/GameData';
+import SingleChart from '../../SingleChart';
+// import PropTypes from 'prop-types';
 
 // Maximum history analyzed for success ratio
 // Allow for rapid changes to make choices appear more impactful
 const MAX_DEPTH = 5;
 // Max number of data points on graph
 // Allow to see about 2 minutes worth of progress
-const MAX_NUM_DATA_POINTS = 16;
+const MAX_NUM_DATA_POINTS = 5;
 
 class LiveGameScore extends React.Component {
   constructor(props) {
     super(props);
+    const data = GameData.getCommonData();
     this.state = {
-      data: []
+      data,
+      timeData: {
+        bars: [],
+        color: data[2].color,
+      },
     };
   }
 
   componentDidMount() {
     GameData.subscribeToGuessing((data) => {
-      let newData = this.state.data.concat({
+      this.setState({
+        data: GameData.getCommonData(),
+      });
+
+      let newTimeBars = this.state.data.concat({
         value: GameData.getGuessRatio({maxDepth: MAX_DEPTH}),
       });
-      if (newData.length > MAX_NUM_DATA_POINTS) {
-        newData = newData.slice(newData.length - MAX_NUM_DATA_POINTS, newData.length);
+      if (newTimeBars.length > MAX_NUM_DATA_POINTS) {
+        newTimeBars = newTimeBars.slice(
+          newTimeBars.length - MAX_NUM_DATA_POINTS,
+          newTimeBars.length
+        );
       }
       this.setState({
-        data: newData,
+        timeData: Object.assign({}, this.state.timeData, {
+          bars: newTimeBars,
+        }),
       });
     });
   }
 
   render() {
-    if (this.state.data.length > 0) {
-      return (
-        <div>
-          {/*<h4>Correctness</h4>*/}
-          <AreaChart width={window.innerWidth}
-                     height={70}
-                     data={this.state.data}>
-            <defs>
-              <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <Area type='monotone'
-                  dataKey='value'
-                  stroke='#8884d8'
-                  strokeWidth={2}
-                  fill='url(#colorValue)'
-                  isAnimationActive={false}
-            />
-          </AreaChart>
-        </div>
-      );
-    } else {
-      return <div />;
-    }
+    let {data, timeData} = this.state;
+    // Replace third graph with real data
+    data[2] = timeData;
+    data[3] = {
+      textOnly: true,
+      text: GameData.getLatestGoodGuessStreakCount(),
+      color: data[3].color,
+    };
+
+    return (
+      <div style={{
+        ...this.props.style,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+      }}>
+        {
+          data.map((d, index) => (
+            <div key={index} style={{height: 30, width: 30}}>
+              {
+                d.textOnly ?
+                  <span style={{color: d.color}}>{d.text}</span>
+                  :
+                  <SingleChart data={d} mini={true} />
+              }
+            </div>
+          ))
+        }
+      </div>
+    );
   }
 }
 

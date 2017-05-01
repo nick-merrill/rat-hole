@@ -18,6 +18,7 @@ import GameTutorial, {storage as tutorialStorage} from '../../components/game/pa
 import CircleProgress from '../CircleProgress';
 import gameMuiTheme from '../../styles/gameMuiTheme';
 import debugStorage from '../../data/debugStorage';
+import {get_debug} from '../../lib/debug';
 
 // Storage and its keys
 const storage = new StorageEngine('game_play_environment');
@@ -241,10 +242,13 @@ class GamePlayEnvironment extends React.Component {
             right: 0,
             margin: 2,
           }}>
-            <CircleProgress size={20}
-                            color={colors.green500}
-                            percent={GameData.guessRatioForStudent(this.state.studentToGuess) * 100}
-                            label='' />
+            {
+              get_debug() &&
+              <CircleProgress size={20}
+                              color={colors.green500}
+                              percent={GameData.guessRatioForStudent(this.state.studentToGuess) * 100}
+                              label='' />
+            }
           </div>
           {question()}
         </div>
@@ -275,9 +279,9 @@ class GamePlayEnvironment extends React.Component {
           max={this.state.questionsInRound}
         />
 
-        {primaryComponent}
+        <LiveGameScore style={{marginTop: 8}} />
 
-        <LiveGameScore />
+        {primaryComponent}
       </div>
     );
   }
