@@ -4,6 +4,7 @@ import StorageEngine from '../lib/StorageEngine';
 import {getCurrentUser} from './users';
 import moment from 'moment';
 import {getFlaggedStudentIDs, getPermittedStudents} from './students';
+import * as colors from 'material-ui/styles/colors';
 
 // Keys
 const STUDENTS = 'students';
@@ -217,6 +218,41 @@ class GameData {
     return this._storage.get(MAX_GOOD_GUESS_STREAK) || 0;
   }
 
+  getGuessLog() {
+    return this._storage.get(GUESS_LOG) || [];
+  }
+
+  getCommonData() {
+    const averageRecentGuessRatio = this.averageRecentGuessRatio() * 100;
+    const currentUser = getCurrentUser();
+    const bestStreak = this.getMaxGoodGuessStreakCount();
+    return [
+      {
+        title: 'House Knowledge',
+        percent: averageRecentGuessRatio,
+        label: `${Math.round(averageRecentGuessRatio)}% of ${currentUser.house.nickname}`,
+        color: colors.pink500,
+        fullWidth: true,
+      },
+      {
+        title: 'Latest Record',
+        percent: this.getGuessRatio() * 100,
+        color: colors.lightBlue500,
+      },
+      {
+        title: 'Improvement',
+        bars: [{value: 7}, {value: 9}, {value: 15}],
+        color: colors.green500,
+      },
+      {
+        title: 'Best Streak',
+        percent: bestStreak > 0 ? 100 : 0,
+        label: `${bestStreak}`,
+        color: colors.deepOrange500,
+      },
+    ];
+  }
+
   /*
    PRIVATE methods from here on. Don't call them without good reason.
    */
@@ -243,10 +279,6 @@ class GameData {
     const studentData = this._getStudentData(student);
     const newData = Object.assign({}, studentData, patchObject);
     this._setStudentData(student, newData);
-  }
-
-  getGuessLog() {
-    return this._storage.get(GUESS_LOG) || [];
   }
 
   _addToGuessLog(data) {
