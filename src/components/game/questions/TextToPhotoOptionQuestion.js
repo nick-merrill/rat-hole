@@ -6,6 +6,13 @@ import {GridList, GridTile} from 'material-ui';
 import SuccessIndicatorOverlay from '../small_components/SuccessIndicatorOverlay';
 
 class TextToPhotoOptionQuestion extends Question {
+  constructor(props) {
+    super(props);
+    Object.assign({}, this.state, {
+      mouseDownIndex: null,
+    });
+  }
+
   render() {
     const {studentToGuess, guessedStudent} = this.state;
     // Results in square photos if in portrait and reasonably sized photos if
@@ -62,6 +69,9 @@ class TextToPhotoOptionQuestion extends Question {
                     />
                   )
                 }
+                onTouchStart={() => this.setState({mouseDownIndex: index})}
+                onTouchEnd={() => this.setState({mouseDownIndex: null})}
+                style={this.state.mouseDownIndex === index ? {opacity: 0.65} : {}}
               >
                 <img
                   src={s.imageURL}
