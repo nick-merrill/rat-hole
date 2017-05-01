@@ -76,8 +76,10 @@ class GamePlayEnvironment extends React.Component {
    * This is called from several places, including the tutorial page, the
    * success page, and the failure/memory refresher page.
    */
-  handleContinue() {
-    storage.set(HAS_SEEN_FLAG_TUTORIAL, true);
+  handleContinue(fromFailurePage = false) {
+    if (fromFailurePage) {
+      storage.set(HAS_SEEN_FLAG_TUTORIAL, true);
+    }
     this.setState({
       justBadlyGuessedStudent: null,
     });
@@ -178,7 +180,7 @@ class GamePlayEnvironment extends React.Component {
                         height: 50,
                         minWidth: window.innerWidth * 0.75,
                       }}
-                      onTouchTap={() => this.handleContinue()} />
+                      onTouchTap={() => this.handleContinue(true)} />
       </div>
     );
   }

@@ -63,9 +63,10 @@ class StudentProfile extends React.Component {
     );
 
     const flag = (
-      <i className={this.state.isFlagged ? 'fa fa-star' : 'fa fa-star-o' }
-         style={{color: muiTheme.palette.flagColor}}
-         onClick={() => this.flag()} />
+      <i
+        className={this.state.isFlagged ? 'ion ion-ios-checkmark-outline' : 'ion ion-ios-checkmark' }
+        style={{color: muiTheme.palette.flagColor, fontSize: '1.7em'}}
+        onClick={() => this.flag()} />
     );
 
     return (
@@ -91,20 +92,21 @@ class StudentProfile extends React.Component {
           </h3>
           {
             this.props.showFlagTutorial ?
-            <Paper zDepth={3} style={{
-              display: 'inline-block',
-              padding: 8,
-              color: muiTheme.palette.flagColor,
-              background: 'transparent',
-              border: '1px solid',
-              borderColor: muiTheme.palette.flagColor,
-            }}>
-              {flag}
-              {' '}
-              <i className='ion ion-arrow-left-c' />
-              {' '}
-              Star to add to "My Radar"
-            </Paper>
+              <Paper zDepth={3} style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                padding: 8,
+                color: muiTheme.palette.flagColor,
+                background: 'transparent',
+                border: '1px solid',
+                borderColor: muiTheme.palette.flagColor,
+              }}>
+                {flag}
+                <div style={{marginLeft: 8}}>
+                  <i className='ion ion-arrow-left-c' />
+                  Add to "My Radar"
+                </div>
+              </Paper>
               :
               flag
           }
@@ -135,6 +137,7 @@ StudentProfile.propTypes = {
 StudentProfile.defaultProps = {
   isLarge: false,
   shouldCollapseDetails: false,
+  showFlagTutorial: false,
 };
 
 export default StudentProfile;
